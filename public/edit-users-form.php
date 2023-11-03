@@ -549,13 +549,11 @@ if (isset($_POST['btnCancel'])) { ?>
                         </div>
                         <br>
                         <div class="row">
-                        <div class="form-group">
                             <div class="col-md-3">
-                                    <label for="">Withdrawal Status</label><br>
+                                <label for="">Withdrawal Status</label><br>
                                     <input type="checkbox" id="withdrawal_button" class="js-switch" <?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 'checked' : '' ?>>
                                     <input type="hidden" id="withdrawal_status" name="withdrawal_status" value="<?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 1 : 0 ?>">
                                 </div>
-                            </div>
                                 <div class="col-md-3">
                                 <label for="exampleInputEmail1">Total orders</label><i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="total_orders" value="<?php echo $res[0]['total_orders']; ?>">
@@ -564,8 +562,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <label for="exampleInputEmail1">Today orders</label><i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="today_orders" value="<?php echo $res[0]['today_orders']; ?>">
                                 </div>
-                            </div>
-                        
+                                </div>
                         <br>
                         <div class="row">
                         <div class="col-md-3">
