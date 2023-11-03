@@ -27,7 +27,7 @@ include "header.php";
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>A1 Ads - Dashboard</title>
+    <title>Next gen - Dashboard</title>
 </head>
 
 <body>
