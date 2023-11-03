@@ -573,19 +573,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1">Min Withdrawal</label><i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="min_withdrawal" value="<?php echo $res[0]['min_withdrawal']; ?>">
                                 </div>
-                                <div class="col-md-3">
-                                   <label for="exampleInputEmail1">Gender</label> <i class="text-danger asterik">*</i>
-                                    <select id='gender' name="gender" class='form-control'>
-                                     <option value='male' <?php if ($res[0]['gender'] == 'male') echo 'selected'; ?>>Male</option>
-                                      <option value='female' <?php if ($res[0]['gender'] == 'female') echo 'selected'; ?>>Female</option>
-                                      <option value='others' <?php if ($res[0]['gender'] == 'others') echo 'selected'; ?>>Others</option>
-                                    </select>
-                                    </div>
                                     <div class="col-md-3">
                                     <label for="exampleInputEmail1">Device Id</label> <i class="text-danger asterik">*</i><?php echo isset($error['device_id']) ? $error['device_id'] : ''; ?>
                                     <input type="text" class="form-control" name="device_id" value="<?php echo $res[0]['device_id']; ?>">
                                 </div>
-						</div>
+						 </div>  
                                  
                                  <br>
                         <div class="row">
