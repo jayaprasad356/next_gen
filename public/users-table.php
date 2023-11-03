@@ -64,7 +64,6 @@
                                     <th  data-field="support_name" >Support Name</th>
                                     <th  data-field="lead_name" >Lead Name</th>
                                     <th  data-field="balance" data-sortable="true">Balance</th>
-                                    <th  data-field="balance" data-sortable="true">Balance</th>
                                     <th  data-field="status" data-sortable="true">Status</th>
                                     <th  data-field="joined_date" data-sortable="true">Joined Date</th>
                                 </tr>
