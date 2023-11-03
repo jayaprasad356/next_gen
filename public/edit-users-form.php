@@ -42,7 +42,7 @@ if (isset($_POST['btnEdit'])) {
     $lead_id = $db->escapeString(($_POST['lead_id']));
     $support_id = $db->escapeString(($_POST['support_id']));
     $branch_id = $db->escapeString(($_POST['branch_id']));
-    $gender = $db->escapeString(($_POST['gender']));
+
 
     $plan = $db->escapeString(($_POST['plan']));
     $plan_type = $db->escapeString(($_POST['plan_type']));
