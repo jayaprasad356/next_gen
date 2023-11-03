@@ -37,17 +37,13 @@ if (isset($_POST['btnEdit'])) {
     $ifsc = $db->escapeString(($_POST['ifsc']));
     $device_id = $db->escapeString(($_POST['device_id']));
     $joined_date = $db->escapeString($_POST['joined_date']);
-    $basic_wallet = $db->escapeString(($_POST['basic_wallet']));
-    $premium_wallet = $db->escapeString(($_POST['premium_wallet']));
     $total_orders = $db->escapeString(($_POST['total_orders']));
     $today_orders = $db->escapeString($_POST['today_orders']);
     $lead_id = $db->escapeString(($_POST['lead_id']));
     $support_id = $db->escapeString(($_POST['support_id']));
     $branch_id = $db->escapeString(($_POST['branch_id']));
-    $support_lan = $db->escapeString(($_POST['support_lan']));
     $gender = $db->escapeString(($_POST['gender']));
-    $current_refers = $db->escapeString(($_POST['current_refers']));
-    $target_refers = $db->escapeString(($_POST['target_refers']));
+
     $plan = $db->escapeString(($_POST['plan']));
     $plan_type = $db->escapeString(($_POST['plan_type']));
     $total_referrals = $db->escapeString(($_POST['total_referrals']));
@@ -273,7 +269,7 @@ if (isset($_POST['btnEdit'])) {
                 $orders_time = 20;
             }
     
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', basic_wallet='$basic_wallet', premium_wallet='$premium_wallet', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',support_lan='$support_lan',gender='$gender',current_refers='$current_refers',target_refers='$target_refers',plan = '$plan',total_referrals = $total_referrals,orders_time='$orders_time',orders_cost='$orders_cost',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available' WHERE id = $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',total_referrals = $total_referrals,orders_time='$orders_time',orders_cost='$orders_cost',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available' WHERE id = $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -553,15 +549,13 @@ if (isset($_POST['btnCancel'])) { ?>
                         </div>
                         <br>
                         <div class="row">
-                            <div class="form-group">
+                        <div class="form-group">
                             <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Basic Wallet</label><i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="basic_wallet" value="<?php echo $res[0]['basic_wallet']; ?>">
+                                    <label for="">Withdrawal Status</label><br>
+                                    <input type="checkbox" id="withdrawal_button" class="js-switch" <?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="withdrawal_status" name="withdrawal_status" value="<?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 1 : 0 ?>">
                                 </div>
-                                <div class="col-md-3">
-                                <label for="exampleInputEmail1">Premium Wallet</label><i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="premium_wallet" value="<?php echo $res[0]['premium_wallet']; ?>">
-                                </div>
+                            </div>
                                 <div class="col-md-3">
                                 <label for="exampleInputEmail1">Total orders</label><i class="text-danger asterik">*</i>
                                     <input type="text" class="form-control" name="total_orders" value="<?php echo $res[0]['total_orders']; ?>">
@@ -571,36 +565,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="text" class="form-control" name="today_orders" value="<?php echo $res[0]['today_orders']; ?>">
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="">Withdrawal Status</label><br>
-                                    <input type="checkbox" id="withdrawal_button" class="js-switch" <?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 'checked' : '' ?>>
-                                    <input type="hidden" id="withdrawal_status" name="withdrawal_status" value="<?= isset($res[0]['withdrawal_status']) && $res[0]['withdrawal_status'] == 1 ? 1 : 0 ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Current Refers</label><i class="text-danger asterik">*</i>
-                                       <input type="number" class="form-control" name="current_refers" value="<?php echo $res[0]['current_refers']; ?>">
-                                    </div>
-                                <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Target Refers</label><i class="text-danger asterik">*</i>
-                                        <input type="number" class="form-control" name="target_refers" value="<?php echo $res[0]['target_refers']; ?>">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                    <label for="exampleInputEmail1">Select Languages</label> <i class="text-danger asterik">*</i>
-                                    <select id='support_lan' name="support_lan" class='form-control'>
-                                    <option value=''>--Select--</option>
-                                    <option value='tamil' <?php if ($res[0]['support_lan'] == 'tamil') echo 'selected'; ?>>Tamil</option>
-                                      <option value='kannada' <?php if ($res[0]['support_lan'] == 'kannada') echo 'selected'; ?>>Kannada</option>
-                                      <option value='telugu' <?php if ($res[0]['support_lan'] == 'telugu') echo 'selected'; ?>>Telugu</option>
-                                      <option value='hindi' <?php if ($res[0]['support_lan'] == 'hindi') echo 'selected'; ?>>Hindi</option>
-                                      <option value='english' <?php if ($res[0]['support_lan'] == 'english') echo 'selected'; ?>>English</option>
-                                    </select>
-                            </div>
-                        </div>
+                        
                         <br>
                         <div class="row">
                         <div class="col-md-3">
