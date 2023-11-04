@@ -219,71 +219,12 @@ $fn = new custom_functions;
                     </a>
                 </li>
                 <li class="treeview">
-                    <a href="orders.php">
-                        <i class="fa fa-star"></i>
-                        <span>orders</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="orders-trans.php">
-                        <i class="fa fa-star"></i>
-                        <span>orders Trans</span>
-                    </a>
-                </li>
-                <li class="treeview">
                     <a href="branches.php">
                         <i class="fa fa-adn"></i>
                         <span>Branches</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="reports.php">
-                        <i class="fa fa-bell"></i>
-                        <span>Reports</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="slide.php">
-                        <i class="fa fa-image"></i>
-                        <span>Slide</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="mypost.php">
-                        <i class="fa fa-image"></i>
-                        <span>MyPost</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="post.php">
-                        <i class="fa fa-image"></i>
-                        <span>Post</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="duplicate_sync.php">
-                        <i class="fa fa-adn"></i>
-                        <span>Duplicate Sync</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="new_page.php">
-                        <i class="fa fa-adn"></i>
-                        <span>Example</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="query_list.php">
-                        <i class="fa fa-adn"></i>
-                        <span>Query</span>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="withdrawal_report.php">
-                        <i class="fa fa-adn"></i>
-                        <span>Withdrawal Report</span>
-                    </a>
-                </li>
+             
             </ul>
             </section>
             <!-- /.sidebar -->
