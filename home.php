@@ -78,25 +78,19 @@ include "header.php";
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-6">
-                    <div class="small-box bg-orange">
+                   <div class="small-box bg-orange">
                         <div class="inner">
-                        <h3><?php
-                            $branch_id = (isset($_POST['branch_id']) && $_POST['branch_id']!='') ? $_POST['branch_id'] :"";
-                            if ($branch_id != '') {
-                                $join1="AND users.branch_id='$branch_id'";
-                            } else {
-                                $join1="";
-                            }
-                            $sql = "SELECT SUM(withdrawals.amount) AS amount,withdrawals.user_id,users.id FROM withdrawals,users WHERE withdrawals.user_id=users.id AND withdrawals.status=0 $join1";
-                            $db->sql($sql);
-                            $res = $db->getResult();
-                            $totalamount = $res[0]['amount'];
-                            echo "Rs.".$totalamount;
-                             ?></h3>
-                            <p>Unpaid Withdrawals</p>
-                        </div>
+                        <?php
+                           $sql = "SELECT SUM(total_orders) AS total_orders FROM users";
+                           $db->sql($sql);
+                           $res = $db->getResult();
+                            $totalOrders = $res[0]['total_orders'];
+                           ?>
+                          <h3><?php echo $totalOrders; ?></h3>
+                          <p>Total Orders Generated</p>
+                          </div>
                         
-                        <a href="withdrawals.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-xs-6">
@@ -133,6 +127,63 @@ include "header.php";
                         <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
+                <div class="col-lg-4 col-xs-6">
+                <div class="small-box bg-maroon">
+                        <div class="inner">
+                        <h3><?php
+                            $branch_id = (isset($_POST['branch_id']) && $_POST['branch_id']!='') ? $_POST['branch_id'] :"";
+                            if ($branch_id != '') {
+                                $join1="AND users.branch_id='$branch_id'";
+                            } else {
+                                $join1="";
+                            }
+                            $sql = "SELECT SUM(withdrawals.amount) AS amount,withdrawals.user_id,users.id FROM withdrawals,users WHERE withdrawals.user_id=users.id AND withdrawals.status=0 $join1";
+                            $db->sql($sql);
+                            $res = $db->getResult();
+                            $totalamount = $res[0]['amount'];
+                            echo "Rs.".$totalamount;
+                             ?></h3>
+                            <p>Today Withdrawals</p>
+                        </div>
+                        
+                        <a href="withdrawals.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                <div class="small-box bg-teal">
+                        <div class="inner">
+                           <?php
+                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 400";
+                           $db->sql($sql);
+                           $res = $db->getResult();
+                           $count = $res[0]['count'];
+                           ?>
+
+                          <h3><?php echo $count; ?></h3>
+                          <p>No Of Users Less Than 400 Average</p>
+                          </div>
+                        
+                        <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-6">
+                <div class="small-box bg-blue">
+                        <div class="inner">
+                           <?php
+                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 400";
+                           $db->sql($sql);
+                           $res = $db->getResult();
+                           $count = $res[0]['count'];
+                           ?>
+
+                          <h3>0</h3>
+                          <p>No Of New Referrals</p>
+                          </div>
+                        
+                        <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+               
             </div>
         </section>
     </div>
