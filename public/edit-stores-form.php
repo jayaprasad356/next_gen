@@ -87,11 +87,11 @@ if (isset($_POST['btnCancel'])) { ?>
                         <div class="row">
 							<div class="form-group">
                                  <div class="col-md-4">
-									<label for="exampleInputEmail1">Minimum Quantity</label><i class="text-danger asterik">*</i>
+									<label for="exampleInputEmail1">Min Qty</label><i class="text-danger asterik">*</i>
 									<input type="number" class="form-control" name="min_qty" value="<?php echo $res[0]['min_qty']; ?>">
 								 </div>
                                  <div class="col-md-4">
-									<label for="exampleInputEmail1">Maximum Quantity</label><i class="text-danger asterik">*</i>
+									<label for="exampleInputEmail1">Max Qty</label><i class="text-danger asterik">*</i>
 									<input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
 								 </div>
                                  <div class="col-md-4">

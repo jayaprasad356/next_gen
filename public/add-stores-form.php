@@ -84,11 +84,11 @@ if (isset($_POST['btnAdd'])) {
                      <div class="row">
                         <div class="form-group">
                              <div class='col-md-4'>
-                                  <label for="exampleInputtitle">Minimum Quantity</label> <i class="text-danger asterik">*</i>
+                                  <label for="exampleInputtitle">Min Qty</label> <i class="text-danger asterik">*</i>
                                   <input type="number" class="form-control" name="min_qty" required>
                             </div>
                         <div class='col-md-4'>
-                                 <label for="exampleInputtitle">Maximum Quantity</label> <i class="text-danger asterik">*</i>
+                                 <label for="exampleInputtitle">Max Qty</label> <i class="text-danger asterik">*</i>
                                  <input type="number" class="form-control" name="max_qty" required>
                             </div>
                             <div class='col-md-4'>

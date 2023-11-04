@@ -24,8 +24,8 @@
                                     
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="name" data-sortable="true">Name</th>
-                                    <th  data-field="min_qty" data-sortable="true">Minimum Quantity</th>
-                                    <th  data-field="max_qty" data-sortable="true">Maximum Quantity</th>
+                                    <th  data-field="min_qty" data-sortable="true">Min Qty</th>
+                                    <th  data-field="max_qty" data-sortable="true">Max Qty</th>
                                     <th  data-field="per_order_cost" data-sortable="true">Per Order Cost</th>
                                     <th  data-field="operate" data-events="actionEvents">Action</th>
                                 </tr>
