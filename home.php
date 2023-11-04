@@ -81,13 +81,14 @@ include "header.php";
                    <div class="small-box bg-orange">
                         <div class="inner">
                         <?php
-                           $sql = "SELECT SUM(total_orders) AS total_orders FROM users";
+                        $currentdate = date("Y-m-d"); // Get the current date
+                           $sql = "SELECT SUM(total_orders) AS total_orders FROM users WHERE DATE(registered_date) = '$currentdate'";
                            $db->sql($sql);
                            $res = $db->getResult();
                             $totalOrders = $res[0]['total_orders'];
                            ?>
                           <h3><?php echo $totalOrders; ?></h3>
-                          <p>Total Orders Generated</p>
+                          <p>Today Orders Generated</p>
                           </div>
                         
                         <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
