@@ -93,7 +93,7 @@ if (isset($_POST['btnAdd'])) {
                             </div>
                             <div class='col-md-4'>
                                  <label for="exampleInputtitle">Per Order Cost</label> <i class="text-danger asterik">*</i>
-                                 <input type="number" class="form-control" name="per_order_cost" required>
+                                 <input type="text" class="form-control" name="per_order_cost" required>
                             </div>
                         </div>
                     </div>
