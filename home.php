@@ -82,12 +82,12 @@ include "header.php";
                         <div class="inner">
                         <?php
                         $currentdate = date("Y-m-d"); // Get the current date
-                           $sql = "SELECT SUM(total_orders) AS total_orders FROM users WHERE DATE(registered_date) = '$currentdate'";
+                           $sql = "SELECT SUM(today_orders) AS today_orders FROM users WHERE DATE(registered_date) = '$currentdate'";
                            $db->sql($sql);
                            $res = $db->getResult();
-                            $totalOrders = $res[0]['total_orders'];
+                            $todayOrders = $res[0]['today_orders'];
                            ?>
-                          <h3><?php echo $totalOrders; ?></h3>
+                          <h3><?php echo $todayOrders;?></h3>
                           <p>Today Orders Generated</p>
                           </div>
                         
