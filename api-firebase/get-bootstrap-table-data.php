@@ -1230,6 +1230,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'stores') {
         $tempRow['name'] = $row['name'];
         $tempRow['min_qty'] = $row['min_qty'];
         $tempRow['max_qty'] = $row['max_qty'];
+        $tempRow['per_order_cost'] = $row['per_order_cost'];
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }

@@ -18,11 +18,12 @@ if (isset($_POST['btnEdit'])) {
 	$name = $db->escapeString($_POST['name']);
     $min_qty = $db->escapeString($_POST['min_qty']);
     $max_qty = $db->escapeString($_POST['max_qty']);
+    $per_order_cost = $db->escapeString($_POST['per_order_cost']);
 
 	$error = array();
 
 	if (!empty($name) && !empty($min_qty)&& !empty($max_qty))  {
-		$sql_query = "UPDATE stores SET name='$name',min_qty = '$min_qty',max_qty = '$max_qty' WHERE id =  $ID";
+		$sql_query = "UPDATE stores SET name='$name',min_qty = '$min_qty',max_qty = '$max_qty',per_order_cost = '$per_order_cost' WHERE id =  $ID";
 		$db->sql($sql_query);
 		$update_result = $db->getResult();
 		if (!empty($update_result)) {
@@ -92,6 +93,10 @@ if (isset($_POST['btnCancel'])) { ?>
                                  <div class="col-md-4">
 									<label for="exampleInputEmail1">Maximum Quantity</label><i class="text-danger asterik">*</i>
 									<input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
+								 </div>
+                                 <div class="col-md-4">
+									<label for="exampleInputEmail1">Per Order Cost</label><i class="text-danger asterik">*</i>
+									<input type="number" class="form-control" name="per_order_cost" value="<?php echo $res[0]['per_order_cost']; ?>">
 								 </div>
                               </div>
                              </div>

@@ -14,6 +14,7 @@ if (isset($_POST['btnAdd'])) {
         $name = $db->escapeString(($_POST['name']));
         $min_qty = $db->escapeString($_POST['min_qty']);
         $max_qty = $db->escapeString($_POST['max_qty']);
+        $per_order_cost = $db->escapeString($_POST['per_order_cost']);
         $error = array();
        
         if (empty($name)) {
@@ -27,10 +28,10 @@ if (isset($_POST['btnAdd'])) {
         }
        
        
-       if (!empty($name) && !empty($min_qty) && !empty($max_qty)) 
+       if (!empty($name) && !empty($min_qty) && !empty($max_qty)&& !empty($per_order_cost)) 
        {
            
-            $sql_query = "INSERT INTO stores (name,min_qty,max_qty)VALUES('$name','$min_qty','$max_qty')";
+            $sql_query = "INSERT INTO stores (name,min_qty,max_qty,per_order_cost)VALUES('$name','$min_qty','$max_qty','$per_order_cost')";
             $db->sql($sql_query);
             $result = $db->getResult();
             if (!empty($result)) {
@@ -89,6 +90,10 @@ if (isset($_POST['btnAdd'])) {
                         <div class='col-md-4'>
                                  <label for="exampleInputtitle">Maximum Quantity</label> <i class="text-danger asterik">*</i>
                                  <input type="number" class="form-control" name="max_qty" required>
+                            </div>
+                            <div class='col-md-4'>
+                                 <label for="exampleInputtitle">Per Order Cost</label> <i class="text-danger asterik">*</i>
+                                 <input type="number" class="form-control" name="per_order_cost" required>
                             </div>
                         </div>
                     </div>
