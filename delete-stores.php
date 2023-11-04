@@ -12,8 +12,8 @@ $db->connect();
 	}
 	$data = array();
 
-	$sql_query = "DELETE  FROM ads WHERE id =" . $ID;
+	$sql_query = "DELETE  FROM stores WHERE id =" . $ID;
 	$db->sql($sql_query);
 	$res = $db->getResult();
-	header("location:ads.php");
+	header("location:stores.php");
 ?>

@@ -224,6 +224,12 @@ $fn = new custom_functions;
                         <span>Branches</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="stores.php">
+                        <i class="fa fa-adn"></i>
+                        <span>Stores</span>
+                    </a>
+                </li>
              
             </ul>
             </section>

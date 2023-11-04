@@ -24,12 +24,12 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Edit orders | - Dashboard</title>
+<title>Edit Stores | - Dashboard</title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <?php include('public/edit-orders-form.php'); ?>
+        <?php include('public/edit-stores-form.php'); ?>
       </div><!-- /.content-wrapper -->
   </body>
 </html>

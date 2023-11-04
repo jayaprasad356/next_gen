@@ -25,13 +25,13 @@
 <?php include "header.php";?>
 <html>
 <head>
-<title>Add orders | Update Data</title>
+<title>Add Stores | Update Data</title>
 </head>
 </body>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
 		<?php
-			include('public/add-orders-form.php'); 
+			include('public/add-stores-form.php'); 
 		?>
       </div><!-- /.content-wrapper -->
   </body>

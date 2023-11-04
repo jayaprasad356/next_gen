@@ -32,14 +32,14 @@ $_SESSION['timeout'] = $currentTime + $expired;
 <html>
 
 <head>
-    <title>orders | - Dashboard</title>
+    <title>Stores | - Dashboard</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <?php include('public/order-table.php'); ?>
+        <?php include('public/stores-table.php'); ?>
     </div><!-- /.content-wrapper -->
 </body>
 
