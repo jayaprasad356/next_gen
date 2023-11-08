@@ -362,7 +362,7 @@ if (isset($_POST['btnCancel'])) { ?>
                <div class="box-header with-border">
                            <div class="form-group col-md-3">
                                 <h4 class="box-title"> </h4>
-                                <a class="btn btn-block btn-primary" href="add-ad.php?id=<?php echo $ID ?>"><i class="fa fa-plus-square"></i> Add orders</a>
+                                <a class="btn btn-block btn-primary" href="add-order.php?id=<?php echo $ID ?>"><i class="fa fa-plus-square"></i> Add orders</a>
                             </div>
                              <div class="form-group col-md-3">
                                 <h4 class="box-title"> </h4>
