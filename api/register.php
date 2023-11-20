@@ -104,14 +104,13 @@ if ($num >= 1) {
 else{
 
 
-    
-    $datetime = date('Y-m-d H:i:s');
-    $sql = "INSERT INTO users (`name`,`mobile`,`email`,`password`,`location`,`dob`,`hr_id`,`aadhaar_num`,`referred_by`,`device_id`,`last_updated`,`registered_date`)VALUES('$name','$mobile','$email','$password','$location','$dob','$hr_id','$aadhaar_num','$referred_by','$device_id','$datetime','$datetime')";
-    $db->sql($sql);
-    $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
-    $db->sql($sql);
-    $res = $db->getResult();
-    $user_id = $res[0]['id'];
+$datetime = date('Y-m-d H:i:s');
+$sql = "INSERT INTO users (`name`,`mobile`,`email`,`password`,`location`,`dob`,`hr_id`,`aadhaar_num`,`referred_by`,`device_id`,`last_updated`,`registered_date`, `order_available`) VALUES('$name','$mobile','$email','$password','$location','$dob','$hr_id','$aadhaar_num','$referred_by','$device_id','$datetime','$datetime', 1)";
+$db->sql($sql);
+$sql = "SELECT * FROM users WHERE mobile = '$mobile'";
+$db->sql($sql);
+$res = $db->getResult();
+$user_id = $res[0]['id'];
 
     $support_id = '';
 
