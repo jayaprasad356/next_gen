@@ -61,12 +61,12 @@ if (empty($_POST['dob'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['hr_id'])) {
-    $response['success'] = false;
-    $response['message'] = "Enrolled Under HR ID is Empty";
-    print_r(json_encode($response));
-    return false;
-}
+// if (empty($_POST['hr_id'])) {
+//     $response['success'] = false;
+//     $response['message'] = "Enrolled Under HR ID is Empty";
+//     print_r(json_encode($response));
+//     return false;
+// }
 if (empty($_POST['aadhaar_num'])) {
     $response['success'] = false;
     $response['message'] = "Aadhaar Number is Empty";
@@ -85,7 +85,7 @@ $email = $db->escapeString($_POST['email']);
 $password = $db->escapeString($_POST['password']);
 $location = $db->escapeString($_POST['location']);
 $referred_by = (isset($_POST['referred_by']) && !empty($_POST['referred_by'])) ? $db->escapeString($_POST['referred_by']) : "";
-$hr_id = $db->escapeString($_POST['hr_id']);
+$hr_id = '';
 $aadhaar_num = $db->escapeString($_POST['aadhaar_num']);
 $dob = $db->escapeString($_POST['dob']);
 $device_id = $db->escapeString($_POST['device_id']);
