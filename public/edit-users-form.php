@@ -56,6 +56,9 @@ if (isset($_POST['btnEdit'])) {
     $order_available = $db->escapeString(($_POST['order_available']));
     $average_orders = $db->escapeString(($_POST['average_orders']));
     $level = $db->escapeString(($_POST['level']));
+    $abcd_user = $db->escapeString(($_POST['abcd_user']));
+    $description = $db->escapeString(($_POST['description']));
+    $interested = $db->escapeString(($_POST['interested']));
 
     
     $error = array();
@@ -271,7 +274,7 @@ if (isset($_POST['btnEdit'])) {
                 $orders_time = 20;
             }
     
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',orders_time='$orders_time',orders_cost='$orders_cost',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',level = '$level' WHERE id = $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',orders_time='$orders_time',orders_cost='$orders_cost',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',level = '$level',abcd_user = '$abcd_user', description = '$description', interested = '$interested'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -661,6 +664,21 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="number" class="form-control" name="level" value="<?php echo $res[0]['level']; ?>">
                                 </div>
                             </div>
+                            <br>
+                            <div class="row">   
+                                  <div class="form-group">
+                                  <div class="col-md-3">
+                                    <label for="exampleInputEmail1">Abcd User</label><i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="abcd_user" value="<?php echo $res[0]['abcd_user']; ?>">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="exampleInputEmail1">Interested</label><i class="text-danger asterik">*</i>
+                                    <input type="number" class="form-control" name="interested" value="<?php echo $res[0]['interested']; ?>">
+                                </div>
+                              
+                                </div>
+                            </div>
+                         <br>
                          </div><!-- /.box-body -->
                 </form>
             </div><!-- /.box -->
