@@ -119,6 +119,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $tempRow['earn'] = $row['earn'];
         $tempRow['today_orders'] = $row['today_orders'];
         $tempRow['total_orders'] = $row['total_orders'];
+        $tempRow['description'] = $row['description'];
         $tempRow['balance'] = $row['balance'];
         $sql = "SELECT name FROM `staffs` WHERE id = $support_id";
         $db->sql($sql);
