@@ -17,12 +17,6 @@ if (empty($_POST['user_id'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['abcd_user'])) {
-    $response['success'] = false;
-    $response['message'] = "Abcd User is Empty";
-    print_r(json_encode($response));
-    return false;
-} 
 if (empty($_POST['description'])) {
     $response['success'] = false;
     $response['message'] = "Description is Empty";
@@ -31,7 +25,7 @@ if (empty($_POST['description'])) {
 } 
 
 $user_id = $db->escapeString($_POST['user_id']);
-$abcd_user = $db->escapeString($_POST['abcd_user']);
+$abcd_user = isset($_POST['abcd_user']) ? $db->escapeString($_POST['abcd_user']) : '';
 $description = $db->escapeString($_POST['description']);
 
 $sql = "SELECT * FROM users WHERE id=" . $user_id;
