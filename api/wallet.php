@@ -30,8 +30,9 @@ if (empty($_POST['orders'])) {
 
 $user_id = $db->escapeString($_POST['user_id']);
 $orders = $db->escapeString($_POST['orders']);
+$amount = $orders * 0.50;
 
-$sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders WHERE id = $user_id";
+$sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders ,orders_earnings = orders_earnings + $amount  WHERE id = $user_id";
 $db->sql($sql);
 
 $sql = "SELECT * FROM users WHERE id = $user_id";

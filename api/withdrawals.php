@@ -9,7 +9,8 @@ header("Pragma: no-cache");
 date_default_timezone_set('Asia/Kolkata');
 
 include_once('../includes/crud.php');
-
+include_once('../includes/custom-functions.php');
+$fn = new custom_functions;
 $db = new Database();
 $db->connect();
 
@@ -33,12 +34,7 @@ function isBetween10AMand6PM() {
     return ($currentHour >= date('H', $startTimestamp)) && ($currentHour < date('H', $endTimestamp));
 }
 
-if (!isBetween10AMand6PM()) {
-    $response['success'] = false;
-    $response['message'] = "Withdrawal time morning 10AM to 6PM";
-    print_r(json_encode($response));
-    return false;
-}
+
 
 $user_id = $db->escapeString($_POST['user_id']);
 $amount = $db->escapeString($_POST['amount']);
@@ -78,15 +74,21 @@ $account_num = $res[0]['account_num'];
 $earn = $res[0]['earn'];
 $min_withdrawal = $res[0]['min_withdrawal'];
 $withdrawal_status = $res[0]['withdrawal_status'];
-$total_orders = $res[0]['total_orders'];
+$status = $res[0]['status'];
+$total_ads = $res[0]['total_ads'];
 $worked_days = $res[0]['worked_days'];
 $total_referrals = $res[0]['total_referrals'];
+$missed_days = $res[0]['missed_days'];
 $old_plan = $res[0]['old_plan'];
 $plan = $res[0]['plan'];
 $blocked = $res[0]['blocked'];
-$target_orders = ($worked_days + 1) * 1200;
+$ads_10th_day = $res[0]['ads_10th_day'];
+$performance = $res[0]['performance'];
+$project_type = $res[0]['project_type'];
+$joined_date = $res[0]['joined_date'];
+$target_ads = 12000;
 $percentage = 70;
-$result = ($percentage / 100) * $target_orders;
+$result = 8400;
 if ($blocked == 1) {
     $response['success'] = false;
     $response['message'] = "Your Account is Blocked";
@@ -94,13 +96,49 @@ if ($blocked == 1) {
     return false;
 }
 
+// if ($plan == 'A1' && $project_type == 'free' && $performance < 100) {
+//     $refer_bonus = 1200 * $refer_target;
+//     $response['success'] = false;
+//     $response['message'] = "You missed to Complete daily target So refer 5 person to withdrawal";
+//     print_r(json_encode($response));
+//     return false;
+// }
 
-if ($worked_days > 10 && $total_orders < $result && $total_referrals == 0 && $old_plan == 0 && $plan == 'A1') {
+
+// $refer_target = $fn->get_my_refer_target($user_id);
+// if ($plan == 'A1' && $performance < 100 && $refer_target > 0) {
+//     $refer_bonus = 1200 * $refer_target;
+//     $response['success'] = false;
+//     $response['message'] = "You missed to Complete daily target So give work ".$refer_target." person get ".$refer_bonus." ads to withdrawal";
+//     print_r(json_encode($response));
+//     return false;
+// }
+// if ($plan == 'A1' && $performance < 100 && $worked_days >= 6 ) {
+//     $target_ads = ($worked_days + 1 ) * 1200;
+//     $c_ads = $target_ads - $total_ads;
+
+//     $response['success'] = false;
+//     $response['message'] = "You missed to Watch ".$c_ads;
+//     print_r(json_encode($response));
+//     return false;
+// }
+
+
+if ($plan == 'A2' && $performance < 100 ) {
+    $target_ads = ($worked_days + 1 ) * 10;
+    $c_ads = $target_ads - $total_ads;
     $response['success'] = false;
-    $response['message'] = "You missed to Complete 70% work(".$result." orders) So refer 1 person get 1200 orders to withdrawal";
+    $response['message'] = "You missed to Watch ".$c_ads." Ads.So refer to A1 plan get 10 ads extra";
     print_r(json_encode($response));
     return false;
 }
+
+// if ($ads_10th_day < $result && $total_referrals == 0 && $worked_days >= 10 && $plan == 'A1') {
+//     $response['success'] = false;
+//     $response['message'] = "You missed to Complete 70% work in 10 days So refer 1 person get 1200 ads to withdrawal";
+//     print_r(json_encode($response));
+//     return false;
+// }
 
 if ($withdrawal_status == '0') {
     $response['success'] = false;
@@ -108,7 +146,48 @@ if ($withdrawal_status == '0') {
     print_r(json_encode($response));
     return false;
 }
+if($total_referrals < 3 && $plan == 'A1' && $status == 1 && $old_plan == 0 && $total_referrals < $missed_days){
+    if($missed_days > 3){
+        $missed_days = 3;
 
+    }
+    $missed_days = $missed_days - $total_referrals;
+
+    $sql = "SELECT DATE(datetime) AS date, SUM(ads) AS total_ads FROM `transactions` WHERE type = 'watch_ads' AND user_id = $user_id AND DATE(datetime) < '$date' AND DATE(datetime) >= '$joined_date'  GROUP BY DATE(datetime) HAVING total_ads < 1200 ORDER BY datetime DESC LIMIT $missed_days";
+    $db->sql($sql);
+    $res= $db->getResult();
+    $num = $db->numRows($res);
+    if ($num >= 1){
+        $miss_date = '';
+        foreach ($res as $row) {
+            $date = $row['date'];
+            $dateTime = new DateTime($date);
+            $date = $dateTime->format('M d');
+            $miss_date .= $date.',';
+        }
+
+        $response['success'] = false;
+        $response['message'] = "Not Completing ".$missed_days." Days Work (".$miss_date.") So Refer ".$missed_days." Persons";
+        print_r(json_encode($response));
+        return false;
+        
+    }else{
+        $response['success'] = false;
+        $response['message'] = "Not Completing Work";
+        print_r(json_encode($response));
+        return false;
+
+    }
+
+
+}
+
+if (!isBetween10AMand6PM()) {
+    $response['success'] = false;
+    $response['message'] = "Withdrawal time morning 10AM to 6PM";
+    print_r(json_encode($response));
+    return false;
+}
 if ($amount >= $min_withdrawal) {
     if ($amount <= $balance) {
         if ($account_num == '') {
@@ -117,6 +196,25 @@ if ($amount >= $min_withdrawal) {
             print_r(json_encode($response));
             return false;
         } else {
+            if ($amount > 500 ) {
+                $response['success'] = false;
+                $response['message'] = "Maximum Withdrawal ₹500";
+                print_r(json_encode($response));
+                return false;
+            }
+            $sql = "SELECT id FROM withdrawals WHERE user_id = $user_id AND status = 0";
+            $db->sql($sql);
+            $res= $db->getResult();
+            $num = $db->numRows($res);
+
+            if ($num >= 1){
+                $response['success'] = false;
+                $response['message'] = "You Already Requested to Withdrawal pls wait...";
+                print_r(json_encode($response));
+                return false;
+
+            }
+            
 
             $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,0,'$datetime')";
             $db->sql($sql);
@@ -124,7 +222,7 @@ if ($amount >= $min_withdrawal) {
             $db->sql($sql);
 
             $response['success'] = true;
-            $response['message'] = "Withdrawal Requested Successfully. Your withdrawal status is now stable.";
+            $response['message'] = "Withdrawal Requested Successfully.";
             print_r(json_encode($response));
         }
     } else {
