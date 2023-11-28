@@ -75,18 +75,14 @@ $earn = $res[0]['earn'];
 $min_withdrawal = $res[0]['min_withdrawal'];
 $withdrawal_status = $res[0]['withdrawal_status'];
 $status = $res[0]['status'];
-$total_ads = $res[0]['total_ads'];
+$total_orders = $res[0]['total_orders'];
 $worked_days = $res[0]['worked_days'];
 $total_referrals = $res[0]['total_referrals'];
-$missed_days = $res[0]['missed_days'];
 $old_plan = $res[0]['old_plan'];
 $plan = $res[0]['plan'];
 $blocked = $res[0]['blocked'];
-$ads_10th_day = $res[0]['ads_10th_day'];
-$performance = $res[0]['performance'];
-$project_type = $res[0]['project_type'];
 $joined_date = $res[0]['joined_date'];
-$target_ads = 12000;
+$target_orders = 12000;
 $percentage = 70;
 $result = 8400;
 if ($blocked == 1) {
@@ -109,33 +105,33 @@ if ($blocked == 1) {
 // if ($plan == 'A1' && $performance < 100 && $refer_target > 0) {
 //     $refer_bonus = 1200 * $refer_target;
 //     $response['success'] = false;
-//     $response['message'] = "You missed to Complete daily target So give work ".$refer_target." person get ".$refer_bonus." ads to withdrawal";
+//     $response['message'] = "You missed to Complete daily target So give work ".$refer_target." person get ".$refer_bonus." orders to withdrawal";
 //     print_r(json_encode($response));
 //     return false;
 // }
 // if ($plan == 'A1' && $performance < 100 && $worked_days >= 6 ) {
-//     $target_ads = ($worked_days + 1 ) * 1200;
-//     $c_ads = $target_ads - $total_ads;
+//     $target_orders = ($worked_days + 1 ) * 1200;
+//     $c_orders = $target_orders - $total_orders;
 
 //     $response['success'] = false;
-//     $response['message'] = "You missed to Watch ".$c_ads;
+//     $response['message'] = "You missed to Watch ".$c_orders;
 //     print_r(json_encode($response));
 //     return false;
 // }
 
 
 if ($plan == 'A2' && $performance < 100 ) {
-    $target_ads = ($worked_days + 1 ) * 10;
-    $c_ads = $target_ads - $total_ads;
+    $target_orders = ($worked_days + 1 ) * 10;
+    $c_orders = $target_orders - $total_orders;
     $response['success'] = false;
-    $response['message'] = "You missed to Watch ".$c_ads." Ads.So refer to A1 plan get 10 ads extra";
+    $response['message'] = "You missed to Watch ".$c_orders." orders.So refer to A1 plan get 10 orders extra";
     print_r(json_encode($response));
     return false;
 }
 
-// if ($ads_10th_day < $result && $total_referrals == 0 && $worked_days >= 10 && $plan == 'A1') {
+// if ($orders_10th_day < $result && $total_referrals == 0 && $worked_days >= 10 && $plan == 'A1') {
 //     $response['success'] = false;
-//     $response['message'] = "You missed to Complete 70% work in 10 days So refer 1 person get 1200 ads to withdrawal";
+//     $response['message'] = "You missed to Complete 70% work in 10 days So refer 1 person get 1200 orders to withdrawal";
 //     print_r(json_encode($response));
 //     return false;
 // }
@@ -153,7 +149,7 @@ if($total_referrals < 3 && $plan == 'A1' && $status == 1 && $old_plan == 0 && $t
     }
     $missed_days = $missed_days - $total_referrals;
 
-    $sql = "SELECT DATE(datetime) AS date, SUM(ads) AS total_ads FROM `transactions` WHERE type = 'watch_ads' AND user_id = $user_id AND DATE(datetime) < '$date' AND DATE(datetime) >= '$joined_date'  GROUP BY DATE(datetime) HAVING total_ads < 1200 ORDER BY datetime DESC LIMIT $missed_days";
+    $sql = "SELECT DATE(datetime) AS date, SUM(orders) AS total_orders FROM `transactions` WHERE type = 'watch_orders' AND user_id = $user_id AND DATE(datetime) < '$date' AND DATE(datetime) >= '$joined_date'  GROUP BY DATE(datetime) HAVING total_orders < 1200 ORDER BY datetime DESC LIMIT $missed_days";
     $db->sql($sql);
     $res= $db->getResult();
     $num = $db->numRows($res);
