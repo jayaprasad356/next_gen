@@ -230,6 +230,12 @@ $fn = new custom_functions;
                         <span>Stores</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="leaves.php">
+                        <i class="fa fa-adn"></i>
+                        <span>Leaves</span>
+                    </a>
+                </li>
              
             </ul>
             </section>

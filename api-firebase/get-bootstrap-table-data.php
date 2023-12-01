@@ -1239,4 +1239,80 @@ if (isset($_GET['table']) && $_GET['table'] == 'stores') {
     print_r(json_encode($bulkData));
 }
 
+//leaves table goes here
+if (isset($_GET['table']) && $_GET['table'] == 'leaves') {
+    $offset = 0;
+    $limit = 10;
+    $where = '';
+    $sort = 'date';
+    $order = 'DESC';
+    if ((isset($_GET['type']) && $_GET['type'] != '')) {
+        $type = $db->escapeString($fn->xss_clean($_GET['type']));
+        $where .= "AND l.type = '$type'";
+    }
+    if (isset($_GET['date']) && $_GET['date'] != '') {
+        $date = $db->escapeString($fn->xss_clean($_GET['date']));
+        $where .= " AND l.date = '$date'";
+    }
+    if (isset($_GET['offset']))
+        $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
+    if (isset($_GET['limit']))
+        $limit = $db->escapeString($fn->xss_clean($_GET['limit']));
+
+    if (isset($_GET['sort']))
+        $sort = $db->escapeString($fn->xss_clean($_GET['sort']));
+    if (isset($_GET['order']))
+        $order = $db->escapeString($fn->xss_clean($_GET['order']));
+
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $search = $db->escapeString($fn->xss_clean($_GET['search']));
+        $where .= "AND u.name like '%" . $search . "%' OR l.reason like '%" . $search . "%' OR l.id like '%" . $search . "%'  OR l.date like '%" . $search . "%' OR u.mobile like '%" . $search . "%' OR l.type like '%" . $search . "%' ";
+    }
+    if (isset($_GET['sort'])) {
+        $sort = $db->escapeString($_GET['sort']);
+    }
+    if (isset($_GET['order'])) {
+        $order = $db->escapeString($_GET['order']);
+    }
+    $join = "LEFT JOIN `users` u ON l.user_id = u.id WHERE l.id IS NOT NULL " . $where;
+
+    $sql = "SELECT COUNT(l.id) AS total FROM `leaves` l " . $join;
+    $db->sql($sql);
+    $res = $db->getResult();
+    foreach ($res as $row)
+        $total = $row['total'];
+   
+     $sql = "SELECT l.id AS id,l.*,u.name,u.mobile,l.status AS status FROM `leaves` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+     $db->sql($sql);
+     $res = $db->getResult();
+
+    $bulkData = array();
+    $bulkData['total'] = $total;
+    $rows = array();
+    $tempRow = array();
+    foreach ($res as $row) {
+
+        $operate = '<a href="edit-leave.php?id=' . $row['id'] . '" class="text text-primary"><i class="fa fa-edit"></i>Edit</a>';
+        $operate .= ' <a class="text text-danger" href="delete-leave.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
+        $tempRow['id'] = $row['id'];
+        $tempRow['date'] = $row['date'];
+        $tempRow['type'] = $row['type'];
+        $tempRow['name'] = $row['name'];
+        $tempRow['mobile'] = $row['mobile'];
+        $tempRow['reason'] = $row['reason'];
+        if($row['status']==0){
+            $tempRow['status']="<p class='text text-primary'>Pending</p>";        
+        }
+        elseif($row['status']==1){
+            $tempRow['status']="<p class='text text-success'>Approved</p>";        
+        }
+        else{
+            $tempRow['status']="<p class='text text-danger'>Not-Approved</p>";        
+        }
+        $tempRow['operate'] = $operate;
+        $rows[] = $tempRow;
+    }
+    $bulkData['rows'] = $rows;
+    print_r(json_encode($bulkData));
+}
 $db->disconnect();
