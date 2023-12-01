@@ -46,6 +46,7 @@ if ($num == 1) {
     $media_wallet = $res[0]['media_wallet']; 
     $old_plan = $res[0]['old_plan']; 
     $hiring_earnings = $res[0]['hiring_earnings']; 
+    $orders_earnings = $res[0]['orders_earnings'];
 
     if($wallet_type == 'basic_wallet'){
         $min_basic_withdrawal = 30;
@@ -168,6 +169,19 @@ if ($num == 1) {
         $sql = "UPDATE users SET hiring_earnings= hiring_earnings + $hiring_earnings,earn = earn + $hiring_earnings  WHERE id=" . $user_id;
         $db->sql($sql);
     }
+    if($wallet_type == 'orders_earnings'){
+        if ($orders_earnings <= 0) {
+            $response['success'] = false;
+            $response['message'] = "Orders earnings is Low";
+            print_r(json_encode($response));
+            return false;
+        }
+        $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'orders_earnings','$datetime',$orders_earnings)";
+        $db->sql($sql);
+        $sql = "UPDATE users SET orders_earnings= orders_earnings + $orders_earnings,earn = earn + $orders_earnings  WHERE id=" . $user_id;
+        $db->sql($sql);
+    }
+
 
 
     $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
