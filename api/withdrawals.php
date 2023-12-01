@@ -142,41 +142,7 @@ if ($withdrawal_status == '0') {
     print_r(json_encode($response));
     return false;
 }
-if($total_referrals < 3 && $plan == 'A1' && $status == 1 && $old_plan == 0 && $total_referrals < $missed_days){
-    if($missed_days > 3){
-        $missed_days = 3;
 
-    }
-    $missed_days = $missed_days - $total_referrals;
-
-    $sql = "SELECT DATE(datetime) AS date, SUM(orders) AS total_orders FROM `transactions` WHERE type = 'watch_orders' AND user_id = $user_id AND DATE(datetime) < '$date' AND DATE(datetime) >= '$joined_date'  GROUP BY DATE(datetime) HAVING total_orders < 1200 ORDER BY datetime DESC LIMIT $missed_days";
-    $db->sql($sql);
-    $res= $db->getResult();
-    $num = $db->numRows($res);
-    if ($num >= 1){
-        $miss_date = '';
-        foreach ($res as $row) {
-            $date = $row['date'];
-            $dateTime = new DateTime($date);
-            $date = $dateTime->format('M d');
-            $miss_date .= $date.',';
-        }
-
-        $response['success'] = false;
-        $response['message'] = "Not Completing ".$missed_days." Days Work (".$miss_date.") So Refer ".$missed_days." Persons";
-        print_r(json_encode($response));
-        return false;
-        
-    }else{
-        $response['success'] = false;
-        $response['message'] = "Not Completing Work";
-        print_r(json_encode($response));
-        return false;
-
-    }
-
-
-}
 
 if (!isBetween10AMand6PM()) {
     $response['success'] = false;
