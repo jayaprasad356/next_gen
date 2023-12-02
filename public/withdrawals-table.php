@@ -70,7 +70,9 @@ if (isset($_POST['btnPaid'])  && isset($_POST['enable'])) {
 ?>
 <section class="content-header">
     <h1>Withdrawals /<small><a href="home.php"><i class="fa fa-home"></i> Home</a></small></h1>
-  
+    <ol class="breadcrumb">
+                <a class="btn btn-block btn-default" href="add-withdrawal.php"><i class="fa fa-plus-square"></i> Add New withdrawal</a>
+</ol>
 </section>
     <section class="content">
         <!-- Main row -->
