@@ -48,7 +48,6 @@ if (isset($_POST['btnEdit'])) {
     $plan_type = $db->escapeString(($_POST['plan_type']));
     $total_referrals = $db->escapeString(($_POST['total_referrals']));
     $orders_time = $db->escapeString(($_POST['orders_time']));
-    $orders_cost = isset($_POST['orders_cost']) ? $db->escapeString($_POST['orders_cost']) : 0;
     $old_plan = $db->escapeString(($_POST['old_plan']));
     $worked_days = $db->escapeString(($_POST['worked_days']));
     $description = $db->escapeString(($_POST['description']));
@@ -87,13 +86,17 @@ if (isset($_POST['btnEdit'])) {
     if (empty($branch_id)) {
         $error['update_users'] = " <span class='label label-danger'> Branch Required!</span>";
     }
+    if (empty($store_id)) {
+        $error['update_users'] = " <span class='label label-danger'> Store Required!</span>";
+    }
     
     
             
 
     if (!empty($mobile) && !empty($lead_id)  && 
     !empty($support_id) && 
-    !empty($branch_id)) {
+    !empty($branch_id) && 
+    !empty($store_id)) {
 
         $refer_bonus_sent = $fn->get_value('users','refer_bonus_sent',$ID);
  
@@ -109,92 +112,18 @@ if (isset($_POST['btnEdit'])) {
             if ($num == 1){
                 $user_status = $res[0]['status'];
                 $user_id = $res[0]['id'];
-                $user_current_refers = $res[0]['current_refers'];
-                $user_target_refers = $res[0]['target_refers'];
-                $user_old_plan = $res[0]['old_plan'];
-                $user_plan = $res[0]['plan'];
-                $join = '';
                 if($user_status == 1){
-                    if($plan == 'A2'){
-                        //$join = ',`current_refers` = current_refers + 1';
-                        if($user_plan == 'A2'){
-                            $referral_bonus = 300;
-                            $sql_query = "INSERT INTO premium_refer_bonus (user_id,refer_user_id,status,amount,datetime)VALUES($user_id,$ID,0,700,'$datetime')";
-                            $db->sql($sql_query);
-    
-                        }else{
-                            $referral_bonus = 500;
-                        
-                        }
+                    $refer_orders = 500;
+                    $referral_bonus = 600;
 
-                    }else{
-                        $today_orders = 0;
-                        $total_orders = 0;
-                        if($user_old_plan == 1){
-                            $referral_bonus = 150;
-
-                        }else{
-                            $orders = 1200;
-                            $referral_bonus = 150;
-                            //$join = ',`today_orders` = today_orders + $orders,`total_orders` = total_orders + $orders';
-                            
-                            
-                        }
-                        
-
-                    }
-                    if($plan == 'A1' && $user_old_plan == 0){
-                        $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`earn` = earn + $referral_bonus,`hiring_earings` = hiring_earings + $referral_bonus ,`today_orders` = today_orders + $orders,`total_orders` = total_orders + $orders WHERE id =  $user_id";
-                        $db->sql($sql_query);
-                        $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type,orders)VALUES($user_id,$referral_bonus,'$datetime','refer_bonus',$orders)";
-                        $db->sql($sql_query);
-
-                    }else{
-                        $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`earn` = earn + $referral_bonus,`hiring_earings` = hiring_earings + $referral_bonus  WHERE id =  $user_id";
-                        $db->sql($sql_query);
-                        $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type)VALUES($user_id,$referral_bonus,'$datetime','refer_bonus')";
-                        $db->sql($sql_query);
-
-                    }
-
+                    $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`total_orders` = total_orders + $refer_orders,`hiring_earings` = hiring_earings + $referral_bonus  WHERE id =  $user_id";
+                    $db->sql($sql_query);
+                    $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type)VALUES($user_id,$referral_bonus,'$datetime','refer_bonus')";
+                    $db->sql($sql_query);
                                         
-
-    
                     $sql_query = "UPDATE users SET refer_bonus_sent = 1 WHERE id =  $ID";
                     $db->sql($sql_query);
 
-
-                    if($user_current_refers >= $user_target_refers && $user_plan == 'A1' && $old_plan == 1){
-                        $sql_query = "SELECT id FROM transactions WHERE type =  'target_bonus' AND user_id = $user_id";
-                        $db->sql($sql_query);
-                        $res = $db->getResult();
-                        $num = $db->numRows($res);
-                        if ($num == 0){
-                            $sql_query = "UPDATE users SET `earn` = earn + 500,`balance` = balance + 500 WHERE id =  $user_id";
-                            $db->sql($sql_query);
-                            $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type)VALUES($user_id,500,'$datetime','target_bonus')";
-                            $db->sql($sql_query);
-
-                        }
-
-                        $sql = "SELECT * FROM monthly_target WHERE user_id = $user_id AND status = 0";
-                        $db->sql($sql);
-                        $res = $db->getResult();
-                        $num = $db->numRows($res);
-                        if ($num >= 1){
-                            $user_premium_wallet = $res[0]['premium_wallet'];
-                            $monthly_id = $res[0]['id'];
-                            $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'premium_wallet','$datetime',$user_premium_wallet)";
-                            $db->sql($sql);
-                            $sql = "UPDATE users SET current_refers = 0,target_refers = 5,balance= balance + $user_premium_wallet,earn = earn + $user_premium_wallet,premium_wallet = premium_wallet - $user_premium_wallet WHERE id=" . $user_id;
-                            $db->sql($sql);
-                            $sql = "UPDATE monthly_target SET status = 1 WHERE id=" . $monthly_id;
-                            $db->sql($sql);
-            
-                        }
-
-
-                    }
 
                 }
               
@@ -210,9 +139,6 @@ if (isset($_POST['btnEdit'])) {
                 $joined_date = $date;
                 $today_orders = 0;
                 $total_orders = 0;
-                $premium_wallet = 0;
-                $current_refers = 0;
-                $target_refers = 0;
                
 
                 if(strlen($referred_by) < 4){
@@ -222,59 +148,28 @@ if (isset($_POST['btnEdit'])) {
                     
                 }
 
-                $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,supports = supports + 1 WHERE id =  $support_id";
-                $db->sql($sql_query);
+                // $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,supports = supports + 1 WHERE id =  $support_id";
+                // $db->sql($sql_query);
     
-                $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,leorders = leorders + 1 WHERE id =  $lead_id";
-                $db->sql($sql_query);
+                // $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,leorders = leorders + 1 WHERE id =  $lead_id";
+                // $db->sql($sql_query);
                 
-                $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$support_id,$incentives,'$datetime','support')";
-                $db->sql($sql_query);
+                // $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$support_id,$incentives,'$datetime','support')";
+                // $db->sql($sql_query);
     
-                $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$lead_id,$incentives,'$datetime','lead')";
-                $db->sql($sql_query);
+                // $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$lead_id,$incentives,'$datetime','lead')";
+                // $db->sql($sql_query);
     
-                $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($support_id,$incentives,'$datetime','incentives')";
-                $db->sql($sql_query);
+                // $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($support_id,$incentives,'$datetime','incentives')";
+                // $db->sql($sql_query);
     
-                $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($lead_id,$incentives,'$datetime','incentives')";
-                $db->sql($sql_query);
+                // $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($lead_id,$incentives,'$datetime','incentives')";
+                // $db->sql($sql_query);
 
             }
-            if($plan == 'A1'){
-                $min_withdrawal = 150;
-                $orders_cost = 0.125;
-                $orders_time = 20;
-            }else{
-                $min_withdrawal = 150;
-            }
 
-            if($plan == 'A2' && $plan_type == 'shift'){
-                $current_refers = 0;
-                $target_refers = 0;
-                $earn = 0;
-                $joined_date = $date;
-                $today_orders = 0;
-                $total_orders = 0;
-                $total_referrals = 0;
-                //$premium_wallet = 0;
 
-            }
-            if($plan == 'A1' && $plan_type == 'new_plan'){
-                $orders_cost = 0.125;
-                $current_refers = 0;
-                $target_refers = 0;
-                $earn = 0;
-                $joined_date = $date;
-                $today_orders = 0;
-                $total_orders = 0;
-                $total_referrals = 0;
-                $premium_wallet = 0;
-                $old_plan = 0;
-                $orders_time = 20;
-            }
-    
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',orders_time='$orders_time',orders_cost='$orders_cost',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',level = '$level',abcd_user = '$abcd_user', description = '$description', interested = '$interested'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',orders_time='$orders_time',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',level = '$level',abcd_user = '$abcd_user', description = '$description', interested = '$interested'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -609,10 +504,6 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">orders Time</label> <i class="text-danger asterik">*</i><?php echo isset($error['orders_time']) ? $error['orders_time'] : ''; ?>
                                     <input type="number" class="form-control" name="orders_time" value="<?php echo $res[0]['orders_time']; ?>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="exampleInputEmail1">orders Cost</label> <i class="text-danger asterik">*</i><?php echo isset($error['orders_cost']) ? $error['orders_cost'] : ''; ?>
-                                    <input type="number" class="form-control" name="orders_cost" value="<?php echo $res[0]['orders_cost']; ?>">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">Worked Days</label> <i class="text-danger asterik">*</i><?php echo isset($error['worked_days']) ? $error['worked_days'] : ''; ?>
