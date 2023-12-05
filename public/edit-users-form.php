@@ -43,18 +43,12 @@ if (isset($_POST['btnEdit'])) {
     $support_id = $db->escapeString(($_POST['support_id']));
     $branch_id = $db->escapeString(($_POST['branch_id']));
     $store_id = $db->escapeString(($_POST['store_id']));
-
-    $plan = $db->escapeString(($_POST['plan']));
-    $plan_type = $db->escapeString(($_POST['plan_type']));
     $total_referrals = $db->escapeString(($_POST['total_referrals']));
     $orders_time = $db->escapeString(($_POST['orders_time']));
-    $old_plan = $db->escapeString(($_POST['old_plan']));
     $worked_days = $db->escapeString(($_POST['worked_days']));
     $description = $db->escapeString(($_POST['description']));
-    $ratings = $db->escapeString(($_POST['ratings']));
     $order_available = $db->escapeString(($_POST['order_available']));
     $average_orders = $db->escapeString(($_POST['average_orders']));
-    $level = $db->escapeString(($_POST['level']));
     $abcd_user = $db->escapeString(($_POST['abcd_user']));
     $description = $db->escapeString(($_POST['description']));
     $interested = $db->escapeString(($_POST['interested']));
@@ -169,7 +163,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',plan = '$plan',orders_time='$orders_time',old_plan = '$old_plan',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',ratings = '$ratings',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',level = '$level',abcd_user = '$abcd_user', description = '$description', interested = '$interested'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -311,15 +305,6 @@ if (isset($_POST['btnCancel'])) { ?>
                           <br>
                         <div class="row">
                             <div class="form-group">
-                            <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1">Plan</label> <i class="text-danger asterik">*</i>
-                                    <select id='plan' name="plan" class='form-control'>
-                                     <option value='A1' <?php if ($res[0]['plan'] == 'A1') echo 'selected'; ?>>A1</option>
-                                      <option value='A2' <?php if ($res[0]['plan'] == 'A2') echo 'selected'; ?>>A2</option>
-                                      
-                                    </select>
-                            </div>
-
                                 <div class="col-md-4">
                                     <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
                                     <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
@@ -436,15 +421,10 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1"> Balance</label> <i class="text-danger asterik">*</i><?php echo isset($error['balance']) ? $error['balance'] : ''; ?>
                                     <input type="text" class="form-control" name="balance" value="<?php echo $res[0]['balance']; ?>">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1">Plan Type</label> <i class="text-danger asterik">*</i>
-                                    <select id='plan_type' name="plan_type" class='form-control'>
-                                     <option value='' >None</option>
-                                      <option value='shift' >Shift</option>
-                                      <option value='new_plan' >New A1 Plan</option>
-                                      
-                                    </select>
-                            </div>
+                                <div class="col-md-3">
+                                    <label for="exampleInputEmail1">Worked Days</label> <i class="text-danger asterik">*</i><?php echo isset($error['worked_days']) ? $error['worked_days'] : ''; ?>
+                                    <input type="number" class="form-control" name="worked_days" value="<?php echo $res[0]['worked_days']; ?>">
+                                </div>
                             </div>
                         </div>
                         <br>
@@ -465,7 +445,6 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <div class="form-group col-md-3">
                                     <label for="exampleInputEmail1">Select Stores</label> <i class="text-danger asterik">*</i>
                                     <select id='store_id' name="store_id" class='form-control'>
-                                           <option value="">--Select--</option>
                                                 <?php
                                                 $sql = "SELECT * FROM `stores`";
                                                 $db->sql($sql);
@@ -493,23 +472,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1">Device Id</label> <i class="text-danger asterik">*</i><?php echo isset($error['device_id']) ? $error['device_id'] : ''; ?>
                                     <input type="text" class="form-control" name="device_id" value="<?php echo $res[0]['device_id']; ?>">
                                 </div>
-						 </div>  
-                                 
-                                 <br>
-                        <div class="row">
-                        <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Old Plan</label> <i class="text-danger asterik">*</i><?php echo isset($error['old_plan']) ? $error['old_plan'] : ''; ?>
-                                    <input type="text" class="form-control" name="old_plan" value="<?php echo $res[0]['old_plan']; ?>">
-                                </div>
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">orders Time</label> <i class="text-danger asterik">*</i><?php echo isset($error['orders_time']) ? $error['orders_time'] : ''; ?>
                                     <input type="number" class="form-control" name="orders_time" value="<?php echo $res[0]['orders_time']; ?>">
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Worked Days</label> <i class="text-danger asterik">*</i><?php echo isset($error['worked_days']) ? $error['worked_days'] : ''; ?>
-                                    <input type="number" class="form-control" name="worked_days" value="<?php echo $res[0]['worked_days']; ?>">
-                                </div>
-                            </div>
+						 </div>  
                              <br>
                             <div class="row">
                             <div class="col-md-3">
@@ -533,12 +500,6 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="hidden" id="order_available" name="order_available" value="<?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 1 : 0 ?>">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Ratings</label> <i class="text-danger asterik">*</i><?php echo isset($error['ratings']) ? $error['ratings'] : ''; ?>
-                                    <input type="text" class="form-control" name="ratings" value="<?php echo $res[0]['ratings']; ?>">
-                                </div>
-                          </div>
                     </div>
                     <br>
                         <div class="row">
@@ -551,14 +512,6 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="number" class="form-control" name="average_orders" value="<?php echo $res[0]['average_orders']; ?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Level</label> <i class="text-danger asterik">*</i><?php echo isset($error['level']) ? $error['level'] : ''; ?>
-                                    <input type="number" class="form-control" name="level" value="<?php echo $res[0]['level']; ?>">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">   
-                                  <div class="form-group">
-                                  <div class="col-md-3">
                                     <label for="exampleInputEmail1">Abcd User</label><i class="text-danger asterik">*</i>
                                     <input type="number" class="form-control" name="abcd_user" value="<?php echo $res[0]['abcd_user']; ?>">
                                 </div>
@@ -566,9 +519,9 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1">Interested</label><i class="text-danger asterik">*</i>
                                     <input type="number" class="form-control" name="interested" value="<?php echo $res[0]['interested']; ?>">
                                 </div>
-                              
-                                </div>
                             </div>
+                            <br>
+                          
                          <br>
                          </div><!-- /.box-body -->
                 </form>
