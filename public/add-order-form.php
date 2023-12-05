@@ -22,15 +22,15 @@ if (isset($_POST['btnAdd'])) {
             if (!empty($orders)) 
             {
                 $datetime = date('Y-m-d H:i:s');
-                $type = 'orders_earnings';
-                $per_code_cost = 0.125;
+                $type = 'order_placed';
+                $per_code_cost = 0.20;
                 $amount = $orders * $per_code_cost;
 
                 $sql = "INSERT INTO transactions (`user_id`,`orders`,`amount`,`datetime`,`type`)VALUES('$ID','$orders','$amount','$datetime','$type')";
                 $db->sql($sql);
                 $res = $db->getResult();
             
-                $sql = "UPDATE `users` SET  `today_orders` = today_orders + $orders,`total_orders` = total_orders + $orders,`earn` = earn + $amount,`balance` = balance + $amount WHERE `id` = $ID";
+                $sql = "UPDATE `users` SET  `today_orders` = today_orders + $orders,total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE `id` = $ID";
                 $db->sql($sql);
                  $result = $db->getResult();
                  if (!empty($result)) {
