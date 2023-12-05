@@ -22,7 +22,7 @@ if (isset($_POST['btnAdd'])) {
             if (!empty($orders)) 
             {
                 $datetime = date('Y-m-d H:i:s');
-                $type = 'order_bonus';
+                $type = 'orders_earnings';
                 $per_code_cost = 0.125;
                 $amount = $orders * $per_code_cost;
 
