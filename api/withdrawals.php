@@ -92,49 +92,6 @@ if ($blocked == 1) {
     return false;
 }
 
-// if ($plan == 'A1' && $project_type == 'free' && $performance < 100) {
-//     $refer_bonus = 1200 * $refer_target;
-//     $response['success'] = false;
-//     $response['message'] = "You missed to Complete daily target So refer 5 person to withdrawal";
-//     print_r(json_encode($response));
-//     return false;
-// }
-
-
-// $refer_target = $fn->get_my_refer_target($user_id);
-// if ($plan == 'A1' && $performance < 100 && $refer_target > 0) {
-//     $refer_bonus = 1200 * $refer_target;
-//     $response['success'] = false;
-//     $response['message'] = "You missed to Complete daily target So give work ".$refer_target." person get ".$refer_bonus." orders to withdrawal";
-//     print_r(json_encode($response));
-//     return false;
-// }
-// if ($plan == 'A1' && $performance < 100 && $worked_days >= 6 ) {
-//     $target_orders = ($worked_days + 1 ) * 1200;
-//     $c_orders = $target_orders - $total_orders;
-
-//     $response['success'] = false;
-//     $response['message'] = "You missed to Watch ".$c_orders;
-//     print_r(json_encode($response));
-//     return false;
-// }
-
-
-if ($plan == 'A2' && $performance < 100 ) {
-    $target_orders = ($worked_days + 1 ) * 10;
-    $c_orders = $target_orders - $total_orders;
-    $response['success'] = false;
-    $response['message'] = "You missed to Watch ".$c_orders." orders.So refer to A1 plan get 10 orders extra";
-    print_r(json_encode($response));
-    return false;
-}
-
-// if ($orders_10th_day < $result && $total_referrals == 0 && $worked_days >= 10 && $plan == 'A1') {
-//     $response['success'] = false;
-//     $response['message'] = "You missed to Complete 70% work in 10 days So refer 1 person get 1200 orders to withdrawal";
-//     print_r(json_encode($response));
-//     return false;
-// }
 
 if ($withdrawal_status == '0') {
     $response['success'] = false;
