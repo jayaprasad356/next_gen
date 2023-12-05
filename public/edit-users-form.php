@@ -197,38 +197,7 @@ $res = $db->getResult();
 $refer_code = $res[0]['refer_code'];
 $referred_by = isset($_POST['referred_by']) ? $_POST['referred_by'] : $res[0]['referred_by'];
 
-$refer_name = '';
-$refer_mobile = '';
 
-if (!empty($referred_by)) {
-    $sql_query = "SELECT name, mobile FROM users WHERE refer_code = '$referred_by'";
-    $db->sql($sql_query);
-    $result = $db->getResult();
-    if (!empty($result)) {
-        $refer_name = isset($result[0]['name']) ? $result[0]['name'] : '';
-        $refer_mobile = isset($result[0]['mobile']) ? $result[0]['mobile'] : '';
-    }
-}
-
-
-if (isset($_POST['btncheck'])) {
-
-    $refer_code = $res[0]['refer_code'];
-    $referred_by = isset($_POST['referred_by']) ? $_POST['referred_by'] : $res[0]['referred_by'];
-    
-    $refer_name = '';
-    $refer_mobile = '';
-    
-    if (!empty($referred_by)) {
-        $sql_query = "SELECT name, mobile FROM users WHERE refer_code = '$referred_by'";
-        $db->sql($sql_query);
-        $result = $db->getResult();
-        if (!empty($result)) {
-            $refer_name = isset($result[0]['name']) ? $result[0]['name'] : '';
-            $refer_mobile = isset($result[0]['mobile']) ? $result[0]['mobile'] : '';
-        }
-    }
-}
 
 if (isset($_POST['btnCancel'])) { ?>
     <script>
