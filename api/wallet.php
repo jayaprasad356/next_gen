@@ -60,7 +60,7 @@ if ($num >= 1) {
 
     if ($status == 0) {
         $response['success'] = false;
-        $response['message'] = "You are Account is not Approved";
+        $response['message'] = "Your Account is not Approved";
         print_r(json_encode($response));
         return false;
     }
