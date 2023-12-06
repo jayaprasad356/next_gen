@@ -188,7 +188,7 @@ if (isset($_POST['btnEdit'])) {
  
 $data = array();
 
-$sql_query = "SELECT *, DATE_FORMAT(joined_date, '%Y-%m-%d') AS joined_date FROM users WHERE id = $ID";
+$sql_query = "SELECT * FROM users WHERE id = $ID";
 $db->sql($sql_query);
 $res = $db->getResult();
 
