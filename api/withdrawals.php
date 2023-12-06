@@ -78,8 +78,6 @@ $status = $res[0]['status'];
 $total_orders = $res[0]['total_orders'];
 $worked_days = $res[0]['worked_days'];
 $total_referrals = $res[0]['total_referrals'];
-$old_plan = $res[0]['old_plan'];
-$plan = $res[0]['plan'];
 $blocked = $res[0]['blocked'];
 $joined_date = $res[0]['joined_date'];
 $target_orders = 12000;
@@ -135,7 +133,7 @@ if ($amount >= $min_withdrawal) {
             }
             
 
-            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,0,'$datetime')";
+            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`status`,`datetime`) VALUES ('$user_id','$amount',0,'$datetime')";
             $db->sql($sql);
             $sql = "UPDATE users SET balance=balance-'$amount' WHERE id='$user_id'";
             $db->sql($sql);
