@@ -58,6 +58,8 @@
                                     <th data-field="refer_code" data-sortable="true">Refer Code</th>
                                     <th data-field="referred_by" data-sortable="true">Refered By</th>
                                     <th  data-field="total_referrals" data-sortable="true">Total Referals</th>
+                                    <th  data-field="orders_earnings" data-sortable="true">Orders Earnings</th>
+                                    <th  data-field="hiring_earings" data-sortable="true">HR Earnings</th>
                                     <th  data-field="today_orders" data-sortable="true">Today orders</th>
                                     <th  data-field="total_orders" data-sortable="true">Total orders</th>
                                     <th  data-field="earn" data-sortable="true">Earn</th>
