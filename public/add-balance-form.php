@@ -18,7 +18,7 @@ if (isset($_POST['btnAdd'])) {
             if (!empty($balance)) 
             {
                 $datetime = date('Y-m-d H:i:s');
-                $type = 'hiring_earnings';
+                $type = 'hiring_earings';
                 $sql = "INSERT INTO transactions (`user_id`,`amount`,`datetime`,`type`)VALUES('$ID','$balance','$datetime','$type')";
                 $db->sql($sql);
                  $sql_query = "UPDATE users SET balance=balance+ $balance WHERE id=$ID";

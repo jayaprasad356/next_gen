@@ -38,20 +38,20 @@ $num = $db->numRows($res);
 if ($num == 1) {
     $today_orders = $res[0]['today_orders'];
     $status = $res[0]['status'];
-    $hiring_earnings = $res[0]['hiring_earnings']; 
+    $hiring_earings = $res[0]['hiring_earings']; 
     $orders_earnings = $res[0]['orders_earnings'];
     $average_orders = $res[0]['average_orders'];
 
-    if($wallet_type == 'hiring_earnings'){
-        if ($hiring_earnings <= 100) {
+    if($wallet_type == 'hiring_earings'){
+        if ($hiring_earings <= 100) {
             $response['success'] = false;
             $response['message'] = "Minimum 100 rs to add";
             print_r(json_encode($response));
             return false;
         }
-        $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'hiring_earnings','$datetime',$hiring_earnings)";
+        $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'hiring_earings','$datetime',$hiring_earings)";
         $db->sql($sql);
-        $sql = "UPDATE users SET hiring_earnings= hiring_earnings - $hiring_earnings,earn = earn + $hiring_earnings,balance = balance + $hiring_earnings  WHERE id=" . $user_id;
+        $sql = "UPDATE users SET hiring_earings= hiring_earings - $hiring_earings,earn = earn + $hiring_earings,balance = balance + $hiring_earings  WHERE id=" . $user_id;
         $db->sql($sql);
     }
     if($wallet_type == 'orders_earnings'){
