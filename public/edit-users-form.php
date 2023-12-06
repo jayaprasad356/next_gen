@@ -250,23 +250,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1"> Refered By</label> <i class="text-danger asterik">*</i<?php echo isset($error['referred_by']) ? $error['referred_by'] : ''; ?>>
                                     <input type="text" class="form-control" name="referred_by" value="<?php echo $res[0]['referred_by']; ?>">
                                  </div>  
-                               <div class="col-md-2">
-                                    <label for="exampleInputEmail1">Check Button</label><i class="text-danger asterisk">*</i>
-                                    <button type="submit" class="btn btn-danger"  name="btncheck">Check</button>
-                                  </div>
                                </div>
                              </div>
                           <br>
                           <div class="row">
                               <div class="form-group">
-                                <div class="col-md-3">
-                                    <label for="exampleInputEmail1"> Refer Name</label><i class="text-danger asterisk">*</i>
-                                    <input type="text" class="form-control" name="refer_name" value="<?php echo $refer_name; ?>" readonly>
-                                 </div>
-                               <div class="col-md-3">
-                                    <label for="exampleInputEmail1"> Refer Mobile</label><i class="text-danger asterisk">*</i>
-                                    <input type="text" class="form-control" name="refer_mobile" value="<?php echo $refer_mobile; ?>" readonly>
-                                  </div>
                                   <div class="col-md-5">
                                             <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
                                             <textarea  type="text" rows="3" class="form-control" name="description"><?php echo $res[0]['description']?></textarea>
