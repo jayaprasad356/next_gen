@@ -56,10 +56,7 @@ if ($num == 1) {
     }
     if($wallet_type == 'orders_earnings'){
 
-        $response['success'] = false;
-        $response['message'] = "Disabled pls wait under development";
-        print_r(json_encode($response));
-        return false;
+
         if ($orders_earnings <= 100) {
             $response['success'] = false;
             $response['message'] = "Minimum 100 rs to add";
