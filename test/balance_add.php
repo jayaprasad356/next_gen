@@ -14,7 +14,7 @@ $db->connect();
 
 
 
-$sql = "SELECT SUM(amount) AS amount,user_id FROM `transactions` WHERE type = 'orders_earnings' AND user_id = $user_id GROUP BY user_id";
+$sql = "SELECT SUM(amount) AS amount,user_id FROM `transactions` WHERE type = 'orders_earnings' GROUP BY user_id";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);
