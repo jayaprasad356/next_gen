@@ -14,16 +14,20 @@ $db->connect();
 
 
 
-$sql = "SELECT * FROM `transactions` WHERE type = 'refer_bonus'";
+$sql = "SELECT id FROM `users` WHERE earn != 0 ";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1){
     
     foreach ($res as $row) {
-        $user_id = $row['user_id'];
+        $user_id = $row['id'];
 
-        $sql = "UPDATE users SET total_referrals = total_referrals - 1 WHERE id = $user_id";
+        $sql = "SELECT SUM(amount) FROM `transactions` WHERE type = 'orders_earnings' AND user_id = $user_id";
+        $db->sql($sql);
+        $res= $db->getResult();
+        $amount = $res[0]['amount'];
+        $sql = "UPDATE users SET balance = $amount WHERE id = $user_id";
         $db->sql($sql);
     
 
