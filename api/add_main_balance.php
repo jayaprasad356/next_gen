@@ -43,9 +43,9 @@ if ($num == 1) {
     $average_orders = $res[0]['average_orders'];
 
     if($wallet_type == 'hiring_earnings'){
-        if ($hiring_earnings <= 0) {
+        if ($hiring_earnings <= 100) {
             $response['success'] = false;
-            $response['message'] = "Hiring earnings is Low";
+            $response['message'] = "Minimum 100 rs to add";
             print_r(json_encode($response));
             return false;
         }
@@ -55,9 +55,14 @@ if ($num == 1) {
         $db->sql($sql);
     }
     if($wallet_type == 'orders_earnings'){
-        if ($orders_earnings <= 0) {
+
+        $response['success'] = false;
+        $response['message'] = "Disabled pls wait under development";
+        print_r(json_encode($response));
+        return false;
+        if ($orders_earnings <= 100) {
             $response['success'] = false;
-            $response['message'] = "Orders earnings is Low";
+            $response['message'] = "Minimum 100 rs to add";
             print_r(json_encode($response));
             return false;
         }
