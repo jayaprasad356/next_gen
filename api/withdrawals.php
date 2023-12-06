@@ -35,6 +35,11 @@ function isBetween10AMand6PM() {
 }
 
 
+$response['success'] = false;
+$response['message'] = "Disabled pls wait under development";
+
+print_r(json_encode($response));
+return false;
 
 $user_id = $db->escapeString($_POST['user_id']);
 $amount = $db->escapeString($_POST['amount']);
