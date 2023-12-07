@@ -139,18 +139,28 @@ if ($amount >= $min_withdrawal) {
             $sql = "UPDATE users SET balance=balance-'$amount' WHERE id='$user_id'";
             $db->sql($sql);
 
+            $sql = "SELECT * FROM withdrawals WHERE user_id = $user_id";
+            $db->sql($sql);
+            $withdrawals = $db->getResult();
+    
+            $sql = "SELECT * FROM users WHERE id = $user_id";
+            $db->sql($sql);
+            $userDetails = $db->getResult();
+    
             $response['success'] = true;
             $response['message'] = "Withdrawal Requested Successfully.";
+            $response['data']['withdrawals'] = $withdrawals;
+            $response['data']['userDetails'] = $userDetails;
+            print_r(json_encode($response));
+        }
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Insufficient Balance";
             print_r(json_encode($response));
         }
     } else {
         $response['success'] = false;
-        $response['message'] = "Insufficient Balance";
+        $response['message'] = "Minimum Withdrawal Amount is $min_withdrawal";
         print_r(json_encode($response));
     }
-} else {
-    $response['success'] = false;
-    $response['message'] = "Minimum Withdrawal Amount is $min_withdrawal";
-    print_r(json_encode($response));
-}
-?>
+    ?>
