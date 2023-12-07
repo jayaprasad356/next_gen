@@ -14,7 +14,7 @@ $db = new Database();
 $db->connect();
 
 
-$sql = "SELECT * FROM users WHERE old_plan = 0 AND plan = 'A1' AND total_referrals = 0 AND worked_days >= 7 AND status = 1";
+$sql = "SELECT * FROM users WHERE  total_referrals = 0 AND worked_days >= 7 AND status = 1";
 $db->sql($sql);
 $res = $db->getResult();
 foreach ($res as $row) {
