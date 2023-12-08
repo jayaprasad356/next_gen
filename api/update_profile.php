@@ -27,9 +27,19 @@ if (empty($_POST['name'])) {
     print_r(json_encode($response));
     return false;
 }
-if (empty($_POST['support_lan'])) {
+if (empty($_POST['mobile'])) {
     $response['success'] = false;
-    $response['message'] = "Support Languages is Empty";
+    $response['message'] = "Mobile Number is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+
+// Remove any non-numeric characters from the mobile number
+$mobileNumber = preg_replace('/[^0-9]/', '', $_POST['mobile']);
+
+if (strlen($mobileNumber) !== 10) {
+    $response['success'] = false;
+    $response['message'] = "Mobile number should be exactly 10 digits,please remove if +91 is there";
     print_r(json_encode($response));
     return false;
 }
@@ -40,12 +50,39 @@ if (empty($_POST['email'])) {
     print_r(json_encode($response));
     return false;
 }
-
+if (empty($_POST['dob'])) {
+    $response['success'] = false;
+    $response['message'] = "Date of Birth is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['hr_id'])) {
+    $response['success'] = false;
+    $response['message'] = "HR ID is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['location'])) {
+    $response['success'] = false;
+    $response['message'] = "Location is Empty";
+    print_r(json_encode($response));
+    return false;
+}
+if (empty($_POST['aadhaar_num'])) {
+    $response['success'] = false;
+    $response['message'] = "Aadhaar Number is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
 $user_id = $db->escapeString($_POST['user_id']);
 $name = $db->escapeString($_POST['name']);
-$support_lan = $db->escapeString($_POST['support_lan']);   
+$mobile = $db->escapeString($_POST['mobile']); 
 $email = $db->escapeString($_POST['email']);
+$dob = $db->escapeString($_POST['dob']);
+$hr_id = $db->escapeString($_POST['hr_id']);
+$location = $db->escapeString($_POST['location']);
+$aadhaar_num = $db->escapeString($_POST['aadhaar_num']);
 
 
 $sql = "SELECT * FROM users WHERE id=" . $user_id;
@@ -53,7 +90,7 @@ $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-    $sql = "UPDATE users SET name='$name',support_lan='$support_lan',email='$email' WHERE id=" . $user_id;
+    $sql = "UPDATE users SET name='$name',mobile='$mobile',email='$email',dob='$dob',hr_id='$hr_id',location='$location',aadhaar_num='$aadhaar_num' WHERE id=" . $user_id;
     $db->sql($sql);
     $sql = "SELECT * FROM users WHERE id=" . $user_id;
     $db->sql($sql);
