@@ -133,8 +133,8 @@ if (isset($_POST['btnEdit'])) {
                 $db->sql($sql_query);
         
                 $joined_date = $date;
-                $today_orders = 0;
-                $total_orders = 0;
+                // $today_orders = 0;
+                // $total_orders = 0;
                
 
                 if(strlen($referred_by) < 4){
