@@ -42,7 +42,7 @@ if ($num == 1) {
     $orders_earnings = $res[0]['orders_earnings'];
     $average_orders = $res[0]['average_orders'];
 
-    if($wallet_type == 'hiring_earings'){
+    if($wallet_type == 'hiring_earnings'){
         if ($hiring_earings < 100) {
             $response['success'] = false;
             $response['message'] = "Minimum 100 rs to add";
