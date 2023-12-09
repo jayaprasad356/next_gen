@@ -32,6 +32,24 @@ $user_id = $db->escapeString($_POST['user_id']);
 $orders = $db->escapeString($_POST['orders']);
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
+
+
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate'";
+$db->sql($sql);
+$resl = $db->getResult();
+$lnum = $db->numRows($resl);
+$enable = 1;
+if ($lnum >= 1) {
+    $enable = 0;
+
+}
+if ($enable == 0) {
+    $response['success'] = false;
+    $response['message'] = "Holiday, Come Back Tomorrow";
+    print_r(json_encode($response));
+    return false;
+}
+
 $sql = "SELECT * FROM users WHERE id = $user_id";
 $db->sql($sql);
 $res = $db->getResult();
