@@ -70,7 +70,7 @@ if ($num >= 1) {
         print_r(json_encode($response));
         return false;
     }
-    if ($average_orders <= 300) {
+    if ($average_orders < 300) {
         $response['success'] = false;
         $response['message'] = "Your cannot sync because your average is very low";
         print_r(json_encode($response));
