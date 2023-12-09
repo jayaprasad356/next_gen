@@ -42,59 +42,48 @@ $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1) {
-    $sql = "SELECT id FROM `users` WHERE joined_date >= '2023-02-06' AND id = $user_id";
+    $sql = "SELECT id FROM leaves WHERE user_id = $user_id";
     $db->sql($sql);
     $res = $db->getResult();
     $num = $db->numRows($res);
-    if ($num >= 1) {
-        $sql = "SELECT id FROM leaves WHERE user_id = $user_id";
+    if ($num >= 4) {
+        $response['success'] = false;
+        $response['message'] = "Exceeded Leave Limit";
+        print_r(json_encode($response));
+
+    }
+    else{
+        $sql = "SELECT id FROM leaves WHERE user_id = $user_id AND date = '$leave_date'";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
-        if ($num >= 4) {
+        if ($num == 1) {
             $response['success'] = false;
-            $response['message'] = "Exceeded Leave Limit";
+            $response['message'] = "Already Applied on that day";
             print_r(json_encode($response));
     
-        }
-        else{
-            $sql = "SELECT id FROM leaves WHERE user_id = $user_id AND date = '$leave_date'";
+        }else{
+            $sql = "SELECT id FROM leaves WHERE type = 'common_leave' AND date = '$leave_date'";
             $db->sql($sql);
             $res = $db->getResult();
             $num = $db->numRows($res);
-            if ($num == 1) {
+            if ($num >= 1) {
                 $response['success'] = false;
-                $response['message'] = "Already Applied on that day";
+                $response['message'] = "That Day Common Leave For All";
                 print_r(json_encode($response));
-        
-            }else{
-                $sql = "SELECT id FROM leaves WHERE type = 'common_leave' AND date = '$leave_date'";
-                $db->sql($sql);
-                $res = $db->getResult();
-                $num = $db->numRows($res);
-                if ($num >= 1) {
-                    $response['success'] = false;
-                    $response['message'] = "That Day Common Leave For All";
-                    print_r(json_encode($response));
-        
-                }
-                else{
-                    $sql_query = "INSERT INTO leaves (type,user_id,date,reason,status)VALUES('user_leave','$user_id','$leave_date','$reason',1)";
-                    $db->sql($sql_query);
-                    $response['success'] = true;
-                    $response['message'] = "Leave Requested Successfully";
-                    print_r(json_encode($response));
-        
-                }
+    
             }
+            else{
+                $sql_query = "INSERT INTO leaves (type,user_id,date,reason,status)VALUES('user_leave','$user_id','$leave_date','$reason',1)";
+                $db->sql($sql_query);
+                $response['success'] = true;
+                $response['message'] = "Leave Requested Successfully";
+                print_r(json_encode($response));
     
-    
+            }
         }
 
-    }else{
-        $response['success'] = false;
-        $response['message'] = "You Cannot Apply For Leave";
-        print_r(json_encode($response));
+
     }
 
 
