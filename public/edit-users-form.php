@@ -54,6 +54,7 @@ if (isset($_POST['btnEdit'])) {
     $interested = $db->escapeString(($_POST['interested']));
     $hiring_earings = $db->escapeString(($_POST['hiring_earings']));
     $orders_earnings = $db->escapeString(($_POST['orders_earnings']));
+    $password = $db->escapeString(($_POST['password']));
 
     
     $error = array();
@@ -133,10 +134,6 @@ if (isset($_POST['btnEdit'])) {
                 $db->sql($sql_query);
         
                 $joined_date = $date;
-                // $today_orders = 0;
-                // $total_orders = 0;
-               
-
                 if(strlen($referred_by) < 4){
                     $incentives = 50;
                 }else{
@@ -144,28 +141,10 @@ if (isset($_POST['btnEdit'])) {
                     
                 }
 
-                // $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,supports = supports + 1 WHERE id =  $support_id";
-                // $db->sql($sql_query);
-    
-                // $sql_query = "UPDATE staffs SET incentives = incentives + $incentives,earn = earn + $incentives,balance = balance + $incentives,leorders = leorders + 1 WHERE id =  $lead_id";
-                // $db->sql($sql_query);
-                
-                // $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$support_id,$incentives,'$datetime','support')";
-                // $db->sql($sql_query);
-    
-                // $sql_query = "INSERT INTO incentives (user_id,staff_id,amount,datetime,type)VALUES($ID,$lead_id,$incentives,'$datetime','lead')";
-                // $db->sql($sql_query);
-    
-                // $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($support_id,$incentives,'$datetime','incentives')";
-                // $db->sql($sql_query);
-    
-                // $sql_query = "INSERT INTO staff_transactions (staff_id,amount,datetime,type)VALUES($lead_id,$incentives,'$datetime','incentives')";
-                // $db->sql($sql_query);
-
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -481,10 +460,14 @@ if (isset($_POST['btnCancel'])) { ?>
                             </div>
                             <br>
                             <div class="row">
-                        <div class="col-md-3">
-                                    <label for="exampleInputEmail1"> Hiring Earnings</label> <i class="text-danger asterik">*</i><?php echo isset($error['hiring_earings']) ? $error['hiring_earings'] : ''; ?>
-                                    <input type="number" class="form-control" name="hiring_earings" value="<?php echo $res[0]['hiring_earings']; ?>">
-                                </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputEmail1"> Password</label> <i class="text-danger asterik">*</i><?php echo isset($error['password']) ? $error['password'] : ''; ?>
+                                        <input type="text" class="form-control" name="password" value="<?php echo $res[0]['password']; ?>">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputEmail1"> Hiring Earnings</label> <i class="text-danger asterik">*</i><?php echo isset($error['hiring_earings']) ? $error['hiring_earings'] : ''; ?>
+                                        <input type="number" class="form-control" name="hiring_earings" value="<?php echo $res[0]['hiring_earings']; ?>">
+                                    </div>
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">Orders Earnings</label> <i class="text-danger asterik">*</i><?php echo isset($error['orders_earnings']) ? $error['orders_earnings'] : ''; ?>
                                     <input type="number" class="form-control" name="orders_earnings" value="<?php echo $res[0]['orders_earnings']; ?>">

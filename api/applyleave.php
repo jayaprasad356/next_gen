@@ -37,6 +37,26 @@ $user_id = $db->escapeString($_POST['user_id']);
 $leave_date = $db->escapeString($_POST['leave_date']);
 $reason = $db->escapeString($_POST['reason']);
 
+
+function checkLeaveDate($leaveDate) {
+    // Create DateTime objects for leave date and the day after tomorrow
+    $leaveDateObj = new DateTime($leaveDate);
+    $dayAfterTomorrow = new DateTime('+1 days');
+
+    // Compare leave date with the day after tomorrow
+    if ($leaveDateObj <= $dayAfterTomorrow) {
+        return true;
+    } else {
+        return false;
+    }
+}
+if (!checkLeaveDate($leave_date)) {
+    $response['success'] = false;
+    $response['message'] = "Leave date does not exceeds tomorrow day.";
+    print_r(json_encode($response));
+    return false;
+}
+
 $sql = "SELECT id FROM users WHERE id = $user_id";
 $db->sql($sql);
 $res = $db->getResult();
@@ -46,7 +66,7 @@ if ($num == 1) {
     $db->sql($sql);
     $res = $db->getResult();
     $num = $db->numRows($res);
-    if ($num >= 4) {
+    if ($num >= 2) {
         $response['success'] = false;
         $response['message'] = "Exceeded Leave Limit";
         print_r(json_encode($response));
