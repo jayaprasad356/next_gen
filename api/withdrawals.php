@@ -41,7 +41,7 @@ $user_id = $db->escapeString($_POST['user_id']);
 $amount = $db->escapeString($_POST['amount']);
 $datetime = date('Y-m-d H:i:s');
 $dayOfWeek = date('w', strtotime($datetime));
-$sql = "SELECT * FROM leaves WHERE date = '$date'";
+$sql = "SELECT * FROM leaves WHERE date = '$date' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();
 $lnum = $db->numRows($resl);
