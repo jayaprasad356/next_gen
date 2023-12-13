@@ -19,9 +19,8 @@ include_once('../includes/functions.php');
 $fn = new functions;
 $currentdate = date('Y-m-d');
 
-return false;
 
-$sql = "SELECT * FROM leaves WHERE date = '$currentdate'";
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();
 $lnum = $db->numRows($resl);
