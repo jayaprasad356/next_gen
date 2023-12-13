@@ -19,6 +19,9 @@ include_once('../includes/functions.php');
 $fn = new functions;
 $currentdate = date('Y-m-d');
 
+
+return false;
+
 $sql = "SELECT user_id FROM leaves WHERE date = '$currentdate' AND type = 'user_leave'";
 $db->sql($sql);
 $resl = $db->getResult();

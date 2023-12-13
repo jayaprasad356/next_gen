@@ -19,6 +19,8 @@ include_once('../includes/functions.php');
 $fn = new functions;
 $currentdate = date('Y-m-d');
 
+return false;
+
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate'";
 $db->sql($sql);
 $resl = $db->getResult();
