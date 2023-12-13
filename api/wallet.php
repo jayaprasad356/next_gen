@@ -34,19 +34,6 @@ $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
 
-function isBetween12AMand6AM() {
-    $currentHour = date('H');
-    $startTimestamp = strtotime('00:00:00');
-    $endTimestamp = strtotime('06:00:00');
-    return ($currentHour >= date('H', $startTimestamp)) && ($currentHour < date('H', $endTimestamp));
-}
-if (isBetween12AMand6AM()) {
-    $response['success'] = false;
-    $response['message'] = "Cannot sync ryt now";
-    print_r(json_encode($response));
-    return false;
-}
-
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();
