@@ -22,8 +22,8 @@ $currentdate = date('Y-m-d');
 $sql = "UPDATE users SET last_today_orders = today_orders";
 $db->sql($sql);
 
-// $sql = "UPDATE users SET today_orders = 0";
-// $db->sql($sql);
+$sql = "UPDATE users SET today_orders = 0";
+$db->sql($sql);
 
 $sql = "UPDATE users
 SET worked_days = DATEDIFF('$currentdate', joined_date) - (
