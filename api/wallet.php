@@ -63,7 +63,7 @@ if ($lnum >= 1) {
 }
 
 
-$sql = "SELECT * FROM leaves WHERE date = '$currentdate'";
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();
 $lnum = $db->numRows($resl);
@@ -125,6 +125,12 @@ if ($num >= 1) {
     }
     $type = 'order_placed';
     $sync_limit = $average_orders / 100;
+
+    if($sync_limit >= 5){
+        $sync_limit = 5;
+        
+
+    }
 
 
     $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
