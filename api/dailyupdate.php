@@ -35,8 +35,6 @@ SET worked_days = DATEDIFF('$currentdate', joined_date) - (
 WHERE status = 1";
 $db->sql($sql);
 
-$sql = "UPDATE users SET average_orders = total_orders / worked_days WHERE status = 1";
-$db->sql($sql);
 
 
 
