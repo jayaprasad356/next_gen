@@ -32,6 +32,7 @@ if ($num >= 1){
         $temp['orders'] = $row['orders'];
         $temp['type'] = $row['type'];
         $temp['datetime'] = $row['datetime'];
+        $temp['total_qty_sold'] = $row['total_qty_sold'];
         $rows[] = $temp;
     }
     $response['success'] = true;

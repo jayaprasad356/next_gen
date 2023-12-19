@@ -757,6 +757,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
         $tempRow['amount'] = $row['amount'];
         $tempRow['orders'] = $row['orders'];
         $tempRow['datetime'] = $row['datetime'];
+        $tempRow['total_qty_sold'] = $row['total_qty_sold'];
         $rows[] = $tempRow;
     }
     $bulkData['rows'] = $rows;

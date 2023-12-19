@@ -41,6 +41,7 @@
                                     <th  data-field="mobile" data-sortable="true">Mobile</th>
                                     <th  data-field="orders" data-sortable="true">orders</th>
                                     <th  data-field="amount" data-sortable="true">Amount</th>
+                                    <th  data-field="total_qty_sold" data-sortable="true">Total Qty Sold</th>
                                     <th  data-field="type" data-sortable="true">Type</th>
                                     <th  data-field="datetime" data-sortable="true">DateTime</th>
                                 </tr>
