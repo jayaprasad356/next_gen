@@ -57,7 +57,7 @@ if (!checkLeaveDate($leave_date)) {
     return false;
 }
 
-$sql = "SELECT id FROM users WHERE id = $user_id";
+$sql = "SELECT id FROM users WHERE id = $user_id AND status = 1";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);

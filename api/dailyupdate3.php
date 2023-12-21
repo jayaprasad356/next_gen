@@ -20,19 +20,18 @@ $fn = new functions;
 $currentdate = date('Y-m-d');
 
 
-$sql = "SELECT user_id FROM leaves WHERE date = '$currentdate' AND type = 'user_leave'";
-$db->sql($sql);
-$resl = $db->getResult();
-$lnum = $db->numRows($resl);
-if ($lnum >= 1) {
-    foreach ($resl as $row) {
-        $user_id = $row['user_id'];
-        $sql = "UPDATE users SET worked_days = worked_days - 1 WHERE id = $user_id ";
-        $db->sql($sql);
-    }
-}
+// $sql = "SELECT user_id FROM leaves WHERE date = '$currentdate' AND type = 'user_leave'";
+// $db->sql($sql);
+// $resl = $db->getResult();
+// $lnum = $db->numRows($resl);
+// if ($lnum >= 1) {
+//     foreach ($resl as $row) {
+//         $user_id = $row['user_id'];
+//         $sql = "UPDATE users SET worked_days = worked_days - 1 WHERE id = $user_id ";
+//         $db->sql($sql);
+//     }
+// }
 
-$sql = "UPDATE users SET average_orders = total_orders / worked_days WHERE status = 1";
-$db->sql($sql);
+
 
 ?>
