@@ -1051,10 +1051,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'staff_withdrawals') {
     if (isset($_GET['order']))
         $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "AND s.mobile like '%" . $search . "%'";
-    }
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search = $db->escapeString($fn->xss_clean($_GET['search']));
+            $where .= "AND s.name like '%" . $search . "%' OR t.amount like '%" . $search . "%' OR t.id like '%" . $search . "%'  OR t.type like '%" . $search . "%' OR s.mobile like '%" . $search . "%' ";
+        }
+        
     if (isset($_GET['sort'])) {
         $sort = $db->escapeString($_GET['sort']);
     }
