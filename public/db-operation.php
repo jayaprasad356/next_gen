@@ -21,55 +21,58 @@ if (isset($_POST['cancel_withdrawal']) && $_POST['cancel_withdrawal'] == 1) {
     $count = 0;
     $count1 = 0;
     $error = false;
+
     $filename = $_FILES["upload_file"]["tmp_name"];
     $result = $fn->validate_image($_FILES["upload_file"], false);
     if (!$result) {
         $error = true;
     }
+
     if ($_FILES["upload_file"]["size"] > 0  && $error == false) {
         $file = fopen($filename, "r");
+
         while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
-            // print_r($emapData);
             if ($count1 != 0) {
-                $w_id = trim($db->escapeString($emapData[0]));
-             
+                $w_id = trim($db->escapeString($emapData[0])); 
+                $mobile = trim($db->escapeString($emapData[1]));
 
                 $sql = "UPDATE withdrawals SET status=2 WHERE id = $w_id";
                 $db->sql($sql);
                 $sql = "SELECT * FROM `withdrawals` WHERE id = $w_id ";
                 $db->sql($sql);
-                $res = $db->getResult();
-                $user_id= $res[0]['user_id'];
-                $amount= $res[0]['amount'];
-                $sql = "UPDATE users SET balance= balance + $amount WHERE id = $user_id";
+
+                $mobile = trim($db->escapeString($emapData[0]));
+                $orders = trim($db->escapeString($emapData[1]));
+                $sql = "SELECT * FROM `users` WHERE mobile = '$mobile'";
                 $db->sql($sql);
+                $res = $db->getResult();
+
+                    $ID = $res[0]['id'];
+                    $datetime = date('Y-m-d H:i:s');
+                    $type = 'admin_orders';
+                    $per_code_cost = 0.20;
+                    $amount = $orders * $per_code_cost;
+
                 
-            }
+                    $sql = "INSERT INTO transactions (`user_id`,`orders`,`amount`,`datetime`,`type`)VALUES('$ID','$orders','$amount','$datetime','$type')";
+                    $db->sql($sql);
+
+                    $sql = "UPDATE `users` SET  `today_orders` = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE `id` = $ID";
+                    $db->sql($sql);
+                }
+            
 
             $count1++;
         }
+
         fclose($file);
-        // $file = fopen($filename, "r");
-        // while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
-        //     // print_r($emapData);
-        //     if ($count1 != 0) {
-        //         $emapData[0] = trim($db->escapeString($emapData[0]));
-        //         $emapData[1] = trim($db->escapeString($emapData[1]));  
-                
-        //         $sql = "UPDATE users SET `support_id`= $emapData[1],op_leads = 1 WHERE id= $emapData[0]";
-        //         $db->sql($sql);
-
-        //     }
-
-        //     $count1++;
-        // }
-        // fclose($file);
 
         echo "<p class='alert alert-success'>CSV file is successfully imported!</p><br>";
     } else {
         echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
     }
 }
+
 if (isset($_POST['delete_variant'])) {
     $v_id = $db->escapeString(($_POST['id']));
     $sql = "DELETE FROM product_variant WHERE id = $v_id";

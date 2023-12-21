@@ -27,9 +27,16 @@ if (empty($_POST['orders'])) {
     echo json_encode($response);
     return;
 }
+if (empty($_POST['total_qty_sold'])) {
+    $response['success'] = false;
+    $response['message'] = "Total Qty Sold is Empty";
+    echo json_encode($response);
+    return;
+}
 
 $user_id = $db->escapeString($_POST['user_id']);
 $orders = $db->escapeString($_POST['orders']);
+$total_qty_sold = $db->escapeString($_POST['total_qty_sold']);
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
@@ -177,7 +184,7 @@ if ($num >= 1) {
         $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
         $db->sql($sql);
     
-        $sql = "INSERT INTO transactions (`user_id`,`orders`,`amount`,`datetime`,`type`)VALUES('$user_id','$orders','$amount','$datetime','$type')";
+        $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
         $db->sql($sql);
 
 

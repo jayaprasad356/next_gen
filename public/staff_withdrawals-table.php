@@ -89,12 +89,12 @@ if (isset($_POST['export_all'])) {
                                                 <option value=''>All</option>
                                                 
                                                         <?php
-                                                        $sql = "SELECT id,first_name FROM `staffs`";
+                                                        $sql = "SELECT id,name FROM `staffs`";
                                                         $db->sql($sql);
                                                         $result = $db->getResult();
                                                         foreach ($result as $value) {
                                                         ?>
-                                                            <option value='<?= $value['id'] ?>'><?= $value['first_name'] ?></option>
+                                                            <option value='<?= $value['id'] ?>'><?= $value['name'] ?></option>
                                                     <?php } ?>
                                                 </select>
                                         </div>
