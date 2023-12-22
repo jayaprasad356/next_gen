@@ -27,16 +27,16 @@ if (empty($_POST['orders'])) {
     echo json_encode($response);
     return;
 }
-if (empty($_POST['total_qty_sold'])) {
-    $response['success'] = false;
-    $response['message'] = "Total Qty Sold is Empty";
-    echo json_encode($response);
-    return;
-}
+// if (empty($_POST['total_qty_sold'])) {
+//     $response['success'] = false;
+//     $response['message'] = "Total Qty Sold is Empty";
+//     echo json_encode($response);
+//     return;
+// }
 
 $user_id = $db->escapeString($_POST['user_id']);
 $orders = $db->escapeString($_POST['orders']);
-$total_qty_sold = $db->escapeString($_POST['total_qty_sold']);
+$total_qty_sold = 100;
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
