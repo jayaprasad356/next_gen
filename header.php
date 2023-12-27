@@ -242,6 +242,12 @@ $fn = new custom_functions;
                         <span>Bulk upload</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk-approval.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk Approval</span>
+                    </a>
+                </li>
              
             </ul>
             </section>
