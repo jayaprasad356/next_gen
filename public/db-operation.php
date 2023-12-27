@@ -149,7 +149,7 @@ if (isset($_POST['bulk_approval']) && $_POST['bulk_approval'] == 1) {
                 $mobile = trim($db->escapeString($emapData[0]));
                 $joined_date = trim($db->escapeString($emapData[1]));
 
-                $sql = "UPDATE users SET `status` = 1 , joined_date = '$joined_date' WHERE mobile = '$mobile'";
+                $sql = "UPDATE users SET `status` = 1 , joined_date = '$joined_date' , refer_bonus_sent = 1 WHERE mobile = '$mobile'";
                 $db->sql($sql);
             }
 
