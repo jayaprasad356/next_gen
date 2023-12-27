@@ -135,6 +135,9 @@ if (isset($_POST['btnEdit'])) {
                 $sql_query = "UPDATE users SET register_bonus_sent = 1 WHERE id =  $ID";
                 $db->sql($sql_query);
         
+                $sql_query = "UPDATE settings SET vacancies = vacancies - 1";
+                $db->sql($sql_query);
+
                 $joined_date = $date;
                 if(strlen($referred_by) < 4){
                     $incentives = 50;
