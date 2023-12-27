@@ -95,6 +95,7 @@ if ($num >= 1) {
     $store_id = $res[0]['store_id'];
     $blocked = $res[0]['blocked'];
     $status = $res[0]['status'];
+    $joined_date = $res[0]['joined_date'];
 
     $sql = "SELECT per_order_cost FROM `stores` WHERE id = $store_id";
     $db->sql($sql);
@@ -123,6 +124,14 @@ if ($num >= 1) {
         $response['message'] = "Your Account is Blocked";
         print_r(json_encode($response));
         return false;
+    }
+
+    if($joined_date > $currentdate){
+        $response['success'] = false;
+        $response['message'] = "Your Plan not Started";
+        print_r(json_encode($response));
+        return false;
+
     }
     if ($average_orders < 300) {
         $response['success'] = false;
