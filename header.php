@@ -236,6 +236,12 @@ $fn = new custom_functions;
                         <span>Leaves</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk-upload-user.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk upload</span>
+                    </a>
+                </li>
              
             </ul>
             </section>

@@ -122,6 +122,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $tempRow['balance'] = $row['balance'];
         $tempRow['orders_earnings'] = $row['orders_earnings'];
         $tempRow['hiring_earings'] = $row['hiring_earings'];
+        $tempRow['registered_date'] = $row['registered_date'];
+        $tempRow['average_orders'] = $row['average_orders'];
         $sql = "SELECT name FROM `staffs` WHERE id = $support_id";
         $db->sql($sql);
         $res = $db->getResult();
@@ -474,7 +476,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'withdrawals') {
     foreach ($res as $row)
         $total = $row['total'];
 
-    $sql = "SELECT w.id AS id,w.*,u.mobile,u.upi,u.account_num,u.holder_name,u.bank,u.branch,u.ifsc,u.earn,w.status AS status FROM `withdrawals` w,`users` u $join 
+    $sql = "SELECT w.id AS id,w.*,u.mobile,u.upi,u.account_num,u.holder_name,u.bank,u.branch,u.ifsc,u.earn,u.total_referrals,w.status AS status FROM `withdrawals` w,`users` u $join 
           $where ORDER BY $sort $order LIMIT $offset, $limit";
     $db->sql($sql);
     $res = $db->getResult();
@@ -490,6 +492,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'withdrawals') {
         $tempRow['column'] = $checkbox;
         $tempRow['id'] = $row['id'];
         $tempRow['mobile'] = $row['mobile'];
+        $tempRow['total_referrals'] = $row['total_referrals'];
         $tempRow['earn'] = $row['earn'];
         $tempRow['upi'] = $row['upi'];
         $tempRow['account_num'] = ','.$row['account_num'].',';

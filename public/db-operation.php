@@ -72,6 +72,65 @@ if (isset($_POST['cancel_withdrawal']) && $_POST['cancel_withdrawal'] == 1) {
         echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
     }
 }
+if (isset($_POST['bulk_upload']) && $_POST['bulk_upload'] == 1) {
+    $count = 0;
+    $count1 = 0;
+    $error = false;
+
+    $filename = $_FILES["upload_file"]["tmp_name"];
+    $result = $fn->validate_image($_FILES["upload_file"], false);
+
+    if (!$result) {
+        $error = true;
+    }
+
+    if ($_FILES["upload_file"]["size"] > 0 && $error == false) {
+        $file = fopen($filename, "r");
+
+        while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
+            if ($count1 != 0) {
+                $mobile = trim($db->escapeString($emapData[0]));
+
+                $sql = "SELECT * FROM `users` WHERE mobile = '$mobile'";
+                $db->sql($sql);
+                $res = $db->getResult();
+                $num = $db->numRows($res);
+                
+                if ($num == 1) {
+                    $user_status = $res[0]['status'];
+                    $refer_bonus_sent = $res[0]['refer_bonus_sent'];
+                    $user_id = $res[0]['id'];
+
+                    if ($user_status == 1 && $refer_bonus_sent != 1) {
+                        $refer_orders = 500;
+                        $referral_bonus = 600;
+        
+
+                            $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1, `total_orders` = total_orders + $refer_orders, `hiring_earings` = hiring_earings + $referral_bonus WHERE id =  $user_id";
+                            $db->sql($sql_query);
+        
+
+                        $sql_query = "INSERT INTO transactions (user_id, amount, datetime, type) VALUES ($user_id, $referral_bonus, '$datetime', 'refer_bonus')";
+                        $db->sql($sql_query);
+                    }
+                }
+            
+
+            }
+
+            $count1++;
+        }
+
+        fclose($file);
+
+        echo "<p class='alert alert-success'>CSV file is successfully imported!</p><br>";
+    } else {
+        echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
+    }
+}
+
+
+
 
 if (isset($_POST['delete_variant'])) {
     $v_id = $db->escapeString(($_POST['id']));

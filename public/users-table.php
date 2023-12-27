@@ -68,6 +68,8 @@
                                     <th  data-field="balance" data-sortable="true">Balance</th>
                                     <th  data-field="status" data-sortable="true">Status</th>
                                     <th  data-field="joined_date" data-sortable="true">Joined Date</th>
+                                    <th  data-field="registered_date" data-sortable="true">Registered Date</th>
+                                    <th  data-field="average_orders" data-sortable="true">Average Orders</th>
                                 </tr>
                             </thead>
                         </table>

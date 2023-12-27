@@ -130,11 +130,11 @@ if (isset($_POST['btnPaid'])  && isset($_POST['enable'])) {
                                                 <th data-field="column"> All</th>
                                                 <th  data-field="id" data-sortable="true">ID</th>
                                                 <th  data-field="mobile" data-sortable="true">Mobile</th>
-                                               
                                                 <th data-field="status" data-sortable="true">Status</th>
                                                 <th  data-field="amount" data-sortable="true">Amount</th>
                                                 <th  data-field="datetime" data-sortable="true">Date</th>
                                                 <th  data-field="earn" data-sortable="true">Earn</th>
+                                                <th  data-field="total_referrals" data-sortable="true">Total Referals</th>
                                                 <th data-field="account_num" data-sortable="true">Account Number</th>
                                         <th data-field="holder_name" data-sortable="true">Holder Name</th>
                                         <th data-field="bank" data-sortable="true">Bank</th>
