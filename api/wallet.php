@@ -126,7 +126,8 @@ if ($num >= 1) {
         return false;
     }
     $type = 'order_placed';
-    $sync_limit = round($average_orders / 100);
+    $sync_limit = intval($average_orders / 100);
+
 
 
     if($sync_limit >= 5){
