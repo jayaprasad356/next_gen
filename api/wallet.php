@@ -127,6 +127,7 @@ if ($num >= 1) {
     }
     $type = 'order_placed';
     $sync_limit = $average_orders / 100;
+    $response['sync_limit'] = $sync_limit;
 
     if($sync_limit >= 5){
         $sync_limit = 5;
