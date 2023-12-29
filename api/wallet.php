@@ -42,22 +42,20 @@ $total_qty_sold = isset($_POST['total_qty_sold']) ? $db->escapeString($_POST['to
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
-
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();
 $lnum = $db->numRows($resl);
-$enable = 1;
-if ($lnum >= 1) {
-    $enable = 0;
 
-}
+$enable = ($lnum >= 1) ? 0 : 1;
+
 if ($enable == 0) {
     $response['success'] = false;
     $response['message'] = "Holiday, Come Back Tomorrow";
     print_r(json_encode($response));
     return false;
 }
+
 
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
 $db->sql($sql);
@@ -72,21 +70,7 @@ if ($lnum >= 1) {
 }
 
 
-$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
-$db->sql($sql);
-$resl = $db->getResult();
-$lnum = $db->numRows($resl);
-$enable = 1;
-if ($lnum >= 1) {
-    $enable = 0;
 
-}
-if ($enable == 0) {
-    $response['success'] = false;
-    $response['message'] = "Holiday, Come Back Tomorrow";
-    print_r(json_encode($response));
-    return false;
-}
 
 $sql = "SELECT * FROM users WHERE id = $user_id";
 $db->sql($sql);
@@ -151,7 +135,7 @@ if ($num >= 1) {
     }
 
 
-    $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
+   /* $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
     $db->sql($sql);
     $tres = $db->getResult();
     $t_count = $tres[0]['count'];
@@ -160,14 +144,16 @@ if ($num >= 1) {
         $response['message'] = "You Reached Daily Sync Limit";
         print_r(json_encode($response));
         return false;
-    }
+    }*/
 
-    $sql = "SELECT sync_unique_id,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+
+    $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
     $db->sql($sql);
     $tres = $db->getResult();
     $num = $db->numRows($tres);
-    $code_min_sync_time = 30;
-    $totalMinutes = 0;
+    $code_min_sync_time = 30; 
+    $totalSeconds = 0;
+    
     if ($num >= 1) {
         $t_sync_unique_id = $tres[0]['sync_unique_id'];
         $dt1 = $tres[0]['datetime'];
@@ -175,18 +161,18 @@ if ($num >= 1) {
         $date2 = new DateTime($datetime);
     
         $diff = $date1->diff($date2);
-        $totalMinutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
-        $dfi = $code_min_sync_time - $totalMinutes;
-        if($totalMinutes < $code_min_sync_time ){
+        $totalSeconds = $diff->s + ($diff->i * 60) + ($diff->h * 3600) + ($diff->days * 24 * 3600);
+    
+        $dfi = $code_min_sync_time - $totalSeconds;
+    
+        if ($totalSeconds < $code_min_sync_time) {
             $response['success'] = false;
-            $response['message'] = "Cannot Sync Right Now, Try again after ".$dfi." mins";
+            $response['message'] = "Cannot Sync Right Now, Try again after " . $dfi . " seconds";
             print_r(json_encode($response));
             return false;
-    
         }
-    
-    
     }
+    
 
 
     if($orders == '100'){
