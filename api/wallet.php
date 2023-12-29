@@ -46,17 +46,16 @@ $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leav
 $db->sql($sql);
 $resl = $db->getResult();
 $lnum = $db->numRows($resl);
-$enable = 1;
-if ($lnum >= 1) {
-    $enable = 0;
 
-}
+$enable = ($lnum >= 1) ? 0 : 1;
+
 if ($enable == 0) {
     $response['success'] = false;
     $response['message'] = "Holiday, Come Back Tomorrow";
     print_r(json_encode($response));
     return false;
 }
+
 
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
 $db->sql($sql);
