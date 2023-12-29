@@ -59,17 +59,17 @@ if ($enable == 0) {
     return false;
 }
 
-$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
-$db->sql($sql);
-$resl = $db->getResult();
-$lnum = $db->numRows($resl);
-if ($lnum >= 1) {
-    $response['success'] = false;
-    $response['message'] = "You cannot work in Leave Day.";
-    print_r(json_encode($response));
-    return false;
+//$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
+//$db->sql($sql);
+//$resl = $db->getResult();
+//$lnum = $db->numRows($resl);
+//if ($lnum >= 1) {
+  //  $response['success'] = false;
+   // $response['message'] = "You cannot work in Leave Day.";
+   // print_r(json_encode($response));
+   // return false;
 
-}
+//}
 
 
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
