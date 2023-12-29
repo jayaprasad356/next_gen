@@ -36,7 +36,9 @@ if (empty($_POST['orders'])) {
 
 $user_id = $db->escapeString($_POST['user_id']);
 $orders = $db->escapeString($_POST['orders']);
-$total_qty_sold = 100;
+//$total_qty_sold = 100;
+
+$total_qty_sold = isset($_POST['total_qty_sold']) ? $db->escapeString($_POST['total_qty_sold']) : 0;
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
