@@ -127,13 +127,14 @@ if ($num >= 1) {
     }
     $type = 'order_placed';
     $sync_limit = round($average_orders / 100);
-    $response['sync_limit'] = $sync_limit;
+
 
     if($sync_limit >= 5){
         $sync_limit = 5;
         
 
     }
+    $response['sync_limit'] = $sync_limit;
 
 
     $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
