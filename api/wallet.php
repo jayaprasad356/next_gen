@@ -136,7 +136,7 @@ if ($num >= 1) {
     }
 
 
-   /* $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
+    $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
     $db->sql($sql);
     $tres = $db->getResult();
     $t_count = $tres[0]['count'];
@@ -145,7 +145,7 @@ if ($num >= 1) {
         $response['message'] = "You Reached Daily Sync Limit";
         print_r(json_encode($response));
         return false;
-    }*/
+    }
 
 
     $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
