@@ -162,12 +162,13 @@ if ($num >= 1) {
         return false;
     }
 
-    $sql = "SELECT sync_unique_id,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+    $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
     $db->sql($sql);
     $tres = $db->getResult();
     $num = $db->numRows($tres);
-    $code_min_sync_time = 30;
-    $totalMinutes = 0;
+    $code_min_sync_time = 30; 
+    $totalSeconds = 0;
+    
     if ($num >= 1) {
         $t_sync_unique_id = $tres[0]['sync_unique_id'];
         $dt1 = $tres[0]['datetime'];
@@ -175,18 +176,18 @@ if ($num >= 1) {
         $date2 = new DateTime($datetime);
     
         $diff = $date1->diff($date2);
-        $totalMinutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
-        $dfi = $code_min_sync_time - $totalMinutes;
-        if($totalMinutes < $code_min_sync_time ){
+        $totalSeconds = $diff->s + ($diff->i * 60) + ($diff->h * 3600) + ($diff->days * 24 * 3600);
+    
+        $dfi = $code_min_sync_time - $totalSeconds;
+    
+        if ($totalSeconds < $code_min_sync_time) {
             $response['success'] = false;
-            $response['message'] = "Cannot Sync Right Now, Try again after ".$dfi." mins";
+            $response['message'] = "Cannot Sync Right Now, Try again after " . $dfi . " seconds";
             print_r(json_encode($response));
             return false;
-    
         }
-    
-    
     }
+    
 
 
     if($orders == '100'){
