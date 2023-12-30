@@ -19,6 +19,15 @@ include_once('../includes/functions.php');
 $fn = new functions;
 $currentdate = date('Y-m-d');
 
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
+$db->sql($sql);
+$resl = $db->getResult();
+$lnum = $db->numRows($resl);
+if ($lnum >= 1) {
+    return false;
+
+}
+
 
 $sql = "UPDATE users SET last_today_orders = today_orders";
 $db->sql($sql);
