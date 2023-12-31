@@ -121,6 +121,7 @@ if ($num >= 1) {
     $type = 'order_placed';
 
     $amount = 100;
+    $message = "Order Placed successfully";
     $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
     $db->sql($sql);
 
