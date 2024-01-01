@@ -112,91 +112,82 @@ if ($num >= 1) {
         return false;
 
     }
-    // if ($average_orders < 300) {
-    //     $response['success'] = false;
-    //     $response['message'] = "Your cannot sync because your average is very low";
-    //     print_r(json_encode($response));
-    //     return false;
-    // }
+    if ($average_orders < 300) {
+        $response['success'] = false;
+        $response['message'] = "Your cannot sync because your average is very low";
+        print_r(json_encode($response));
+        return false;
+    }
     $type = 'order_placed';
 
-    $amount = 100;
-    $message = "Order Placed successfully";
-    $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
+
+    if($sync_limit >= 5){
+        $sync_limit = 5;
+        
+
+    }
+    $response['sync_limit'] = $sync_limit;
+
+
+    $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
     $db->sql($sql);
-
-    // $sync_limit = intval($average_orders / 100);
-
-
-
-    // if($sync_limit >= 5){
-    //     $sync_limit = 5;
-        
-
-    // }
-    // $response['sync_limit'] = $sync_limit;
+    $tres = $db->getResult();
+    $t_count = $tres[0]['count'];
+    if ($t_count >= $sync_limit) {
+        $response['success'] = false;
+        $response['message'] = "You Reached Daily Sync Limit";
+        print_r(json_encode($response));
+        return false;
+    }
 
 
-    // $sql = "SELECT COUNT(id) AS count  FROM transactions WHERE user_id = $user_id AND DATE(datetime) = '$currentdate' AND type = '$type'";
-    // $db->sql($sql);
-    // $tres = $db->getResult();
-    // $t_count = $tres[0]['count'];
-    // if ($t_count >= $sync_limit) {
-    //     $response['success'] = false;
-    //     $response['message'] = "You Reached Daily Sync Limit";
-    //     print_r(json_encode($response));
-    //     return false;
-    // }
-
-
-    // $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
-    // $db->sql($sql);
-    // $tres = $db->getResult();
-    // $num = $db->numRows($tres);
-    // $code_min_sync_time = 30; 
-    // $totalSeconds = 0;
+    $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+    $db->sql($sql);
+    $tres = $db->getResult();
+    $num = $db->numRows($tres);
+    $code_min_sync_time = 30; 
     
-    // if ($num >= 1) {
-    //     $t_sync_unique_id = $tres[0]['sync_unique_id'];
-    //     $dt1 = $tres[0]['datetime'];
-    //     $date1 = new DateTime($dt1);
-    //     $date2 = new DateTime($datetime);
+    if ($num >= 1) {
+        $t_sync_unique_id = $tres[0]['sync_unique_id'];
+        $dt1 = $tres[0]['datetime'];
+        $date1 = new DateTime($dt1);
+        $date2 = new DateTime($datetime);
     
-    //     $diff = $date1->diff($date2);
-    //     $totalSeconds = $diff->s + ($diff->i * 60) + ($diff->h * 3600) + ($diff->days * 24 * 3600);
+        $diff = $date1->diff($date2);
+        $totalMinutes = ($diff->days * 24 * 60) + ($diff->h * 60) + $diff->i;
     
-    //     $dfi = $code_min_sync_time - $totalSeconds;
+        $dfi = $code_min_sync_time - $totalMinutes;
     
-    //     if ($totalSeconds < $code_min_sync_time) {
-    //         $response['success'] = false;
-    //         $response['message'] = "Cannot Sync Right Now, Try again after " . $dfi . " seconds";
-    //         print_r(json_encode($response));
-    //         return false;
-    //     }
-    // }
+        if ($totalMinutes < $code_min_sync_time) {
+            $response['success'] = false;
+            $response['message'] = "Cannot Sync Right Now, Try again after " . $dfi . " minutes";
+            print_r(json_encode($response));
+            return false;
+        }
+    }
     
 
 
-    // if($orders == '100'){
-    //     $amount = $orders * $per_order_cost;
+    if($orders == '100'){
+        $amount = $orders * $per_order_cost;
 
-    //     $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
-    //     $db->sql($sql);
+        // $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
+        // $db->sql($sql);
     
-    //     $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
-    //     $db->sql($sql);
+        $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
+        $db->sql($sql);
 
 
-    //     $message = "Order Placed successfully";
+        $message = "Order Placed successfully";
 
         
     
-    // }else{
-    //     $message = "order not placed";
+    }else{
+        $message = "order not placed";
 
         
     
-    // }
+    }
 
 
     
