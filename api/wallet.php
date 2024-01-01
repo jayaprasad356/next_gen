@@ -35,32 +35,32 @@ $total_qty_sold = isset($_POST['total_qty_sold']) ? $db->escapeString($_POST['to
 $datetime = date('Y-m-d H:i:s');
 $currentdate = date('Y-m-d');
 
-// $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
-// $db->sql($sql);
-// $resl = $db->getResult();
-// $lnum = $db->numRows($resl);
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
+$db->sql($sql);
+$resl = $db->getResult();
+$lnum = $db->numRows($resl);
 
-// $enable = ($lnum >= 1) ? 0 : 1;
+$enable = ($lnum >= 1) ? 0 : 1;
 
-// if ($enable == 0) {
-//     $response['success'] = false;
-//     $response['message'] = "Holiday, Come Back Tomorrow";
-//     print_r(json_encode($response));
-//     return false;
-// }
+if ($enable == 0) {
+    $response['success'] = false;
+    $response['message'] = "Holiday, Come Back Tomorrow";
+    print_r(json_encode($response));
+    return false;
+}
 
 
-// $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
-// $db->sql($sql);
-// $resl = $db->getResult();
-// $lnum = $db->numRows($resl);
-// if ($lnum >= 1) {
-//     $response['success'] = false;
-//     $response['message'] = "You cannot work in Leave Day.";
-//     print_r(json_encode($response));
-//     return false;
+$sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND user_id = $user_id";
+$db->sql($sql);
+$resl = $db->getResult();
+$lnum = $db->numRows($resl);
+if ($lnum >= 1) {
+    $response['success'] = false;
+    $response['message'] = "You cannot work in Leave Day.";
+    print_r(json_encode($response));
+    return false;
 
-// }
+}
 
 
 
@@ -172,8 +172,8 @@ if ($num >= 1) {
     if($orders == '100'){
         $amount = $orders * $per_order_cost;
 
-        // $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
-        // $db->sql($sql);
+        $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
+        $db->sql($sql);
     
         $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
         $db->sql($sql);
