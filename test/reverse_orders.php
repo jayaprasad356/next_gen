@@ -21,11 +21,16 @@ $num = $db->numRows($res);
 if ($num >= 1){
     
     foreach ($res as $row) {
-        $user_id = $row['id'];
-        $balance = $row['balance'];
+        $user_id = $row['user_id'];
+        $user_id = - $row['orders'];
+        $amount = $row['amount'];
         $total_orders = $row['total_orders'];
-        $sql = "UPDATE users SET balance = $balance,total_orders = $total_orders,balance = $balance WHERE id = $user_id";
+        $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
         $db->sql($sql);
+    
+        $sql = "DELETE FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02'";
+        $db->sql($sql);
+
     
 
     }
