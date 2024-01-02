@@ -142,15 +142,16 @@ if ($num >= 1) {
     }
 
 
-    $sql = "SELECT sync_unique_id, datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+    $sql = "SELECT  total_qty_sold,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
     $db->sql($sql);
     $tres = $db->getResult();
     $num = $db->numRows($tres);
     $code_min_sync_time = 30; 
+    $tqs1 = '';
     
     if ($num >= 1) {
-        $t_sync_unique_id = $tres[0]['sync_unique_id'];
         $dt1 = $tres[0]['datetime'];
+        $tqs1 = $tres[0]['total_qty_sold'];
         $date1 = new DateTime($dt1);
         $date2 = new DateTime($datetime);
     
@@ -169,10 +170,10 @@ if ($num >= 1) {
     
 
 
-    if($orders == '100'){
+    if($orders == '100' && ($tqs1 != $total_qty_sold)){
         $amount = $orders * $per_order_cost;
 
-        $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
+        $sql = "UPDATE users SET today_orders = today_orders + '$orders', total_orders = total_orders + '$orders', orders_earnings = orders_earnings + '$amount' WHERE id = $user_id";
         $db->sql($sql);
     
         $sql = "INSERT INTO transactions (`user_id`, `orders`, `amount`, `datetime`, `type`, `total_qty_sold`) VALUES ('$user_id', '$orders', '$amount', '$datetime', '$type', '$total_qty_sold')";
