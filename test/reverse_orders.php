@@ -14,21 +14,21 @@ $db->connect();
 
 
 $type = 'order_placed';
-$sql = "SELECT * FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02'";
+$sql = "SELECT * FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02' AND total_qty_sold < 100 AND user_id = 1153";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1){
     
     foreach ($res as $row) {
+        $id = $row['id'];
         $user_id = $row['user_id'];
-        $user_id = - $row['orders'];
-        $amount = $row['amount'];
-        $total_orders = $row['total_orders'];
+        $orders = - $row['orders'];
+        $amount = - $row['amount'];
         $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
         $db->sql($sql);
     
-        $sql = "DELETE FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02'";
+        $sql = "DELETE FROM transactions  WHERE id = $id";
         $db->sql($sql);
 
     
