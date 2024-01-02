@@ -25,7 +25,7 @@ if ($num >= 1){
         $user_id = $row['user_id'];
         $orders = - $row['orders'];
         $amount = - $row['amount'];
-        $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE id = $user_id";
+        $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, balance = balance + $amount WHERE id = $user_id";
         $db->sql($sql);
     
         $sql = "DELETE FROM transactions  WHERE id = $id";
