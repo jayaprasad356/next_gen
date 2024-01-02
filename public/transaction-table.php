@@ -44,6 +44,7 @@
                                     <th  data-field="total_qty_sold" data-sortable="true">Total Qty Sold</th>
                                     <th  data-field="type" data-sortable="true">Type</th>
                                     <th  data-field="datetime" data-sortable="true">DateTime</th>
+                                    <th  data-field="operate" data-events="actionEvents">Action</th>
                                 </tr>
                             </thead>
                         </table>

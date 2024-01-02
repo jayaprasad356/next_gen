@@ -752,6 +752,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
     $rows = array();
     $tempRow = array();
     foreach ($res as $row) {
+           $operate = ' <a class="text text-danger" href="delete-transaction.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
         $tempRow = array();
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
@@ -761,6 +762,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'transactions') {
         $tempRow['orders'] = $row['orders'];
         $tempRow['datetime'] = $row['datetime'];
         $tempRow['total_qty_sold'] = $row['total_qty_sold'];
+        $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
     $bulkData['rows'] = $rows;
