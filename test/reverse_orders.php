@@ -14,7 +14,7 @@ $db->connect();
 
 
 $type = 'order_placed';
-$sql = "SELECT * FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02' AND total_qty_sold < 100 AND user_id = 1153";
+$sql = "SELECT * FROM transactions  WHERE type = '$type' AND DATE(datetime) = '2024-01-02' AND total_qty_sold < 100";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);
