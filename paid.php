@@ -27,7 +27,7 @@ $_SESSION['timeout'] = $currentTime + $expired;
 ?>
 <?php
 if (isset($_POST['btnPaidAll'])) {
-    $sql = "UPDATE withdrawals SET status = 1";
+    $sql = "UPDATE withdrawals SET status = 1 WHERE status = 0";
     $db->sql($sql);
     $result = $db->getResult();
     header("Location: withdrawals.php");
