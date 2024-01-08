@@ -28,8 +28,8 @@ if ($num >= 1){
         $sql = "UPDATE users SET today_orders = today_orders + $orders, total_orders = total_orders + $orders, balance = balance + $amount WHERE id = $user_id";
         $db->sql($sql);
     
-        $sql = "DELETE FROM transactions  WHERE id = $id";
-        $db->sql($sql);
+        // $sql = "DELETE FROM transactions  WHERE id = $id";
+        // $db->sql($sql);
 
     
 
