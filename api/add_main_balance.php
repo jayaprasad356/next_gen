@@ -55,6 +55,10 @@ if ($num == 1) {
         $db->sql($sql);
     }
     if($wallet_type == 'orders_earnings'){
+        $response['success'] = true;
+        $response['message'] = "Disabled";
+        print_r(json_encode($response));
+        return false;
 
 
         if ($orders_earnings < 100) {
