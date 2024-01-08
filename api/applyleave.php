@@ -52,7 +52,7 @@ function checkLeaveDate($leaveDate) {
 }
 if (!checkLeaveDate($leave_date)) {
     $response['success'] = false;
-    $response['message'] = "Leave date does not exceeds tomorrow day.";
+    $response['message'] = "You can apply leave, one day before the leave date.";
     print_r(json_encode($response));
     return false;
 }
@@ -68,7 +68,7 @@ if ($num == 1) {
     $num = $db->numRows($res);
     if ($num >= 2) {
         $response['success'] = false;
-        $response['message'] = "Exceeded Leave Limit";
+        $response['message'] = "You are not allowed above 2 leaves in a month";
         print_r(json_encode($response));
 
     }
