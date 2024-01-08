@@ -26,6 +26,8 @@ if (empty($_POST['wallet_type'])) {
     return false;
 }
 $datetime = date('Y-m-d H:i:s');
+$currentDate = date('Y-m-d');
+$firstDateOfMonth = date('Y-m-01', strtotime('today'));
 $user_id=$db->escapeString($_POST['user_id']);
 $wallet_type = $db->escapeString($_POST['wallet_type']);
 
@@ -55,10 +57,6 @@ if ($num == 1) {
         $db->sql($sql);
     }
     if($wallet_type == 'orders_earnings'){
-        $response['success'] = true;
-        $response['message'] = "Disabled";
-        print_r(json_encode($response));
-        return false;
 
 
         if ($orders_earnings < 100) {
@@ -75,14 +73,13 @@ if ($num == 1) {
             return false;
 
         }
-
-        if($average_orders >= 300 && $average_orders < 400 && $today != 1){
+        if ($average_orders >= 300 && $average_orders < 400 && $currentDate != $firstDateOfMonth) {
             $response['success'] = true;
-            $response['message'] = "Enable on Monday only";
+            $response['message'] = "Enable on First date of the month";
             print_r(json_encode($response));
             return false;
-
         }
+
 
         if($average_orders < 300 ){
             $response['success'] = true;
