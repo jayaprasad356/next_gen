@@ -14,7 +14,7 @@ $db->connect();
 $datetime = date('Y-m-d H:i:s');
 
 $type = 'order_placed';
-$sql = "SELECT t.* FROM `users`u,`transactions`t WHERE u.id = t.user_id AND DATE(t.datetime) = '2024-01-08' AND u.average_orders < 400 AND u.id = 80628";
+$sql = "SELECT t.* FROM `users`u,`transactions`t WHERE u.id = t.user_id AND DATE(t.datetime) = '2024-01-08' AND u.average_orders < 400 AND u.id = 1622";
 $db->sql($sql);
 $res= $db->getResult();
 $num = $db->numRows($res);
