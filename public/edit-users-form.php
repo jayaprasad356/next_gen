@@ -57,6 +57,7 @@ if (isset($_POST['btnEdit'])) {
     $password = $db->escapeString(($_POST['password']));
     $min_qty = $db->escapeString(($_POST['min_qty']));
     $max_qty = $db->escapeString(($_POST['max_qty']));
+    $enroll_date = $db->escapeString(($_POST['enroll_date']));
 
     
     $error = array();
@@ -149,7 +150,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -241,7 +242,7 @@ if (isset($_POST['btnCancel'])) { ?>
                               <div class="form-group">
                                   <div class="col-md-5">
                                             <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
-                                            <textarea  type="text" rows="3" class="form-control" name="description"><?php echo $res[0]['description']?></textarea>
+                                            <textarea  type="text" rows="1" class="form-control" name="description"><?php echo $res[0]['description']?></textarea>
                                     </div>
                                </div>
                              </div>
@@ -488,6 +489,21 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputEmail1">Max Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['max_qty']) ? $error['max_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
                                     </div>
+                                    <div class="col-md-3">
+                                      <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
+                                       <?php
+                                         if (empty($res[0]['enroll_date'])) {
+                                          ?>
+                                      <input type="date" class="form-control" name="enroll_date" value="">
+                                       <?php
+                                        } else {
+                                        ?>
+                                       <input type="date" class="form-control" name="enroll_date" value="<?php echo $res[0]['enroll_date']; ?>" readonly>
+                                        <?php
+                                          }
+                                         ?>
+                                   </div>
+
                             </div>
                          </div><!-- /.box-body -->
                          <br>
