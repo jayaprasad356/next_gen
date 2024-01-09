@@ -30,11 +30,7 @@ if (isset($_POST['btnEdit'])) {
     $min_withdrawal = $db->escapeString($_POST['min_withdrawal']);
     $status = $db->escapeString($_POST['status']);
     
-    $account_num = $db->escapeString(($_POST['account_num']));
-    $holder_name = $db->escapeString(($_POST['holder_name']));
-    $bank = $db->escapeString(($_POST['bank']));
-    $branch = $db->escapeString(($_POST['branch']));
-    $ifsc = $db->escapeString(($_POST['ifsc']));
+
     $device_id = $db->escapeString(($_POST['device_id']));
     $joined_date = $db->escapeString($_POST['joined_date']);
     $total_orders = $db->escapeString(($_POST['total_orders']));
@@ -150,7 +146,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date',account_num='$account_num', holder_name='$holder_name', bank='$bank', branch='$branch', ifsc='$ifsc', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -339,36 +335,6 @@ if (isset($_POST['btnCancel'])) { ?>
                     </div>
                     <hr>
                     <br>
-                        <div class="row">
-                            <div class="form-group">
-                            <div class='col-md-6'>
-                                    <label for="exampleInputEmail1">Account Number</label> <i class="text-danger asterik">*</i>
-                                    <input type="number" class="form-control" name="account_num" value="<?php echo $res[0]['account_num']; ?>">
-                                </div>
-                                <div class='col-md-6'>
-                                    <label for="exampleInputEmail1">Holder Name</label> <i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="holder_name" value="<?php echo $res[0]['holder_name']; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="form-group">
-                            <div class="col-md-4">
-                                    <label for="exampleInputEmail1">IFSC</label><i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="ifsc" value="<?php echo $res[0]['ifsc']; ?>">
-                                </div>
-                                <div class="col-md-4">
-                                <label for="exampleInputEmail1">Bank</label><i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="bank" value="<?php echo $res[0]['bank']; ?>">
-                                </div>
-                                <div class="col-md-4">
-                                <label for="exampleInputEmail1">Branch</label><i class="text-danger asterik">*</i>
-                                    <input type="text" class="form-control" name="branch" value="<?php echo $res[0]['branch']; ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
                         <div class="row">
                             <div class="form-group">
                             <div class="col-md-4">
