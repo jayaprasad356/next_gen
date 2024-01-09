@@ -269,6 +269,20 @@ if (isset($_POST['btnCancel'])) { ?>
                                                 <?php } ?>
                                     </select>
                             </div>
+                            <div class="col-md-3">
+                                      <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
+                                       <?php
+                                         if (empty($res[0]['enroll_date']) || $res[0]['enroll_date'] == '0000-00-00') {
+                                          ?>
+                                      <input type="date" class="form-control" name="enroll_date" value="">
+                                       <?php
+                                        } else {
+                                        ?>
+                                       <input type="date" class="form-control" name="enroll_date" value="<?php echo $res[0]['enroll_date']; ?>" readonly>
+                                        <?php
+                                          }
+                                         ?>
+                                   </div>
                             </div>
                         </div>
                         <br>
@@ -489,20 +503,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputEmail1">Max Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['max_qty']) ? $error['max_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
                                     </div>
-                                    <div class="col-md-3">
-                                      <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
-                                       <?php
-                                         if (empty($res[0]['enroll_date']) || $res[0]['enroll_date'] == '0000-00-00') {
-                                          ?>
-                                      <input type="date" class="form-control" name="enroll_date" value="">
-                                       <?php
-                                        } else {
-                                        ?>
-                                       <input type="date" class="form-control" name="enroll_date" value="<?php echo $res[0]['enroll_date']; ?>" readonly>
-                                        <?php
-                                          }
-                                         ?>
-                                   </div>
+
 
                             </div>
                          </div><!-- /.box-body -->
