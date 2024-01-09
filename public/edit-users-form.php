@@ -100,7 +100,7 @@ if (isset($_POST['btnEdit'])) {
 
         $refer_bonus_sent = $fn->get_value('users','refer_bonus_sent',$ID);
  
-        if($status == 1 && !empty($referred_by) && $refer_bonus_sent != 1){
+        if(!empty($enroll_date) && !empty($referred_by) && $refer_bonus_sent != 1){
            
             
             $sql_query = "SELECT * FROM users WHERE refer_code =  '$referred_by'";
@@ -132,7 +132,7 @@ if (isset($_POST['btnEdit'])) {
             
         }
         $register_bonus_sent = $fn->get_value('users','register_bonus_sent',$ID);
-            if ($status == 1 && $register_bonus_sent != 1 ) {
+            if (!empty($enroll_date) && $register_bonus_sent != 1 ) {
                 $sql_query = "UPDATE users SET register_bonus_sent = 1 WHERE id =  $ID";
                 $db->sql($sql_query);
         
@@ -492,7 +492,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <div class="col-md-3">
                                       <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
                                        <?php
-                                         if (empty($res[0]['enroll_date'])) {
+                                         if (empty($res[0]['enroll_date']) || $res[0]['enroll_date'] == '0000-00-00') {
                                           ?>
                                       <input type="date" class="form-control" name="enroll_date" value="">
                                        <?php
