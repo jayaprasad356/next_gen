@@ -29,11 +29,11 @@ if ($lnum >= 1) {
 }
 
 
-// $sql = "UPDATE users SET last_today_orders = today_orders";
-// $db->sql($sql);
+$sql = "UPDATE users SET last_today_orders = today_orders";
+$db->sql($sql);
 
-// $sql = "UPDATE users SET today_orders = 0";
-// $db->sql($sql);
+$sql = "UPDATE users SET today_orders = 0";
+$db->sql($sql);
 
 $sql = "UPDATE users
 SET worked_days = DATEDIFF('$currentdate', joined_date) - (
@@ -54,8 +54,8 @@ WHERE status = 1";
 $db->sql($sql);
 
 
-// $sql = "UPDATE users SET average_orders = total_orders / worked_days WHERE status = 1";
-// $db->sql($sql);
+$sql = "UPDATE users SET average_orders = total_orders / worked_days WHERE status = 1";
+$db->sql($sql);
 
 
 
