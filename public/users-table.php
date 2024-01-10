@@ -70,6 +70,7 @@
                                     <th  data-field="description"  data-sortable="true" >Description</th>
                                     <th  data-field="balance" data-sortable="true">Balance</th>
                                     <th  data-field="status" data-sortable="true">Status</th>
+                                    <th  data-field="support_name" data-sortable="true">Support Name</th>
                                     <th  data-field="joined_date" data-sortable="true">Joined Date</th>
                                     <th  data-field="registered_date" data-sortable="true">Registered Date</th>
                                     <th  data-field="enroll_date" data-sortable="true">Enroll Date</th>
