@@ -35,7 +35,6 @@ if (isset($_POST['btnEdit'])) {
     $joined_date = $db->escapeString($_POST['joined_date']);
     $total_orders = $db->escapeString(($_POST['total_orders']));
     $today_orders = $db->escapeString($_POST['today_orders']);
-    $lead_id = $db->escapeString(($_POST['lead_id']));
     $support_id = $db->escapeString(($_POST['support_id']));
     $branch_id = $db->escapeString(($_POST['branch_id']));
     $store_id = $db->escapeString(($_POST['store_id']));
@@ -45,9 +44,7 @@ if (isset($_POST['btnEdit'])) {
     $description = $db->escapeString(($_POST['description']));
     $order_available = $db->escapeString(($_POST['order_available']));
     $average_orders = $db->escapeString(($_POST['average_orders']));
-    $abcd_user = $db->escapeString(($_POST['abcd_user']));
     $description = $db->escapeString(($_POST['description']));
-    $interested = $db->escapeString(($_POST['interested']));
     $hiring_earings = $db->escapeString(($_POST['hiring_earings']));
     $orders_earnings = $db->escapeString(($_POST['orders_earnings']));
     $password = $db->escapeString(($_POST['password']));
@@ -73,9 +70,7 @@ if (isset($_POST['btnEdit'])) {
     if (empty($languages)) {
         $error['languages'] = " <span class='label label-danger'>Required!</span>";
     }
-    if (empty($lead_id)) {
-        $error['update_users'] = " <span class='label label-danger'> Lead Required!</span>";
-    }
+   
     if (empty($support_id)) {
         $error['update_users'] = " <span class='label label-danger'> Support Required!</span>";
     }
@@ -89,7 +84,7 @@ if (isset($_POST['btnEdit'])) {
     
             
 
-    if (!empty($mobile) && !empty($lead_id)  && 
+    if (!empty($mobile) && 
     !empty($support_id) && 
     !empty($branch_id) && 
     !empty($store_id)) {
@@ -146,7 +141,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,lead_id='$lead_id',support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders',abcd_user = '$abcd_user', description = '$description', interested = '$interested',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -249,22 +244,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
                                     <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="exampleInputEmail1">Select Lead</label> <i class="text-danger asterik">*</i>
-                                    <select id='lead_id' name="lead_id" class='form-control' style="background-color: #7EC8E3">
-                                           <option value="">--Select--</option>
-                                                <?php
-                                                $sql = "SELECT * FROM `staffs`";
-                                                $db->sql($sql);
-
-                                                $result = $db->getResult();
-                                                foreach ($result as $value) {
-                                                ?>
-                                                    <option value='<?= $value['id'] ?>' <?= $value['id']==$res[0]['lead_id'] ? 'selected="selected"' : '';?>><?= $value['name'] ?></option>
-                                                    
-                                                <?php } ?>
-                                    </select>
-                            </div>
+                                
                             <div class="col-md-3">
                                       <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
                                        <?php
@@ -436,17 +416,6 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="number" class="form-control" name="average_orders" value="<?php echo $res[0]['average_orders']; ?>">
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Abcd User</label><i class="text-danger asterik">*</i>
-                                    <input type="number" class="form-control" name="abcd_user" value="<?php echo $res[0]['abcd_user']; ?>">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="exampleInputEmail1">Interested</label><i class="text-danger asterik">*</i>
-                                    <input type="number" class="form-control" name="interested" value="<?php echo $res[0]['interested']; ?>">
-                                </div>
-                            </div>
-                            <br>
-                            <div class="row">
-                                    <div class="col-md-3">
                                         <label for="exampleInputEmail1"> Password</label> <i class="text-danger asterik">*</i><?php echo isset($error['password']) ? $error['password'] : ''; ?>
                                         <input type="text" class="form-control" name="password" value="<?php echo $res[0]['password']; ?>">
                                     </div>
@@ -454,14 +423,14 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputEmail1"> Hiring Earnings</label> <i class="text-danger asterik">*</i><?php echo isset($error['hiring_earings']) ? $error['hiring_earings'] : ''; ?>
                                         <input type="number" class="form-control" name="hiring_earings" value="<?php echo $res[0]['hiring_earings']; ?>">
                                     </div>
+                            </div>
+                            <br>
+                            <div class="row">
                                 <div class="col-md-3">
                                     <label for="exampleInputEmail1">Orders Earnings</label> <i class="text-danger asterik">*</i><?php echo isset($error['orders_earnings']) ? $error['orders_earnings'] : ''; ?>
                                     <input type="number" class="form-control" name="orders_earnings" value="<?php echo $res[0]['orders_earnings']; ?>">
                                 </div>
-                            </div>
-                         <br>
-                         <div class="row">
-                                    <div class="col-md-3">
+                                <div class="col-md-3">
                                         <label for="exampleInputEmail1">Min Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['min_qty']) ? $error['min_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="min_qty" value="<?php echo $res[0]['min_qty']; ?>">
                                     </div>
@@ -469,9 +438,9 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputEmail1">Max Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['max_qty']) ? $error['max_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
                                     </div>
-
-
                             </div>
+                         <br>
+                     
                          </div><!-- /.box-body -->
                          <br>
                 </form>

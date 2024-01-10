@@ -39,6 +39,10 @@
                                 <input type="date" class="form-control" id="date" name="date" value="<?php echo (isset($_GET['date'])) ? $_GET['date'] : "" ?>"></input>
                         </div>
                         <div class="col-md-2">
+                                <h4 class="box-title">Enroll Date </h4>
+                                <input type="date" class="form-control" id="enroll_date" name="enroll_date" value="<?php echo (isset($_GET['enroll_date'])) ? $_GET['enroll_date'] : "" ?>"></input>
+                        </div>
+                        <div class="col-md-2">
                         <h4 class="box-title">Referred By</h4>
                             <input type="text" class="form-control" name="referred_by" id="referred_by" >
                         </div>
@@ -64,11 +68,11 @@
                                     <th  data-field="total_orders" data-sortable="true">Total orders</th>
                                     <th  data-field="earn" data-sortable="true">Earn</th>
                                     <th  data-field="description"  data-sortable="true" >Description</th>
-                                    <th  data-field="lead_name" >Lead Name</th>
                                     <th  data-field="balance" data-sortable="true">Balance</th>
                                     <th  data-field="status" data-sortable="true">Status</th>
                                     <th  data-field="joined_date" data-sortable="true">Joined Date</th>
                                     <th  data-field="registered_date" data-sortable="true">Registered Date</th>
+                                    <th  data-field="enroll_date" data-sortable="true">Enroll Date</th>
                                     <th  data-field="average_orders" data-sortable="true">Average Orders</th>
                                 </tr>
                             </thead>
@@ -97,12 +101,16 @@
     $('#date').on('change', function() {
         $('#users_table').bootstrapTable('refresh');
     });
+    $('#enroll_date').on('change', function() {
+        $('#users_table').bootstrapTable('refresh');
+    });
     $('#referred_by').on('change', function() {
         $('#users_table').bootstrapTable('refresh');
     });
     function queryParams(p) {
         return {
             "date": $('#date').val(),
+            "enroll_date": $('#enroll_date').val(),
             "seller_id": $('#seller_id').val(),
             "community": $('#community').val(),
             "status": $('#status').val(),

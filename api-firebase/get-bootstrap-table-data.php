@@ -64,12 +64,18 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         }
         $where .= "joined_date = '$date' ";
     }
-    if (isset($_GET['trail_completed']) && $_GET['trail_completed'] != '') {
-        $trail_completed = $db->escapeString($fn->xss_clean($_GET['trail_completed']));
-        $where .= "trail_completed = '$trail_completed' ";
+    if (isset($_GET['enroll_date']) && $_GET['enroll_date'] != '') {
+        $enroll_date = $db->escapeString($fn->xss_clean($_GET['enroll_date']));
+        if (!empty($where)) {
+            $where .= "AND ";
+        }
+        $where .= "enroll_date = '$enroll_date' ";
     }
     if (isset($_GET['referred_by']) && $_GET['referred_by'] != '') {
         $referred_by = $db->escapeString($fn->xss_clean($_GET['referred_by']));
+        if (!empty($where)) {
+            $where .= "AND ";
+        }
         $where .= "referred_by = '$referred_by' ";
     }
     if (isset($_GET['offset']))
@@ -104,7 +110,6 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
     $tempRow = array();
     foreach ($res as $row) {
         $support_id = $row['support_id'];
-        $lead_id = $row['lead_id'];
 
         $operate = ' <a href="edit-users.php?id=' . $row['id'] . '"><i class="fa fa-edit"></i>Edit</a>';
         $operate .= ' <a class="text text-danger" href="delete-users.php?id=' . $row['id'] . '"><i class="fa fa-trash"></i>Delete</a>';
@@ -128,12 +133,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $db->sql($sql);
         $res = $db->getResult();
         $support_name = isset($res[0]['name']) ? $res[0]['name'] :"";
-        $sql = "SELECT name FROM `staffs` WHERE id = $lead_id";
-        $db->sql($sql);
-        $res = $db->getResult();
-        $lead_name = isset($res[0]['name']) ? $res[0]['name'] :"";
         $tempRow['support_name'] = $support_name;
-        $tempRow['lead_name'] = $lead_name;
         $tempRow['account_num'] = $row['account_num'];
         $tempRow['holder_name'] = $row['holder_name'];
         $tempRow['bank'] = $row['bank'];
@@ -148,6 +148,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
             $tempRow['status']="<label class='label label-danger'>Blocked</label>";
 
          $tempRow['joined_date'] = $row['joined_date'];
+         $tempRow['enroll_date'] = $row['enroll_date'];
         $tempRow['operate'] = $operate;
         $rows[] = $tempRow;
     }
