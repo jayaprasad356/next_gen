@@ -248,6 +248,12 @@ $fn = new custom_functions;
                         <span>Bulk Approval</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk-quantity.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk Quantity</span>
+                    </a>
+                </li>
              
             </ul>
             </section>
