@@ -164,6 +164,41 @@ if (isset($_POST['bulk_approval']) && $_POST['bulk_approval'] == 1) {
     }
 }
 
+if (isset($_POST['bulk_quantity']) && $_POST['bulk_quantity'] == 1) {
+    $count = 0;
+    $count1 = 0;
+    $error = false;
+
+    $filename = $_FILES["upload_file"]["tmp_name"];
+    $result = $fn->validate_image($_FILES["upload_file"], false);
+
+    if (!$result) {
+        $error = true;
+    }
+
+    if ($_FILES["upload_file"]["size"] > 0 && $error == false) {
+        $file = fopen($filename, "r");
+
+        while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
+            if ($count1 != 0) {
+                $mobile = trim($db->escapeString($emapData[0]));
+                $min_qty = trim($db->escapeString($emapData[1]));
+                $max_qty = trim($db->escapeString($emapData[1]));
+
+                $sql = "UPDATE users SET  min_qty = '$min_qty' ,max_qty = '$max_qty'  WHERE mobile = '$mobile'";
+                $db->sql($sql);
+            }
+
+            $count1++;
+        }
+
+        fclose($file);
+
+        echo "<p class='alert alert-success'>CSV file is successfully imported!</p><br>";
+    } else {
+        echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
+    }
+}
 
 
 if (isset($_POST['delete_variant'])) {
