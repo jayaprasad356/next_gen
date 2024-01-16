@@ -5,51 +5,10 @@ include_once('includes/custom-functions.php');
 $fn = new custom_functions;
 
 ?>
-<?php
-if (isset($_POST['btnd'])) {
-
-        $title = $db->escapeString(($_POST['title']));
-        $description = $db->escapeString($_POST['description']);
-        $link = $db->escapeString($_POST['link']);
-        $error = array();
-        if (empty($title)) {
-            $error['title'] = " <span class='label label-danger'>Required!</span>";
-        }
-        if (empty($description)) {
-            $error['description'] = " <span class='label label-danger'>Required!</span>";
-        }
-       
-       
-       
-       if (!empty($title) && !empty($description)) 
-       {
-            $datetime = date('Y-m-d H:i:s');
-            $sql_query = "INSERT INTO notifications (title,description,link,datetime)VALUES('$title','$description','$link','$datetime')";
-            $db->sql($sql_query);
-            $result = $db->getResult();
-            if (!empty($result)) {
-                $result = 0;
-            } else {
-                $result = 1;
-            }
-
-            if ($result == 1) {
-                
-                $error['add_notification'] = "<section class='content-header'>
-                                                <span class='label label-success'>Notification Added Successfully</span> </section>";
-            } else {
-                $error['add_notification'] = " <span class='label label-danger'>Failed</span>";
-            }
-            }
-        }
-?>
 <section class="content-header">
+    <h1>Bulk Quantity<small></small></h1>
+</section>
 
-    <?php echo isset($error['add_notification']) ? $error['add_notification'] : ''; ?>
-    <ol class="breadcrumb">
-        <li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
-    </ol>
-    <hr />
 </section>
 <section class="content">
     <div class="row">
@@ -63,7 +22,7 @@ if (isset($_POST['btnd'])) {
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form id='add_form' method="post" action="public/db-operation.php" enctype="multipart/form-data">
-                <input type="hidden" id="bulk_quantity" name="bulk_quantity" required="" value="1" aria-required="true">
+                    <input type="hidden" id="bulk_quantity" name="bulk_quantity" required="" value="1" aria-required="true">
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
@@ -82,11 +41,15 @@ if (isset($_POST['btnd'])) {
                     </div>
                     <!-- /.box-body -->
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" name="btnAdd">Submit</button>
-                        <input type="reset" onClick="refreshPage()" class="btn-warning btn" value="Clear" />
-                    </div>
+                   
 
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" id="submit_btn" name="btnAdd">Upload</button>
+                        <input type="reset" class="btn-warning btn" value="Clear" />
+
+                        <a class='btn btn-info' id='sample' href='#' download> <em class='fa fa-download'></em> Download Sample File</a>
+
+                    </div>
                 </form>
                 <div id="result"></div>
 
@@ -94,6 +57,35 @@ if (isset($_POST['btnd'])) {
         </div>
     </div>
 </section>
+<script>
+  
+    $('#type').on('change', function(e) {
+        var type = $('#type').val();
+        $("#type1").val(type);
+    });
+    $('.box-footer > #sample').click(function(e) {
+        e.preventDefault(); //stop the browser from following
+        //whenever you click off an input element
+        // type1 = $("#type1").val();
+        // if (type1 != 'products' ) {
+        //   alert('Please select type.');
+        // }
+        // if (type1 == 'products') {
+        window.location.href = 'library/quantity.csv';
+        // } 
+
+    });
+ 
+</script>
+
+<script>
+    $('#add_form').validate({
+        rules: {
+            upload_file: "required",
+            type: "required"
+        }
+    });
+</script>
 
 <div class="separator"> </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
