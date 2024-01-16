@@ -183,7 +183,7 @@ if (isset($_POST['bulk_quantity']) && $_POST['bulk_quantity'] == 1) {
             if ($count1 != 0) {
                 $mobile = trim($db->escapeString($emapData[0]));
                 $min_qty = trim($db->escapeString($emapData[1]));
-                $max_qty = trim($db->escapeString($emapData[1]));
+                $max_qty = trim($db->escapeString($emapData[2]));
 
                 $sql = "UPDATE users SET  min_qty = '$min_qty' ,max_qty = '$max_qty'  WHERE mobile = '$mobile'";
                 $db->sql($sql);
