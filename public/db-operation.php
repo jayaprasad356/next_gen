@@ -199,7 +199,58 @@ if (isset($_POST['bulk_quantity']) && $_POST['bulk_quantity'] == 1) {
         echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
     }
 }
+if (isset($_POST['bulk_orders']) && $_POST['bulk_orders'] == 1) {
+    $count = 0;
+    $count1 = 0;
+    $error = false;
 
+    $filename = $_FILES["upload_file"]["tmp_name"];
+    $result = $fn->validate_image($_FILES["upload_file"], false);
+
+    if (!$result) {
+        $error = true;
+    }
+
+    if ($_FILES["upload_file"]["size"] > 0 && $error == false) {
+        $file = fopen($filename, "r");
+
+        while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE) {
+            if ($count1 != 0) {
+                $mobile = trim($db->escapeString($emapData[0]));
+                $orders = trim($db->escapeString($emapData[1]));
+            
+
+                $datetime = date('Y-m-d H:i:s');
+                $type = 'admin_orders';
+                $per_code_cost = 0.20;
+                $amount = $orders * $per_code_cost;
+                $sql = "SELECT id FROM `users` WHERE mobile = '$mobile'";
+                $db->sql($sql);
+                $res = $db->getResult();
+                $num = $db->numRows($res);
+                
+                if ($num == 1) {
+                    $ID = $res[0]['id'];
+                    $sql = "INSERT INTO transactions (`user_id`,`orders`,`amount`,`datetime`,`type`)VALUES('$ID','$orders','$amount','$datetime','$type')";
+                    $db->sql($sql);
+                    $sql = "UPDATE `users` SET  `today_orders` = today_orders + $orders,total_orders = total_orders + $orders, orders_earnings = orders_earnings + $amount WHERE `id` = $ID";
+                    $db->sql($sql);
+
+                }
+
+
+            }
+
+            $count1++;
+        }
+
+        fclose($file);
+
+        echo "<p class='alert alert-success'>CSV file is successfully imported!</p><br>";
+    } else {
+        echo "<p class='alert alert-danger'>Invalid file format! Please upload data in CSV file!</p><br>";
+    }
+}
 
 if (isset($_POST['delete_variant'])) {
     $v_id = $db->escapeString(($_POST['id']));

@@ -254,6 +254,12 @@ $fn = new custom_functions;
                         <span>Bulk Quantity</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="bulk-orders.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk Orders</span>
+                    </a>
+                </li>
              
             </ul>
             </section>
