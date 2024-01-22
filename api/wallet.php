@@ -181,36 +181,33 @@ if ($num >= 1) {
 
 
         $message = "Order Placed successfully";
-
         
-    
     }else{
-        $message = "order not placed";
+        $message = "Order not placed";
 
-        
-    
+
     }
 
-
-    
-
 }
+
+
 else{
-    $response['success'] = false;
-    $response['message'] = "User Not Found";
-    print_r(json_encode($response));
-    return false;
+$response['success'] = false;
+$response['message'] = "User Not Found";
+print_r(json_encode($response));
+return false;
 }
-
-
 
 
 
 $sql = "SELECT * FROM users WHERE id = $user_id ";
 $db->sql($sql);
 $res = $db->getResult();
+
 $response['success'] = true;
 $response['message'] = $message;
 $response['data'] = $res;
 echo json_encode($response);
+
+
 ?>

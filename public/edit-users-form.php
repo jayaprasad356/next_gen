@@ -164,9 +164,7 @@ if (isset($_POST['btnEdit'])) {
  
 $data = array();
 
-$sql_query = "SELECT * FROM users WHERE id = $ID";
-$db->sql($sql_query);
-$res = $db->getResult();
+
 
 $sql_query = "SELECT * FROM users WHERE id =" . $ID;
 $db->sql($sql_query);
