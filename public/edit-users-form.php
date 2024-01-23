@@ -26,7 +26,6 @@ if (isset($_POST['btnEdit'])) {
     $refer_code= $db->escapeString($_POST['refer_code']);
     $withdrawal_status = $db->escapeString($_POST['withdrawal_status']);
     $blocked = $db->escapeString($_POST['blocked']);
-    $refer_bonus_sent = $db->escapeString($_POST['refer_bonus_sent']);
     $min_withdrawal = $db->escapeString($_POST['min_withdrawal']);
     $status = $db->escapeString($_POST['status']);
     
@@ -141,7 +140,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -390,13 +389,6 @@ if (isset($_POST['btnCancel'])) { ?>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Refer Bonus Sent</label><br>
-                                    <input type="checkbox" id="refer_button" class="js-switch" <?= isset($res[0]['refer_bonus_sent']) && $res[0]['refer_bonus_sent'] == 1 ? 'checked' : '' ?>>
-                                    <input type="hidden" id="refer_bonus_sent" name="refer_bonus_sent" value="<?= isset($res[0]['refer_bonus_sent']) && $res[0]['refer_bonus_sent'] == 1 ? 1 : 0 ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="">Order Available</label><br>
                                     <input type="checkbox" id="order_button" class="js-switch" <?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 'checked' : '' ?>>
                                     <input type="hidden" id="order_available" name="order_available" value="<?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 1 : 0 ?>">
@@ -469,18 +461,6 @@ if (isset($_POST['btnCancel'])) { ?>
 
         } else {
             $('#blocked').val(0);
-        }
-    };
-</script>
-<script>
-    var changeCheckbox = document.querySelector('#refer_button');
-    var init = new Switchery(changeCheckbox);
-    changeCheckbox.onchange = function() {
-        if ($(this).is(':checked')) {
-            $('#refer_bonus_sent').val(1);
-
-        } else {
-            $('#refer_bonus_sent').val(0);
         }
     };
 </script>
