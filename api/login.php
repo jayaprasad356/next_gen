@@ -34,13 +34,11 @@ $device_id = $db->escapeString($_POST['device_id']);
 $password = $db->escapeString($_POST['password']);
 
 
-$sql = "SELECT * FROM users WHERE mobile = '$mobile'";
+$sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password = '$password'";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num == 1){
-
-
     $status = $res[0]['status'];
     if ($status == 1 || $status == 0) {
         $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
@@ -74,7 +72,7 @@ if ($num == 1){
 else{
     $response['success'] = true;
     $response['registered'] = false;
-    $response['message'] = "User Not Logged In";
+    $response['message'] = "User Credentials not match";
     print_r(json_encode($response));
     return false;
 }
