@@ -43,6 +43,12 @@ $name = $db->escapeString($_POST['name']);
 $mobile = $db->escapeString($_POST['mobile']);
 $expense = $db->escapeString($_POST['expense']);
 
+
+$response['success'] = false;
+$response['message'] = "Cannot update profile";
+print_r(json_encode($response));
+return false;
+
 $sql = "SELECT * FROM users WHERE id = '" . $user_id . "'";
 $db->sql($sql);
 $res = $db->getResult();
