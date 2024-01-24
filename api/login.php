@@ -70,7 +70,7 @@ if ($num == 1){
 
 }
 else{
-    $response['success'] = true;
+    $response['success'] = false;
     $response['registered'] = false;
     $response['message'] = "User Credentials not match";
     print_r(json_encode($response));
