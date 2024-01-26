@@ -170,7 +170,7 @@ if ($num >= 1) {
     
 
 
-    if($orders == '100' && ($tqs1 != $total_qty_sold)){
+    if($orders == '100'){
         $amount = $orders * $per_order_cost;
 
         $sql = "UPDATE users SET today_orders = today_orders + '$orders', total_orders = total_orders + '$orders', orders_earnings = orders_earnings + '$amount' WHERE id = $user_id";
