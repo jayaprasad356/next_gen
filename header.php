@@ -236,6 +236,12 @@ $fn = new custom_functions;
                         <span>Leaves</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="website_enroll.php">
+                        <i class="fa fa-adn"></i>
+                        <span>Website Enroll</span>
+                    </a>
+                </li>
                 <!-- <li class="treeview">
                     <a href="bulk-upload-user.php">
                         <i class="fa fa-folder-open"></i>
