@@ -154,7 +154,7 @@ include "header.php";
                 <div class="small-box bg-teal">
                         <div class="inner">
                            <?php
-                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 500";
+                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 500 AND status = 1";
                            $db->sql($sql);
                            $res = $db->getResult();
                            $count = $res[0]['count'];
