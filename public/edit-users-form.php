@@ -105,10 +105,10 @@ if (isset($_POST['btnEdit'])) {
                 if ($user_status == 1) {
                     if ($plan_price == 2999) {
                         $refer_orders = 500;
-                        $referral_bonus = 200;
+                        $referral_bonus = 300;
                     } elseif ($plan_price == 4999) {
                         $refer_orders = 500;
-                        $referral_bonus = 500;
+                        $referral_bonus = 600;
                     } 
                     $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`total_orders` = total_orders + $refer_orders,`hiring_earings` = hiring_earings + $referral_bonus  WHERE id =  $user_id";
                     $db->sql($sql_query);
