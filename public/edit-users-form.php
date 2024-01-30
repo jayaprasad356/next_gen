@@ -28,7 +28,7 @@ if (isset($_POST['btnEdit'])) {
     $blocked = $db->escapeString($_POST['blocked']);
     $min_withdrawal = $db->escapeString($_POST['min_withdrawal']);
     $status = $db->escapeString($_POST['status']);
-    
+    $plan_price = $db->escapeString($_POST['plan_price']);
 
     $device_id = $db->escapeString(($_POST['device_id']));
     $joined_date = $db->escapeString($_POST['joined_date']);
@@ -99,13 +99,17 @@ if (isset($_POST['btnEdit'])) {
             $num = $db->numRows($res);
 
             
-            if ($num == 1){
+            if ($num == 1) {
                 $user_status = $res[0]['status'];
                 $user_id = $res[0]['id'];
-                if($user_status == 1){
-                    $refer_orders = 500;
-                    $referral_bonus = 600;
-
+                if ($user_status == 1) {
+                    if ($plan_price == 2999) {
+                        $refer_orders = 500;
+                        $referral_bonus = 200;
+                    } elseif ($plan_price == 4999) {
+                        $refer_orders = 500;
+                        $referral_bonus = 500;
+                    } 
                     $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`total_orders` = total_orders + $refer_orders,`hiring_earings` = hiring_earings + $referral_bonus  WHERE id =  $user_id";
                     $db->sql($sql_query);
                     $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type)VALUES($user_id,$referral_bonus,'$datetime','refer_bonus')";
@@ -121,6 +125,7 @@ if (isset($_POST['btnEdit'])) {
             }
             
         }
+       
         $register_bonus_sent = $fn->get_value('users','register_bonus_sent',$ID);
             if (!empty($enroll_date) && $register_bonus_sent != 1 ) {
                 $sql_query = "UPDATE users SET register_bonus_sent = 1 WHERE id =  $ID";
@@ -140,7 +145,7 @@ if (isset($_POST['btnEdit'])) {
             }
 
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -231,6 +236,13 @@ if (isset($_POST['btnCancel'])) { ?>
                                   <div class="col-md-5">
                                             <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
                                             <textarea  type="text" rows="1" class="form-control" name="description"><?php echo $res[0]['description']?></textarea>
+                                    </div>
+                                    <div class="col-md-3">
+                                   <label for="exampleInputEmail1">Plan Price</label> <i class="text-danger asterik">*</i>
+                                    <select id='plan_price' name="plan_price" class='form-control'>
+                                     <option value='2999' <?php if ($res[0]['plan_price'] == '2999') echo 'selected'; ?>>2999</option>
+                                      <option value='4999' <?php if ($res[0]['plan_price'] == '4999') echo 'selected'; ?>>4999</option>
+                                    </select>
                                     </div>
                                </div>
                              </div>
