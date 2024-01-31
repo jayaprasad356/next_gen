@@ -504,7 +504,7 @@ if (isset($_POST['btnCancel'])) { ?>
     $(document).ready(function() {
         $("#link").click(function() {
             var refer_code = $("input[name='refer_code']").val();
-            var link = "https://nextgencareer.abcdapp.in?"; 
+            var link = "https://nextgencareer.abcdapp.in/index.php?"; 
             var full_link = link + "refer_code=" + refer_code;
 
             var tempInput = $("<input>");
