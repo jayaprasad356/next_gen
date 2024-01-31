@@ -14,7 +14,9 @@ if (isset($_GET['id'])) {
     exit(0);
 }
 
-if (isset($_POST['btnEdit'])) {
+
+
+if (isset($_POST['btnEdit'])){
 
     $datetime = date('Y-m-d H:i:s');
     $date = date('Y-m-d');
@@ -50,6 +52,7 @@ if (isset($_POST['btnEdit'])) {
     $min_qty = $db->escapeString(($_POST['min_qty']));
     $max_qty = $db->escapeString(($_POST['max_qty']));
     $enroll_date = $db->escapeString(($_POST['enroll_date']));
+   
 
     
     $error = array();
@@ -144,8 +147,11 @@ if (isset($_POST['btnEdit'])) {
 
             }
 
+            $link = "";
+           
+           
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',link = '$link'  WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -245,6 +251,11 @@ if (isset($_POST['btnCancel'])) { ?>
                                     </select>
                                     </div>
                                </div>
+                               <div class="form-group col-md-3">
+                                 <h4 class="box-title"> </h4>
+                                 <a class="btn btn-block btn-primary" name="link" id="link"><i class="fa fa-copy"></i>Copy Marketing Link</a>
+
+                                </div>
                              </div>
                           <br>
                         <div class="row">
@@ -487,6 +498,24 @@ if (isset($_POST['btnCancel'])) { ?>
             $('#order_available').val(0);
         }
     };
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#link").click(function() {
+            var refer_code = $("input[name='refer_code']").val();
+            var link = "https://nextgencareer.abcdapp.in?"; 
+            var full_link = link + "refer_code=" + refer_code;
+
+            var tempInput = $("<input>");
+            $("body").append(tempInput);
+            tempInput.val(full_link).select();
+            document.execCommand("copy");
+            tempInput.remove();
+
+            alert("Marketing link with refer_code copied to clipboard!");
+        });
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>

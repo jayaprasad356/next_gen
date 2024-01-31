@@ -1351,15 +1351,18 @@ if (isset($_GET['table']) && $_GET['table'] == 'website_enroll') {
     if (isset($_GET['order'])){
         $order = $db->escapeString($_GET['order']);
     }
-    $sql = "SELECT COUNT(`id`) as total FROM `website_enroll` ";
+    
+    $join = "LEFT JOIN `users` u ON l.user_id = u.id WHERE l.id IS NOT NULL " . $where;
+
+    $sql = "SELECT COUNT(l.id) AS total FROM `website_enroll` l " . $join;
     $db->sql($sql);
     $res = $db->getResult();
     foreach ($res as $row)
         $total = $row['total'];
    
-    $sql = "SELECT * FROM website_enroll " . $where . " ORDER BY " . $sort . " " . $order . " LIMIT " . $offset . ", " . $limit;
-    $db->sql($sql);
-    $res = $db->getResult();
+     $sql = "SELECT l.id AS id,l.*,u.name AS refer_name,u.mobile AS refer_mobile FROM `website_enroll` l " . $join . " ORDER BY $sort $order LIMIT $offset, $limit";
+     $db->sql($sql);
+     $res = $db->getResult();
 
     $bulkData = array();
     $bulkData['total'] = $total;
@@ -1375,6 +1378,8 @@ if (isset($_GET['table']) && $_GET['table'] == 'website_enroll') {
         $tempRow['id'] = $row['id'];
         $tempRow['name'] = $row['name'];
         $tempRow['mobile'] = $row['mobile'];
+        $tempRow['refer_name'] = $row['refer_name'];
+        $tempRow['refer_mobile'] = $row['refer_mobile'];
         $tempRow['email'] = $row['email'];
         $tempRow['location'] = $row['location'];
         $tempRow['datetime'] = $row['datetime'];

@@ -22,6 +22,8 @@
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="name" data-sortable="true">Name</th>
                                     <th  data-field="mobile" data-sortable="true">Mobile</th>
+                                    <th  data-field="refer_name" data-sortable="true">Refer Name</th>
+                                    <th  data-field="refer_mobile" data-sortable="true">Refer Mobile</th>
                                     <th  data-field="email" data-sortable="true">Email</th>
                                     <th  data-field="location" data-sortable="true">Location</th>
                                     <th  data-field="datetime" data-sortable="true">DateTime</th>
