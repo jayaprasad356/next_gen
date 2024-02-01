@@ -71,7 +71,7 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     $average_orders = $res[0]['average_orders'];
-    $store_id = $res[0]['store_id'];
+    $store_id = $res[0]['store_id'];    
     $blocked = $res[0]['blocked'];
     $status = $res[0]['status'];
     $joined_date = $res[0]['joined_date'];
@@ -142,7 +142,7 @@ if ($num >= 1) {
     }
 
 
-    $sql = "SELECT  total_qty_sold,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+   $sql = "SELECT  total_qty_sold,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
     $db->sql($sql);
     $tres = $db->getResult();
     $num = $db->numRows($tres);
@@ -167,8 +167,22 @@ if ($num >= 1) {
             return false;
         }
     }
-    
+    if ($average_orders >= 500) {
+        
+        $per_order_cost = 0.20; 
+    }
+     elseif ($average_orders >= 400) {
 
+        $per_order_cost = 0.15;
+    } 
+     elseif ($average_orders >= 300) {
+
+        $per_order_cost = 0.10; 
+    } 
+     else {
+
+        $per_order_cost = 0;
+    }
 
     if($orders == '100'){
         $amount = $orders * $per_order_cost;
