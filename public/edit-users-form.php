@@ -291,6 +291,8 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="checkbox" id="student_button" class="js-switch" <?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 'checked' : '' ?>>
                                     <input type="hidden" id="student_plan" name="student_plan" value="<?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 1 : 0 ?>">
                                 </div>
+
+                                </div>
                         </div>
                         <br>
                         <div class="row">
