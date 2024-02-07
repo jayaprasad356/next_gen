@@ -264,14 +264,9 @@ if (isset($_POST['btnCancel'])) { ?>
                                 </div>
                              </div>
                           <br>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
-                                    <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
-                                </div>
-                                
-                            <div class="col-md-3">
+                          <div class="row">
+                              <div class="form-group">
+                              <div class="col-md-3">
                                       <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
                                        <?php
                                          if (empty($res[0]['enroll_date']) || $res[0]['enroll_date'] == '0000-00-00') {
@@ -285,15 +280,17 @@ if (isset($_POST['btnCancel'])) { ?>
                                           }
                                          ?>
                                    </div>
-                            </div>
-                            <div class="col-md-3">
+                                   <div class="col-md-3">
+                                    <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
+                                    <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
+                                </div>
+                                <div class="col-md-3">
                                 <label for="">Student Plan</label><br>
                                     <input type="checkbox" id="student_button" class="js-switch" <?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 'checked' : '' ?>>
                                     <input type="hidden" id="student_plan" name="student_plan" value="<?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 1 : 0 ?>">
                                 </div>
-
-                                </div>
-                        </div>
+                               </div>
+                             </div>
                         <br>
                         <div class="row">
                             <div class="form-group col-md-4">
