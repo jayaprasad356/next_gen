@@ -43,6 +43,7 @@ if ($num == 1) {
     $hiring_earings = $res[0]['hiring_earings']; 
     $orders_earnings = $res[0]['orders_earnings'];
     $average_orders = $res[0]['average_orders'];
+    $student_plan = $res[0]['student_plan'];
 
     if($wallet_type == 'hiring_earnings'){
         if ($hiring_earings < 100) {
@@ -65,29 +66,32 @@ if ($num == 1) {
             print_r(json_encode($response));
             return false;
         }
-        $today = date("N");
-        if($average_orders >= 400 && $average_orders < 500 && $today != 1){
-            $response['success'] = true;
-            $response['message'] = "Enable on Monday only";
-            print_r(json_encode($response));
-            return false;
-
+        if($student_plan == 0){
+            $today = date("N");
+            if($average_orders >= 400 && $average_orders < 500 && $today != 1){
+                $response['success'] = true;
+                $response['message'] = "Enable on Monday only";
+                print_r(json_encode($response));
+                return false;
+    
+            }
+            if ($average_orders >= 300 && $average_orders < 400 && $currentDate != $firstDateOfMonth) {
+                $response['success'] = true;
+                $response['message'] = "Enable on First date of the month";
+                print_r(json_encode($response));
+                return false;
+            }
+    
+    
+            if($average_orders < 300 ){
+                $response['success'] = true;
+                $response['message'] = "Disabled";
+                print_r(json_encode($response));
+                return false;
+    
+            }
         }
-        if ($average_orders >= 300 && $average_orders < 400 && $currentDate != $firstDateOfMonth) {
-            $response['success'] = true;
-            $response['message'] = "Enable on First date of the month";
-            print_r(json_encode($response));
-            return false;
-        }
 
-
-        if($average_orders < 300 ){
-            $response['success'] = true;
-            $response['message'] = "Disabled";
-            print_r(json_encode($response));
-            return false;
-
-        }
 
 
         $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'orders_earnings','$datetime',$orders_earnings)";
