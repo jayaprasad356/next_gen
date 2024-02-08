@@ -78,6 +78,14 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         }
         $where .= "referred_by = '$referred_by' ";
     }
+    if (isset($_GET['student_plan']) && $_GET['student_plan'] != '') {
+        $student_plan = $db->escapeString($fn->xss_clean($_GET['student_plan']));
+        if (!empty($where)) {
+            $where .= "AND ";
+        }
+        $where .= "student_plan = '$student_plan' ";
+    }
+  
     if (isset($_GET['offset']))
         $offset = $db->escapeString($fn->xss_clean($_GET['offset']));
     if (isset($_GET['limit']))
@@ -121,6 +129,7 @@ if (isset($_GET['table']) && $_GET['table'] == 'users') {
         $tempRow['refer_code'] = $row['refer_code'];
         $tempRow['referred_by'] = $row['referred_by'];
         $tempRow['earn'] = $row['earn'];
+        $tempRow['student_plan'] = $row['student_plan'];
         $tempRow['today_orders'] = $row['today_orders'];
         $tempRow['total_orders'] = $row['total_orders'];
         $tempRow['description'] = $row['description'];

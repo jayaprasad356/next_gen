@@ -46,6 +46,14 @@
                         <h4 class="box-title">Referred By</h4>
                             <input type="text" class="form-control" name="referred_by" id="referred_by" >
                         </div>
+                        <div class="col-md-3">
+                        <h4 class="box-title">Filter by Student Plan</h4>
+                        <select id="student_plan" name="student_plan" class="form-control">
+                            <option value="">All</option>
+                            <option value="0">General</option>
+                            <option value="1">Student Plan</option>
+                        </select>
+                    </div>
                 </div>
                     
                     <div  class="box-body table-responsive">
@@ -108,6 +116,9 @@
     $('#referred_by').on('change', function() {
         $('#users_table').bootstrapTable('refresh');
     });
+    $('#student_plan').on('change', function() {
+        $('#users_table').bootstrapTable('refresh');
+    });
     function queryParams(p) {
         return {
             "date": $('#date').val(),
@@ -117,6 +128,7 @@
             "status": $('#status').val(),
             "trail_completed": $('#trail_completed').val(),
             "referred_by": $('#referred_by').val(),
+            "student_plan": $('#student_plan').val(),
             limit: p.limit,
             sort: p.sort,
             order: p.order,
