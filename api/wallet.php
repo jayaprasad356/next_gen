@@ -75,6 +75,7 @@ if ($num >= 1) {
     $blocked = $res[0]['blocked'];
     $status = $res[0]['status'];
     $joined_date = $res[0]['joined_date'];
+    $student_plan = $res[0]['student_plan'];
 
     $sql = "SELECT per_order_cost FROM `stores` WHERE id = $store_id";
     $db->sql($sql);
@@ -182,6 +183,11 @@ if ($num >= 1) {
      else {
 
         $per_order_cost = 0;
+    }
+
+    if($student_plan == 1){
+        $per_order_cost = 0.20; 
+
     }
 
     if($orders == '100'){
