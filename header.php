@@ -180,6 +180,7 @@ $fn = new custom_functions;
                     <ul class="treeview-menu">
                         <li><a href="withdrawals.php"><i class="fa fa-money"></i>Withdrawals</a></li>
                         <li><a href="add-new-bulk-cancel.php"><i class="fa fa-money"></i>Bulk Order Earnings</a></li>
+                        <li><a href="bulk-cancel-withdrawals.php"><i class="fa fa-money"></i>Bulk Cancel Withdrawal</a></li>
     </ul>
                 </li>
                 <li class="treeview">

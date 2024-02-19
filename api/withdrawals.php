@@ -98,7 +98,14 @@ if ($withdrawal_status == '0') {
     print_r(json_encode($response));
     return false;
 }
+$max_daily_withdrawal = 700;
 
+if ($amount > $max_daily_withdrawal) {
+    $response['success'] = false;
+    $response['message'] = "You can withdraw a maximum of Rs $max_daily_withdrawal per day.";
+    print_r(json_encode($response));
+    return false;
+}
 
 if (!isBetween10AMand6PM()) {
     $response['success'] = false;
