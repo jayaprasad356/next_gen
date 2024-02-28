@@ -71,14 +71,14 @@ if ($num == 1) {
         if($student_plan == 0){
             $today = date("N");
             if($average_orders >= 400 && $average_orders < 500 && $today != 1){
-                $response['success'] = true;
+                $response['success'] = false;
                 $response['message'] = "Enable on Monday only";
                 print_r(json_encode($response));
                 return false;
     
             }
             if ($average_orders >= 300 && $average_orders < 400 && $currentDate != $firstDateOfMonth) {
-                $response['success'] = true;
+                $response['success'] = false;
                 $response['message'] = "Enable on First date of the month";
                 print_r(json_encode($response));
                 return false;
@@ -86,7 +86,7 @@ if ($num == 1) {
     
     
             if($average_orders < 300 ){
-                $response['success'] = true;
+                $response['success'] = false;
                 $response['message'] = "Disabled";
                 print_r(json_encode($response));
                 return false;
@@ -94,22 +94,19 @@ if ($num == 1) {
             }
         }
         if ($days_60_plan == 1) {
-            if ($total_referrals >= 0 && $total_referrals <= 3) {
-                $response['success'] = true;
-                $response['message'] = "Enabled for monthly withdrawals on the 1st.";
-                print_r(json_encode($response));
-                return true;
-            } elseif ($total_referrals >= 4 && $total_referrals <= 6) {
-                $response['success'] = true;
-                $response['message'] = "Enabled for weekly withdrawals on Saturday.";
-                print_r(json_encode($response));
-                return true;
-            } else {
+            if ($total_referrals >= 0 && $total_referrals <= 3 && $currentDate != $firstDateOfMonth) {
                 $response['success'] = false;
-                $response['message'] = "Enabled on Daily Withdrawals.";
+                $response['message'] = "Enable on First date of the month";
                 print_r(json_encode($response));
                 return false;
-            }
+            } 
+            if ($total_referrals >= 4 && $total_referrals <= 6) {
+                $response['success'] = false;
+                $response['message'] = "Enable on Monday only";
+                print_r(json_encode($response));
+                return false;
+    
+            } 
         }
         
         $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'orders_earnings','$datetime',$orders_earnings)";

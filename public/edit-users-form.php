@@ -63,6 +63,7 @@ if (isset($_POST['btnEdit'])){
     
     if($days_60_plan == 1){
         $average_orders = 700;
+        $student_plan = 1;
     }
 
     
