@@ -267,7 +267,12 @@ $fn = new custom_functions;
                         <span>Bulk Orders</span>
                     </a>
                 </li>
-             
+                <li class="treeview">
+                    <a href="login_attempts.php">
+                        <i class="fa fa-user"></i>
+                        <span>Login Attempts</span>
+                    </a>
+                </li>
             </ul>
             </section>
             <!-- /.sidebar -->

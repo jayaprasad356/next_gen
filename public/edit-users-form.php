@@ -54,6 +54,7 @@ if (isset($_POST['btnEdit'])){
     $enroll_date = $db->escapeString(($_POST['enroll_date']));
     $student_plan = $db->escapeString(($_POST['student_plan']));
     $days_60_plan = $db->escapeString(($_POST['days_60_plan']));
+    $login_time = $db->escapeString(($_POST['login_time']));
 
     if($student_plan == 1){
         $average_orders = 300;
@@ -162,7 +163,7 @@ if (isset($_POST['btnEdit'])){
            
            
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',student_plan = '$student_plan',days_60_plan = '$days_60_plan'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',student_plan = '$student_plan',days_60_plan = '$days_60_plan',login_time = '$login_time'   WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -470,6 +471,10 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <div class="col-md-3">
                                         <label for="exampleInputEmail1">Max Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['max_qty']) ? $error['max_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputEmail1">Login Time</label> <i class="text-danger asterik">*</i><?php echo isset($error['login_time']) ? $error['login_time'] : ''; ?>
+                                        <input type="datetime-local" class="form-control" name="login_time" value="<?php echo $res[0]['login_time']; ?>">
                                     </div>
                             </div>
                          <br>
