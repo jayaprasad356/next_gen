@@ -44,6 +44,8 @@ if ($num == 1) {
     $orders_earnings = $res[0]['orders_earnings'];
     $average_orders = $res[0]['average_orders'];
     $student_plan = $res[0]['student_plan'];
+    $days_60_plan = $res[0]['days_60_plan'];
+    $total_referrals = $res[0]['total_referrals'];
 
     if($wallet_type == 'hiring_earnings'){
         if ($hiring_earings < 100) {
@@ -91,9 +93,25 @@ if ($num == 1) {
     
             }
         }
-
-
-
+        if ($days_60_plan == 1) {
+            if ($total_referrals >= 0 && $total_referrals <= 3) {
+                $response['success'] = true;
+                $response['message'] = "Enabled for monthly withdrawals on the 1st.";
+                print_r(json_encode($response));
+                return true;
+            } elseif ($total_referrals >= 4 && $total_referrals <= 6) {
+                $response['success'] = true;
+                $response['message'] = "Enabled for weekly withdrawals on Saturday.";
+                print_r(json_encode($response));
+                return true;
+            } else {
+                $response['success'] = false;
+                $response['message'] = "Enabled on Daily Withdrawals.";
+                print_r(json_encode($response));
+                return false;
+            }
+        }
+        
         $sql = "INSERT INTO transactions (`user_id`,`type`,`datetime`,`amount`) VALUES ($user_id,'orders_earnings','$datetime',$orders_earnings)";
         $db->sql($sql);
         $sql = "UPDATE users SET orders_earnings= orders_earnings - $orders_earnings,earn = earn + $orders_earnings,balance = balance + $orders_earnings  WHERE id=" . $user_id;
