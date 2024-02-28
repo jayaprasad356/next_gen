@@ -7,10 +7,13 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+
 include_once('../includes/crud.php');
 
 $db = new Database();
 $db->connect();
+date_default_timezone_set('Asia/Kolkata');
+
 if (empty($_POST['mobile'])) {
     $response['success'] = false;
     $response['message'] = "Mobile is Empty";
@@ -48,6 +51,24 @@ if ($num == 1){
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
+
+        if (!empty($res[0]['login_time'])) {
+            $sql_update_blocked = "UPDATE users SET blocked = 1 WHERE mobile ='$mobile'";
+            $db->sql($sql_update_blocked);
+            
+            $response['success'] = false;
+            $response['registered'] = false;
+            $response['message'] = "User is blocked";
+            print_r(json_encode($response));
+            return false;
+        }
+        $user_id = $res[0]['id']; 
+        $datetime = date('Y-m-d H:i:s');
+            
+        $sql = "INSERT INTO login_attempts (`user_id`, `datetime`) VALUES ('$user_id', '$datetime')";
+        $db->sql($sql);
+
+
         if ($num == 1) {
             $response['success'] = true;
             $response['registered'] = true;
