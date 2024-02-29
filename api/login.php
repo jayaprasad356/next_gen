@@ -47,14 +47,16 @@ if ($num == 1){
         $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
         $db->sql($sql_query);
 
-        $sql = "INSERT INTO login_attempts (`user_id`, `datetime`) VALUES ('$user_id', '$datetime')";
-        $db->sql($sql);
+
 
         $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
         $db->sql($sql);
         $res = $db->getResult();
         $num = $db->numRows($res);
+        $user_id = $res[0]['id']; 
         $login_time = $res[0]['login_time'];
+        $sql = "INSERT INTO login_attempts (`user_id`, `datetime`) VALUES ('$user_id', '$datetime')";
+        $db->sql($sql);
 
         if ($login_time != '0000-00-00 00:00:00' && $login_time != null) {
             $sql_update_blocked = "UPDATE users SET blocked = 1 WHERE mobile ='$mobile'";
@@ -67,7 +69,7 @@ if ($num == 1){
             print_r(json_encode($response));
             return false;
         }
-        $user_id = $res[0]['id']; 
+
         $datetime = date('Y-m-d H:i:s');
             
 
