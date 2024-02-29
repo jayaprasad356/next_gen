@@ -554,7 +554,7 @@ if (isset($_POST['btnCancel'])) { ?>
     };
 </script>
 <script>
-    var changeCheckbox = document.querySelector('#order_button');
+    var changeCheckbox = document.querySelector('#reset_button');
     var init = new Switchery(changeCheckbox);
     changeCheckbox.onchange = function() {
         if ($(this).is(':checked')) {
@@ -566,7 +566,7 @@ if (isset($_POST['btnCancel'])) { ?>
     };
 </script>
 <script>
-    var changeCheckbox = document.querySelector('#reset_button');
+    var changeCheckbox = document.querySelector('#order_button');
     var init = new Switchery(changeCheckbox);
     changeCheckbox.onchange = function() {
         if ($(this).is(':checked')) {
