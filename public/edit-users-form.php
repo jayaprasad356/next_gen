@@ -452,7 +452,7 @@ if (isset($_POST['btnCancel'])) { ?>
                                 <div class="form-group">
                                     <label for="">Reset</label><br>
                                     <input type="checkbox" id="reset_button" class="js-switch">
-                                    <input type="hidden" id="reset_available" name="order_available">
+                                    <input type="hidden" id="reset_available" name="reset_available">
                                 </div>
                             </div>
                     </div>
