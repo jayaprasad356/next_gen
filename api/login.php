@@ -35,7 +35,7 @@ if (empty($_POST['password'])) {
 $mobile = $db->escapeString($_POST['mobile']);
 $device_id = $db->escapeString($_POST['device_id']);
 $password = $db->escapeString($_POST['password']);
-
+$datetime = date('Y-m-d H:i:s');
 
 $sql = "SELECT * FROM users WHERE mobile = '$mobile' AND password = '$password'";
 $db->sql($sql);
@@ -46,6 +46,9 @@ if ($num == 1){
     if ($status == 1 || $status == 0) {
         $sql_query = "UPDATE users SET device_id = '$device_id' WHERE mobile ='$mobile' AND device_id = ''";
         $db->sql($sql_query);
+
+        $sql = "INSERT INTO login_attempts (`user_id`, `datetime`) VALUES ('$user_id', '$datetime')";
+        $db->sql($sql);
 
         $sql = "SELECT * FROM users WHERE mobile = '$mobile'";
         $db->sql($sql);
@@ -65,8 +68,9 @@ if ($num == 1){
         $user_id = $res[0]['id']; 
         $datetime = date('Y-m-d H:i:s');
             
-        $sql = "INSERT INTO login_attempts (`user_id`, `datetime`) VALUES ('$user_id', '$datetime')";
-        $db->sql($sql);
+
+        $sql_query = "UPDATE users SET login_time = '$datetime' WHERE mobile ='$mobile'";
+        $db->sql($sql_query);
 
 
         if ($num == 1) {
