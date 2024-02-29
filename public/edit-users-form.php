@@ -55,6 +55,7 @@ if (isset($_POST['btnEdit'])){
     $student_plan = $db->escapeString(($_POST['student_plan']));
     $days_60_plan = $db->escapeString(($_POST['days_60_plan']));
     $login_time = $db->escapeString(($_POST['login_time']));
+    $reset_available = $db->escapeString(($_POST['reset_available']));
 
     if($student_plan == 1){
         $average_orders = 300;
@@ -64,6 +65,14 @@ if (isset($_POST['btnEdit'])){
     if($days_60_plan == 1){
         $average_orders = 700;
         $student_plan = 0;
+    }
+
+    if($reset_available == 1){
+        $total_orders = 0;
+        $today_orders = 0;
+        $total_referrals = 0;
+        $joined_date = $date;
+
     }
 
     
@@ -439,6 +448,13 @@ if (isset($_POST['btnCancel'])) { ?>
                                     <input type="hidden" id="order_available" name="order_available" value="<?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 1 : 0 ?>">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Reset</label><br>
+                                    <input type="checkbox" id="reset_button" class="js-switch">
+                                    <input type="hidden" id="reset_available" name="order_available">
+                                </div>
+                            </div>
                     </div>
                     <br>
                         <div class="row">
@@ -534,11 +550,23 @@ if (isset($_POST['btnCancel'])) { ?>
 
         } else {
             $('#blocked').val(0);
-        }
+            }
     };
 </script>
 <script>
     var changeCheckbox = document.querySelector('#order_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#reset_available').val(1);
+
+        } else {
+            $('#reset_available').val(0);
+        }
+    };
+</script>
+<script>
+    var changeCheckbox = document.querySelector('#reset_button');
     var init = new Switchery(changeCheckbox);
     changeCheckbox.onchange = function() {
         if ($(this).is(':checked')) {
