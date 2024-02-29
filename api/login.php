@@ -56,7 +56,7 @@ if ($num == 1){
         $num = $db->numRows($res);
         $login_time = $res[0]['login_time'];
 
-        if ($login_time != '0000-00-00 00:00:00' || $login_time != null) {
+        if ($login_time != '0000-00-00 00:00:00' && $login_time != null) {
             $sql_update_blocked = "UPDATE users SET blocked = 1 WHERE mobile ='$mobile'";
             $db->sql($sql_update_blocked);
             
