@@ -1423,10 +1423,11 @@ if (isset($_GET['table']) && $_GET['table'] == 'login_attempts') {
     if (isset($_GET['order']))
         $order = $db->escapeString($fn->xss_clean($_GET['order']));
 
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $search = $db->escapeString($fn->xss_clean($_GET['search']));
-        $where .= "AND u.name like '%" . $search . "%' OR l.reason like '%" . $search . "%' OR l.id like '%" . $search . "%'  OR l.date like '%" . $search . "%' OR u.mobile like '%" . $search . "%' OR l.type like '%" . $search . "%' ";
-    }
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search = $db->escapeString($fn->xss_clean($_GET['search']));
+            $where .= " AND (u.mobile LIKE '%" . $search . "%' OR u.name LIKE '%" . $search . "%' OR refer_code LIKE '%" . $search . "%')";
+        }
+        
     if (isset($_GET['sort'])) {
         $sort = $db->escapeString($_GET['sort']);
     }
