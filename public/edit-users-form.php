@@ -21,7 +21,6 @@ if (isset($_POST['btnEdit'])){
     $datetime = date('Y-m-d H:i:s');
     $date = date('Y-m-d');
     $mobile = $db->escapeString($_POST['mobile']);
-
     $earn = $db->escapeString($_POST['earn']);
     $balance = $db->escapeString($_POST['balance']);
     $referred_by = $db->escapeString($_POST['referred_by']);
@@ -31,7 +30,6 @@ if (isset($_POST['btnEdit'])){
     $min_withdrawal = $db->escapeString($_POST['min_withdrawal']);
     $status = $db->escapeString($_POST['status']);
     $plan_price = $db->escapeString($_POST['plan_price']);
-
     $device_id = $db->escapeString(($_POST['device_id']));
     $joined_date = $db->escapeString($_POST['joined_date']);
     $total_orders = $db->escapeString(($_POST['total_orders']));
