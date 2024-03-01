@@ -72,6 +72,7 @@ if (isset($_POST['btnEdit'])){
         $today_orders = 0;
         $total_referrals = 0;
         $joined_date = $date;
+        $worked_days = 0;
 
     }
 
