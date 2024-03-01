@@ -56,6 +56,7 @@ if (isset($_POST['btnEdit'])){
     $days_60_plan = $db->escapeString(($_POST['days_60_plan']));
     $login_time = $db->escapeString(($_POST['login_time']));
     $reset_available = $db->escapeString(($_POST['reset_available']));
+    $product_status = $db->escapeString(($_POST['product_status']));
 
     if($student_plan == 1){
         $average_orders = 300;
@@ -174,7 +175,7 @@ if (isset($_POST['btnEdit'])){
            
            
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',student_plan = '$student_plan',days_60_plan = '$days_60_plan',login_time = '$login_time'   WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',student_plan = '$student_plan',days_60_plan = '$days_60_plan',login_time = '$login_time',product_status='$product_status'   WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -496,6 +497,16 @@ if (isset($_POST['btnCancel'])) { ?>
                                     </div>
                             </div>
                          <br>
+                         <div class="row">
+                         <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Product Status</label><br>
+                                    <input type="checkbox" id="product_status_button" class="js-switch" <?= isset($res[0]['product_status']) && $res[0]['product_status'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="product_status" name="product_status" value="<?= isset($res[0]['product_status']) && $res[0]['product_status'] == 1 ? 1 : 0 ?>">
+                                </div>
+                            </div>
+                               
+                            </div>
                      
                          </div><!-- /.box-body -->
                          <br>
@@ -575,6 +586,18 @@ if (isset($_POST['btnCancel'])) { ?>
 
         } else {
             $('#order_available').val(0);
+        }
+    };
+</script>
+<script>
+    var changeCheckbox = document.querySelector('#product_status_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#product_status').val(1);
+
+        } else {
+            $('#product_status').val(0);
         }
     };
 </script>
