@@ -130,6 +130,10 @@ if ($num >= 1) {
         
 
     }
+    if ($days_60_plan == 1) {
+        $sync_limit = 7;
+    }
+    
     $response['sync_limit'] = $sync_limit;
 
 
