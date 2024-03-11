@@ -1,7 +1,7 @@
 <?php
 
 
-define('DOMAIN_URL', 'https://admin.colorjobs.site/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
+define('DOMAIN_URL', 'https://ngadmin.nextgencareer.in/'); /* chnage to your domain here - don't forget to add forward slash at the end of the URL like this "/" */
 define('ALLOW_MODIFICATION', 1);
 define('JWT_SECRET_KEY', '12345678'); /* chnage to your secret key here set it to anything you like*/
 define('MAIN_REFER', 'NHR');
@@ -18,9 +18,9 @@ class Database
 
 
   private $db_host = "localhost";  // Change as required
-  private $db_user = "u117947056_nextgen";  // Change as required
- private $db_pass = "Nextgen@0111";  // Change as required
- private $db_name = "u117947056_nextgen"; 
+ private $db_user = "u117947056_ngcourse";  // Change as required
+ private $db_pass = "Ngcourse@2024";  // Change as required
+ private $db_name = "u117947056_ngcourse"; 
 
     //      private $db_host = "localhost";  // Change as required
     //     private $db_user = "u743445510_nextgen";  // Change as required
@@ -33,9 +33,9 @@ class Database
     // private $db_name = "u743445510_a1";    // Change as required
 
     // private $db_host = "localhost";  // Change as required
-   //  private $db_user = "root";  // Change as required
-   //  private $db_pass = "";  // Change as required
-   //  private $db_name = "next_gen";    // Change as required
+     //private $db_user = "root";  // Change as required
+     //private $db_pass = "";  // Change as required
+    // private $db_name = "next_gen_course";    // Change as required
 
     private $con = false; // Check to see if the connection is active
     private $myconn = ""; // This will be our mysqli object
