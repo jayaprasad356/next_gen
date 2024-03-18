@@ -85,6 +85,11 @@ $location = $db->escapeString($_POST['location']);
 $aadhaar_num = $db->escapeString($_POST['aadhaar_num']);
 
 
+$response['success'] = false;
+$response['message'] = "Cannot update profile";
+print_r(json_encode($response));
+return false;
+
 $sql = "SELECT * FROM users WHERE id=" . $user_id;
 $db->sql($sql);
 $res = $db->getResult();

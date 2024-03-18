@@ -14,23 +14,22 @@ if (isset($_GET['id'])) {
     exit(0);
 }
 
-if (isset($_POST['btnEdit'])) {
+
+
+if (isset($_POST['btnEdit'])){
 
     $datetime = date('Y-m-d H:i:s');
     $date = date('Y-m-d');
     $mobile = $db->escapeString($_POST['mobile']);
-
     $earn = $db->escapeString($_POST['earn']);
     $balance = $db->escapeString($_POST['balance']);
     $referred_by = $db->escapeString($_POST['referred_by']);
     $refer_code= $db->escapeString($_POST['refer_code']);
     $withdrawal_status = $db->escapeString($_POST['withdrawal_status']);
     $blocked = $db->escapeString($_POST['blocked']);
-    $refer_bonus_sent = $db->escapeString($_POST['refer_bonus_sent']);
     $min_withdrawal = $db->escapeString($_POST['min_withdrawal']);
     $status = $db->escapeString($_POST['status']);
-    
-
+    $plan_price = $db->escapeString($_POST['plan_price']);
     $device_id = $db->escapeString(($_POST['device_id']));
     $joined_date = $db->escapeString($_POST['joined_date']);
     $total_orders = $db->escapeString(($_POST['total_orders']));
@@ -51,6 +50,30 @@ if (isset($_POST['btnEdit'])) {
     $min_qty = $db->escapeString(($_POST['min_qty']));
     $max_qty = $db->escapeString(($_POST['max_qty']));
     $enroll_date = $db->escapeString(($_POST['enroll_date']));
+    $student_plan = $db->escapeString(($_POST['student_plan']));
+    $days_60_plan = $db->escapeString(($_POST['days_60_plan']));
+    $login_time = $db->escapeString(($_POST['login_time']));
+    $reset_available = $db->escapeString(($_POST['reset_available']));
+    $product_status = $db->escapeString(($_POST['product_status']));
+
+    if($student_plan == 1){
+        $average_orders = 300;
+    }
+
+    
+    if($days_60_plan == 1){
+        $average_orders = 700;
+        $student_plan = 0;
+    }
+
+    if($reset_available == 1){
+        $total_orders = 0;
+        $today_orders = 0;
+        $total_referrals = 0;
+        $joined_date = $date;
+        $worked_days = 0;
+
+    }
 
     
     $error = array();
@@ -100,13 +123,17 @@ if (isset($_POST['btnEdit'])) {
             $num = $db->numRows($res);
 
             
-            if ($num == 1){
+            if ($num == 1) {
                 $user_status = $res[0]['status'];
                 $user_id = $res[0]['id'];
-                if($user_status == 1){
-                    $refer_orders = 500;
-                    $referral_bonus = 600;
-
+                if ($user_status == 1) {
+                    if ($plan_price == 2999) {
+                        $refer_orders = 500;
+                        $referral_bonus = 300;
+                    } elseif ($plan_price == 4999) {
+                        $refer_orders = 500;
+                        $referral_bonus = 600;
+                    } 
                     $sql_query = "UPDATE users SET `total_referrals` = total_referrals + 1,`total_orders` = total_orders + $refer_orders,`hiring_earings` = hiring_earings + $referral_bonus  WHERE id =  $user_id";
                     $db->sql($sql_query);
                     $sql_query = "INSERT INTO transactions (user_id,amount,datetime,type)VALUES($user_id,$referral_bonus,'$datetime','refer_bonus')";
@@ -122,6 +149,7 @@ if (isset($_POST['btnEdit'])) {
             }
             
         }
+       
         $register_bonus_sent = $fn->get_value('users','register_bonus_sent',$ID);
             if (!empty($enroll_date) && $register_bonus_sent != 1 ) {
                 $sql_query = "UPDATE users SET register_bonus_sent = 1 WHERE id =  $ID";
@@ -140,8 +168,12 @@ if (isset($_POST['btnEdit'])) {
 
             }
 
+            $link = "";
+            
+           
+           
 
-            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',refer_bonus_sent = '$refer_bonus_sent',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date'  WHERE id =  $ID";
+            $sql_query = "UPDATE users SET mobile='$mobile',earn='$earn',balance='$balance',referred_by='$referred_by',refer_code='$refer_code',withdrawal_status='$withdrawal_status',min_withdrawal='$min_withdrawal',joined_date = '$joined_date', device_id='$device_id', total_orders='$total_orders', today_orders='$today_orders',status=$status,support_id='$support_id',branch_id='$branch_id',orders_time='$orders_time',worked_days = '$worked_days',blocked = '$blocked',description = '$description',order_available = '$order_available',store_id = '$store_id',total_referrals = '$total_referrals',average_orders = '$average_orders', description = '$description',orders_earnings = '$orders_earnings',hiring_earings = '$hiring_earings',password = '$password',min_qty = '$min_qty',max_qty = '$max_qty',enroll_date = '$enroll_date',plan_price = '$plan_price',student_plan = '$student_plan',days_60_plan = '$days_60_plan',login_time = '$login_time',product_status='$product_status'   WHERE id =  $ID";
             $db->sql($sql_query);
             $update_result = $db->getResult();
     
@@ -164,9 +196,7 @@ if (isset($_POST['btnEdit'])) {
  
 $data = array();
 
-$sql_query = "SELECT * FROM users WHERE id = $ID";
-$db->sql($sql_query);
-$res = $db->getResult();
+
 
 $sql_query = "SELECT * FROM users WHERE id =" . $ID;
 $db->sql($sql_query);
@@ -235,17 +265,24 @@ if (isset($_POST['btnCancel'])) { ?>
                                             <label for="exampleInputEmail1">Description</label> <i class="text-danger asterik">*</i><?php echo isset($error['description']) ? $error['description'] : ''; ?>
                                             <textarea  type="text" rows="1" class="form-control" name="description"><?php echo $res[0]['description']?></textarea>
                                     </div>
+                                    <div class="col-md-3">
+                                   <label for="exampleInputEmail1">Plan Price</label> <i class="text-danger asterik">*</i>
+                                    <select id='plan_price' name="plan_price" class='form-control'>
+                                     <option value='2999' <?php if ($res[0]['plan_price'] == '2999') echo 'selected'; ?>>2999</option>
+                                      <option value='4999' <?php if ($res[0]['plan_price'] == '4999') echo 'selected'; ?>>4999</option>
+                                    </select>
+                                    </div>
                                </div>
+                               <div class="form-group col-md-3">
+                                 <h4 class="box-title"> </h4>
+                                 <a class="btn btn-block btn-primary" name="link" id="link"><i class="fa fa-copy"></i>Copy Marketing Link</a>
+
+                                </div>
                              </div>
                           <br>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                    <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
-                                    <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
-                                </div>
-                                
-                            <div class="col-md-3">
+                          <div class="row">
+                              <div class="form-group">
+                              <div class="col-md-3">
                                       <label for="exampleInputEmail1">Enroll Date</label> <i class="text-danger asterik">*</i><?php echo isset($error['enroll_date']) ? $error['enroll_date'] : ''; ?>
                                        <?php
                                          if (empty($res[0]['enroll_date']) || $res[0]['enroll_date'] == '0000-00-00') {
@@ -259,8 +296,22 @@ if (isset($_POST['btnCancel'])) { ?>
                                           }
                                          ?>
                                    </div>
-                            </div>
-                        </div>
+                                   <div class="col-md-3">
+                                    <label for="exampleInputEmail1"> Refer Code</label> <i class="text-danger asterik">*</i><?php echo isset($error['refer_code']) ? $error['refer_code'] : ''; ?>
+                                    <input type="text" class="form-control" name="refer_code" value="<?php echo $res[0]['refer_code']; ?>">
+                                </div>
+                                <div class="col-md-3">
+                                <label for="">Student Plan</label><br>
+                                    <input type="checkbox" id="student_button" class="js-switch" <?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="student_plan" name="student_plan" value="<?= isset($res[0]['student_plan']) && $res[0]['student_plan'] == 1 ? 1 : 0 ?>">
+                                </div>
+                                <div class="col-md-3">
+                                <label for="">Days 60 Plan</label><br>
+                                    <input type="checkbox" id="days_button" class="js-switch" <?= isset($res[0]['days_60_plan']) && $res[0]['days_60_plan'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="days_60_plan" name="days_60_plan" value="<?= isset($res[0]['days_60_plan']) && $res[0]['days_60_plan'] == 1 ? 1 : 0 ?>">
+                                </div>
+                               </div>
+                             </div>
                         <br>
                         <div class="row">
                             <div class="form-group col-md-4">
@@ -392,16 +443,16 @@ if (isset($_POST['btnCancel'])) { ?>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Refer Bonus Sent</label><br>
-                                    <input type="checkbox" id="refer_button" class="js-switch" <?= isset($res[0]['refer_bonus_sent']) && $res[0]['refer_bonus_sent'] == 1 ? 'checked' : '' ?>>
-                                    <input type="hidden" id="refer_bonus_sent" name="refer_bonus_sent" value="<?= isset($res[0]['refer_bonus_sent']) && $res[0]['refer_bonus_sent'] == 1 ? 1 : 0 ?>">
+                                    <label for="">Order Available</label><br>
+                                    <input type="checkbox" id="order_button" class="js-switch" <?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="order_available" name="order_available" value="<?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 1 : 0 ?>">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="">Order Available</label><br>
-                                    <input type="checkbox" id="order_button" class="js-switch" <?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 'checked' : '' ?>>
-                                    <input type="hidden" id="order_available" name="order_available" value="<?= isset($res[0]['order_available']) && $res[0]['order_available'] == 1 ? 1 : 0 ?>">
+                                    <label for="">Reset</label><br>
+                                    <input type="checkbox" id="reset_button" class="js-switch">
+                                    <input type="hidden" id="reset_available" name="reset_available">
                                 </div>
                             </div>
                     </div>
@@ -438,8 +489,22 @@ if (isset($_POST['btnCancel'])) { ?>
                                         <label for="exampleInputEmail1">Max Qty</label> <i class="text-danger asterik">*</i><?php echo isset($error['max_qty']) ? $error['max_qty'] : ''; ?>
                                         <input type="number" class="form-control" name="max_qty" value="<?php echo $res[0]['max_qty']; ?>">
                                     </div>
+                                    <div class="col-md-3">
+                                        <label for="exampleInputEmail1">Login Time</label> <i class="text-danger asterik">*</i><?php echo isset($error['login_time']) ? $error['login_time'] : ''; ?>
+                                        <input type="datetime-local" class="form-control" name="login_time" value="<?php echo $res[0]['login_time']; ?>">
+                                    </div>
                             </div>
                          <br>
+                         <div class="row">
+                         <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Product Status</label><br>
+                                    <input type="checkbox" id="product_status_button" class="js-switch" <?= isset($res[0]['product_status']) && $res[0]['product_status'] == 1 ? 'checked' : '' ?>>
+                                    <input type="hidden" id="product_status" name="product_status" value="<?= isset($res[0]['product_status']) && $res[0]['product_status'] == 1 ? 1 : 0 ?>">
+                                </div>
+                            </div>
+                               
+                            </div>
                      
                          </div><!-- /.box-body -->
                          <br>
@@ -463,6 +528,30 @@ if (isset($_POST['btnCancel'])) { ?>
     };
 </script>
 <script>
+    var changeCheckbox = document.querySelector('#student_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#student_plan').val(1);
+
+        } else {
+            $('#student_plan').val(0);
+        }
+    };
+</script>
+<script>
+    var changeCheckbox = document.querySelector('#days_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#days_60_plan').val(1);
+
+        } else {
+            $('#days_60_plan').val(0);
+        }
+    };
+</script>
+<script>
     var changeCheckbox = document.querySelector('#blocked_button');
     var init = new Switchery(changeCheckbox);
     changeCheckbox.onchange = function() {
@@ -471,18 +560,18 @@ if (isset($_POST['btnCancel'])) { ?>
 
         } else {
             $('#blocked').val(0);
-        }
+            }
     };
 </script>
 <script>
-    var changeCheckbox = document.querySelector('#refer_button');
+    var changeCheckbox = document.querySelector('#reset_button');
     var init = new Switchery(changeCheckbox);
     changeCheckbox.onchange = function() {
         if ($(this).is(':checked')) {
-            $('#refer_bonus_sent').val(1);
+            $('#reset_available').val(1);
 
         } else {
-            $('#refer_bonus_sent').val(0);
+            $('#reset_available').val(0);
         }
     };
 </script>
@@ -497,6 +586,36 @@ if (isset($_POST['btnCancel'])) { ?>
             $('#order_available').val(0);
         }
     };
+</script>
+<script>
+    var changeCheckbox = document.querySelector('#product_status_button');
+    var init = new Switchery(changeCheckbox);
+    changeCheckbox.onchange = function() {
+        if ($(this).is(':checked')) {
+            $('#product_status').val(1);
+
+        } else {
+            $('#product_status').val(0);
+        }
+    };
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#link").click(function() {
+            var refer_code = $("input[name='refer_code']").val();
+            var link = "https://nextgencareer.abcdapp.in/index.php?"; 
+            var full_link = link + "refer_code=" + refer_code;
+
+            var tempInput = $("<input>");
+            $("body").append(tempInput);
+            tempInput.val(full_link).select();
+            document.execCommand("copy");
+            tempInput.remove();
+
+            alert("Marketing link with refer_code copied to clipboard!");
+        });
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>

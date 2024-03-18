@@ -180,6 +180,7 @@ $fn = new custom_functions;
                     <ul class="treeview-menu">
                         <li><a href="withdrawals.php"><i class="fa fa-money"></i>Withdrawals</a></li>
                         <li><a href="add-new-bulk-cancel.php"><i class="fa fa-money"></i>Bulk Order Earnings</a></li>
+                        <li><a href="bulk-cancel-withdrawals.php"><i class="fa fa-money"></i>Bulk Cancel Withdrawal</a></li>
     </ul>
                 </li>
                 <li class="treeview">
@@ -236,6 +237,12 @@ $fn = new custom_functions;
                         <span>Leaves</span>
                     </a>
                 </li>
+                <li class="treeview">
+                    <a href="website_enroll.php">
+                        <i class="fa fa-adn"></i>
+                        <span>Website Enroll</span>
+                    </a>
+                </li>
                 <!-- <li class="treeview">
                     <a href="bulk-upload-user.php">
                         <i class="fa fa-folder-open"></i>
@@ -248,7 +255,24 @@ $fn = new custom_functions;
                         <span>Bulk Approval</span>
                     </a>
                 </li>
-             
+                <li class="treeview">
+                    <a href="bulk-quantity.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk Quantity</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="bulk-orders.php">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Bulk Orders</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="login_attempts.php">
+                        <i class="fa fa-user"></i>
+                        <span>Login Attempts</span>
+                    </a>
+                </li>
             </ul>
             </section>
             <!-- /.sidebar -->

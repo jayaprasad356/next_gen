@@ -57,22 +57,24 @@ if (!checkLeaveDate($leave_date)) {
     return false;
 }
 
+$leaveMonthYear = date('Y-m', strtotime($leave_date));
+
 $sql = "SELECT id FROM users WHERE id = $user_id AND status = 1";
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
+
 if ($num == 1) {
-    $sql = "SELECT id FROM leaves WHERE user_id = $user_id";
+    $sql = "SELECT id FROM leaves WHERE user_id = $user_id AND DATE_FORMAT(date, '%Y-%m') = '$leaveMonthYear'";
     $db->sql($sql);
     $res = $db->getResult();
-    $num = $db->numRows($res);
-    if ($num >= 2) {
+    $numLeavesThisMonth = $db->numRows($res);
+
+    if ($numLeavesThisMonth >= 2) {
         $response['success'] = false;
         $response['message'] = "You are not allowed above 2 leaves in a month";
         print_r(json_encode($response));
-
-    }
-    else{
+    } else {
         $sql = "SELECT id FROM leaves WHERE user_id = $user_id AND date = '$leave_date'";
         $db->sql($sql);
         $res = $db->getResult();

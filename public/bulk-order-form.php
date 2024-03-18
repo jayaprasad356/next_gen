@@ -6,7 +6,9 @@ $fn = new custom_functions;
 
 ?>
 <section class="content-header">
-    <h1>Bulk Approval<small></small></h1>
+    <h1>Bulk Order<small></small></h1>
+</section>
+
 </section>
 <section class="content">
     <div class="row">
@@ -20,7 +22,7 @@ $fn = new custom_functions;
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form id='add_form' method="post" action="public/db-operation.php" enctype="multipart/form-data">
-                <input type="hidden" id="bulk_approval" name="bulk_approval" required="" value="1" aria-required="true">
+                    <input type="hidden" id="bulk_orders" name="bulk_orders" required="" value="1" aria-required="true">
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">
@@ -39,11 +41,15 @@ $fn = new custom_functions;
                     </div>
                     <!-- /.box-body -->
 
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary" name="btnAdd">Submit</button>
-                        <input type="reset" onClick="refreshPage()" class="btn-warning btn" value="Clear" />
-                    </div>
+                   
 
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary" id="submit_btn" name="btnAdd">Upload</button>
+                        <input type="reset" class="btn-warning btn" value="Clear" />
+
+                        <a class='btn btn-info' id='sample' href='#' download> <em class='fa fa-download'></em> Download Sample File</a>
+
+                    </div>
                 </form>
                 <div id="result"></div>
 
@@ -51,6 +57,35 @@ $fn = new custom_functions;
         </div>
     </div>
 </section>
+<script>
+  
+    $('#type').on('change', function(e) {
+        var type = $('#type').val();
+        $("#type1").val(type);
+    });
+    $('.box-footer > #sample').click(function(e) {
+        e.preventDefault(); //stop the browser from following
+        //whenever you click off an input element
+        // type1 = $("#type1").val();
+        // if (type1 != 'products' ) {
+        //   alert('Please select type.');
+        // }
+        // if (type1 == 'products') {
+        window.location.href = 'library/quantity.csv';
+        // } 
+
+    });
+ 
+</script>
+
+<script>
+    $('#add_form').validate({
+        rules: {
+            upload_file: "required",
+            type: "required"
+        }
+    });
+</script>
 
 <div class="separator"> </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>

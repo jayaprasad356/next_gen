@@ -154,14 +154,14 @@ include "header.php";
                 <div class="small-box bg-teal">
                         <div class="inner">
                            <?php
-                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 400";
+                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 500 AND status = 1";
                            $db->sql($sql);
                            $res = $db->getResult();
                            $count = $res[0]['count'];
                            ?>
 
                           <h3><?php echo $count; ?></h3>
-                          <p>No Of Users Less Than 400 Average</p>
+                          <p>Average Less Than 500</p>
                           </div>
                         
                         <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
@@ -171,14 +171,14 @@ include "header.php";
                 <div class="small-box bg-blue">
                         <div class="inner">
                            <?php
-                           $sql = "SELECT COUNT(id) AS count FROM users WHERE average_orders <= 400";
+                           $sql = "SELECT COUNT(id) AS count FROM users WHERE enroll_date = '$currentdate'";
                            $db->sql($sql);
                            $res = $db->getResult();
                            $count = $res[0]['count'];
                            ?>
 
-                          <h3>0</h3>
-                          <p>No Of New Referrals</p>
+                          <h3><?php echo $count; ?></h3>
+                          <p>No Of Enrolled</p>
                           </div>
                         
                         <a href="users.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>

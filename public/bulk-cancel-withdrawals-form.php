@@ -5,8 +5,51 @@ include_once('includes/custom-functions.php');
 $fn = new custom_functions;
 
 ?>
+<?php
+if (isset($_POST['btnd'])) {
+
+        $title = $db->escapeString(($_POST['title']));
+        $description = $db->escapeString($_POST['description']);
+        $link = $db->escapeString($_POST['link']);
+        $error = array();
+        if (empty($title)) {
+            $error['title'] = " <span class='label label-danger'>Required!</span>";
+        }
+        if (empty($description)) {
+            $error['description'] = " <span class='label label-danger'>Required!</span>";
+        }
+       
+       
+       
+       if (!empty($title) && !empty($description)) 
+       {
+            $datetime = date('Y-m-d H:i:s');
+            $sql_query = "INSERT INTO notifications (title,description,link,datetime)VALUES('$title','$description','$link','$datetime')";
+            $db->sql($sql_query);
+            $result = $db->getResult();
+            if (!empty($result)) {
+                $result = 0;
+            } else {
+                $result = 1;
+            }
+
+            if ($result == 1) {
+                
+                $error['add_notification'] = "<section class='content-header'>
+                                                <span class='label label-success'>Notification Added Successfully</span> </section>";
+            } else {
+                $error['add_notification'] = " <span class='label label-danger'>Failed</span>";
+            }
+            }
+        }
+?>
 <section class="content-header">
-    <h1>Bulk Approval<small></small></h1>
+
+    <?php echo isset($error['add_notification']) ? $error['add_notification'] : ''; ?>
+    <ol class="breadcrumb">
+        <li><a href="home.php"><i class="fa fa-home"></i> Home</a></li>
+    </ol>
+    <hr />
 </section>
 <section class="content">
     <div class="row">
@@ -20,7 +63,7 @@ $fn = new custom_functions;
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form id='add_form' method="post" action="public/db-operation.php" enctype="multipart/form-data">
-                <input type="hidden" id="bulk_approval" name="bulk_approval" required="" value="1" aria-required="true">
+                <input type="hidden" id="bulk_cancel" name="bulk_cancel" required="" value="1" aria-required="true">
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group">

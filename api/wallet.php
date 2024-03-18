@@ -71,10 +71,13 @@ $res = $db->getResult();
 $num = $db->numRows($res);
 if ($num >= 1) {
     $average_orders = $res[0]['average_orders'];
-    $store_id = $res[0]['store_id'];
+    $store_id = $res[0]['store_id'];    
     $blocked = $res[0]['blocked'];
     $status = $res[0]['status'];
     $joined_date = $res[0]['joined_date'];
+    $student_plan = $res[0]['student_plan'];
+    $days_60_plan = $res[0]['days_60_plan'];
+    
 
     $sql = "SELECT per_order_cost FROM `stores` WHERE id = $store_id";
     $db->sql($sql);
@@ -127,6 +130,10 @@ if ($num >= 1) {
         
 
     }
+    if ($days_60_plan == 1) {
+        $sync_limit = 7;
+    }
+    
     $response['sync_limit'] = $sync_limit;
 
 
@@ -142,7 +149,7 @@ if ($num >= 1) {
     }
 
 
-    $sql = "SELECT  total_qty_sold,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
+   $sql = "SELECT  total_qty_sold,datetime FROM transactions WHERE user_id = $user_id AND type = '$type' ORDER BY datetime DESC LIMIT 1 ";
     $db->sql($sql);
     $tres = $db->getResult();
     $num = $db->numRows($tres);
@@ -167,10 +174,33 @@ if ($num >= 1) {
             return false;
         }
     }
+    if ($average_orders >= 500) {
+        
+        $per_order_cost = 0.20; 
+    }
+     elseif ($average_orders >= 400) {
+
+        $per_order_cost = 0.15;
+    } 
+     elseif ($average_orders >= 300) {
+
+        $per_order_cost = 0.10; 
+    } 
+     else {
+
+        $per_order_cost = 0;
+    }
+
+    if($student_plan == 1){
+        $per_order_cost = 0.20; 
+    }
+
+    if ($days_60_plan == 1) {
+        $per_order_cost = 0.40; 
+    }
     
 
-
-    if($orders == '100' && ($tqs1 != $total_qty_sold)){
+    if($orders == '100'){
         $amount = $orders * $per_order_cost;
 
         $sql = "UPDATE users SET today_orders = today_orders + '$orders', total_orders = total_orders + '$orders', orders_earnings = orders_earnings + '$amount' WHERE id = $user_id";
@@ -181,36 +211,33 @@ if ($num >= 1) {
 
 
         $message = "Order Placed successfully";
-
         
-    
     }else{
-        $message = "order not placed";
+        $message = "Order not placed";
 
-        
-    
+
     }
 
-
-    
-
 }
+
+
 else{
-    $response['success'] = false;
-    $response['message'] = "User Not Found";
-    print_r(json_encode($response));
-    return false;
+$response['success'] = false;
+$response['message'] = "User Not Found";
+print_r(json_encode($response));
+return false;
 }
-
-
 
 
 
 $sql = "SELECT * FROM users WHERE id = $user_id ";
 $db->sql($sql);
 $res = $db->getResult();
+
 $response['success'] = true;
 $response['message'] = $message;
 $response['data'] = $res;
 echo json_encode($response);
+
+
 ?>
