@@ -1,6 +1,9 @@
 
 <section class="content-header">
-    <h1>Login Attempts /<small><a href="home.php"><i class="fa fa-home"></i> Home</a></small></h1>
+    <h1>Stores /<small><a href="home.php"><i class="fa fa-home"></i> Home</a></small></h1>
+    <ol class="breadcrumb">
+        <a class="btn btn-block btn-default" href="add-stores.php"><i class="fa fa-plus-square"></i> Add Stores </a>
+    </ol>
 </section>
 
     <!-- Main content -->
@@ -12,7 +15,7 @@
                 <div class="box">
                     
                     <div  class="box-body table-responsive">
-                    <table id='orders_table' class="table table-hover" data-toggle="table" data-url="api-firebase/get-bootstrap-table-data.php?table=login_attempts" data-page-list="[5, 10, 20, 50, 100, 200]" data-show-refresh="true" data-show-columns="true" data-side-pagination="server" data-pagination="true" data-search="true" data-trim-on-search="false" data-filter-control="true" data-query-params="queryParams" data-sort-name="id" data-sort-order="desc" data-show-export="false" data-export-types='["txt","excel"]' data-export-options='{
+                    <table id='orders_table' class="table table-hover" data-toggle="table" data-url="api-firebase/get-bootstrap-table-data.php?table=stores" data-page-list="[5, 10, 20, 50, 100, 200]" data-show-refresh="true" data-show-columns="true" data-side-pagination="server" data-pagination="true" data-search="true" data-trim-on-search="false" data-filter-control="true" data-query-params="queryParams" data-sort-name="id" data-sort-order="desc" data-show-export="false" data-export-types='["txt","excel"]' data-export-options='{
                             "fileName": "students-list-<?= date('d-m-Y') ?>",
                             "ignoreColumn": ["operate"] 
                         }'>
@@ -21,8 +24,9 @@
                                     
                                     <th  data-field="id" data-sortable="true">ID</th>
                                     <th  data-field="name" data-sortable="true">Name</th>
-                                    <th  data-field="mobile" data-sortable="true">Mobile</th>
-                                    <th  data-field="datetime" data-sortable="true">DateTime</th>
+                                    <th  data-field="min_qty" data-sortable="true">Min Qty</th>
+                                    <th  data-field="max_qty" data-sortable="true">Max Qty</th>
+                                    <th  data-field="per_order_cost" data-sortable="true">Per Order Cost</th>
                                     <th  data-field="operate" data-events="actionEvents">Action</th>
                                 </tr>
                             </thead>

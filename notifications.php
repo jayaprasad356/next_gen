@@ -32,14 +32,14 @@ $_SESSION['timeout'] = $currentTime + $expired;
 <html>
 
 <head>
-    <title>Login Attempts | - Dashboard</title>
+    <title>Notifications | - Dashboard</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
 <body>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <?php include('public/login_attempts-table.php'); ?>
+        <?php include('public/notifications-table.php'); ?>
     </div><!-- /.content-wrapper -->
 </body>
 

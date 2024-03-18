@@ -14,48 +14,49 @@ $db = new Database();
 $db->connect();
 include_once('../includes/functions.php');
 $fn = new functions;
-date_default_timezone_set('Asia/Kolkata');
 
-if (empty($_POST['email'])) {
+if (empty($_POST['user_id'])) {
     $response['success'] = false;
-    $response['message'] = "Email Id is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['mobile'])) {
-    $response['success'] = false;
-    $response['message'] = "Mobilenumber is Empty";
-    print_r(json_encode($response));
-    return false;
-}
-if (empty($_POST['password'])) {
-    $response['success'] = false;
-    $response['message'] = "Password is Empty";
+    $response['message'] = "user Id is Empty";
     print_r(json_encode($response));
     return false;
 }
 
-$mobile = $db->escapeString($_POST['mobile']);
-$email = $db->escapeString($_POST['email']);
-$password = $db->escapeString($_POST['password']);
+if (empty($_POST['remarks'])) {
+    $response['success'] = false;
+    $response['message'] = "remarks is Empty";
+    print_r(json_encode($response));
+    return false;
+}
 
-$sql = "SELECT * FROM users WHERE mobile='$mobile' AND email='$email'";
+
+
+$user_id = $db->escapeString($_POST['user_id']);
+$remarks = $db->escapeString($_POST['remarks']);
+
+
+$sql = "SELECT * FROM users WHERE id=" . $user_id;
 $db->sql($sql);
 $res = $db->getResult();
 $num = $db->numRows($res);
-if ($num >= 1) {
-    $sql_query = "UPDATE users SET password='$password' WHERE mobile = '$mobile' AND email='$email'";
-    $db->sql($sql_query);
+if ($num == 1) {
+    $sql = "UPDATE users SET remarks='$remarks' WHERE id=" . $user_id;
+    $db->sql($sql);
+    $sql = "SELECT * FROM users WHERE id=" . $user_id;
+    $db->sql($sql);
+    $res = $db->getResult();
     $response['success'] = true;
-    $response['message'] ="Password Changed Successfully";
+    $response['message'] = "User Updated Successfully";
+    $response['data'] = $res;
     print_r(json_encode($response));
     return false;
 }
 else{
+    
     $response['success'] = false;
-    $response['message'] = "Invalid Credentials";
+    $response['message'] ="User Not Found";
     print_r(json_encode($response));
-
+    return false;
 
 }
 

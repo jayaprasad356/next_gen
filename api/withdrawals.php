@@ -98,14 +98,7 @@ if ($withdrawal_status == '0') {
     print_r(json_encode($response));
     return false;
 }
-$max_daily_withdrawal = 700;
 
-if ($amount > $max_daily_withdrawal) {
-    $response['success'] = false;
-    $response['message'] = "You can withdraw a maximum of Rs $max_daily_withdrawal per day.";
-    print_r(json_encode($response));
-    return false;
-}
 
 if (!isBetween10AMand6PM()) {
     $response['success'] = false;
@@ -121,22 +114,8 @@ if ($amount >= $min_withdrawal) {
             print_r(json_encode($response));
             return false;
         } else {
-            $damount = $amount - 5;
 
-            $sql = "SELECT id FROM withdrawals WHERE user_id = $user_id AND status = 0";
-            $db->sql($sql);
-            $res= $db->getResult();
-            $num = $db->numRows($res);
-
-            if ($num >= 1){
-                $response['success'] = false;
-                $response['message'] = "You  Withdrawal in process...";
-                print_r(json_encode($response));
-                return false;
-
-            }
-
-            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$damount',$balance,0,'$datetime')";
+            $sql = "INSERT INTO withdrawals (`user_id`,`amount`,`balance`,`status`,`datetime`) VALUES ('$user_id','$amount',$balance,0,'$datetime')";
             $db->sql($sql);
             $sql = "UPDATE users SET balance=balance-'$amount' WHERE id='$user_id'";
             $db->sql($sql);
