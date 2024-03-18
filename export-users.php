@@ -4,7 +4,7 @@ $db = new Database();
 $db->connect();
 
 $currentdate = date('Y-m-d');
-$sql_query = "SELECT id, mobile, name, email, total_referrals, earn, balance, device_id, referred_by, refer_code, withdrawal_status, status, joined_date, fcm_id, last_updated, min_withdrawal, account_num, holder_name, bank, branch, ifsc, registered_date, total_orders, today_orders, support_id, lead_id, worked_days, plan, orders_time, aadhaar_num, dob, location, password, order_available, store_id, average_orders, level, orders_earnings, hiring_earings, last_today_orders,min_qty,max_qty,enroll_date,student_plan,blocked FROM `users`"; // Fetch all users without any condition
+$sql_query = "SELECT id, mobile, name, email, total_referrals, earn, balance, device_id, referred_by, refer_code, withdrawal_status, status, joined_date, fcm_id, last_updated, min_withdrawal, account_num, holder_name, bank, branch, ifsc, registered_date, total_orders, today_orders, support_id, lead_id, worked_days, plan, orders_time, CONCAT(',',aadhaar_num, ',') AS aadhaar_num, dob, location, password, order_available, store_id, average_orders, level, orders_earnings, hiring_earings, last_today_orders,min_qty,max_qty,enroll_date,student_plan,blocked FROM `users`"; // Fetch all users without any condition
 $db->sql($sql_query);
 $developer_records = $db->getResult();
 
