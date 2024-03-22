@@ -14,6 +14,11 @@ $db->connect();
 
 $response = [];
 
+$response['success'] = false;
+$response['message'] = "Disabled";
+print_r(json_encode($response));
+return false;
+
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User Id is Empty";
@@ -238,6 +243,5 @@ $response['success'] = true;
 $response['message'] = $message;
 $response['data'] = $res;
 echo json_encode($response);
-
 
 ?>

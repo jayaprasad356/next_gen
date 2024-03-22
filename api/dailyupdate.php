@@ -19,6 +19,11 @@ include_once('../includes/functions.php');
 $fn = new functions;
 $currentdate = date('Y-m-d');
 
+$response['success'] = false;
+$response['message'] = "Disabled";
+print_r(json_encode($response));
+return false;
+
 $sql = "SELECT * FROM leaves WHERE date = '$currentdate' AND type = 'common_leave'";
 $db->sql($sql);
 $resl = $db->getResult();

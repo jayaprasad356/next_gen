@@ -14,6 +14,11 @@ $fn = new custom_functions;
 $db = new Database();
 $db->connect();
 
+$response['success'] = false;
+$response['message'] = "Disabled";
+print_r(json_encode($response));
+return false;
+
 if (empty($_POST['user_id'])) {
     $response['success'] = false;
     $response['message'] = "User ID is Empty";
@@ -165,4 +170,5 @@ if ($amount >= $min_withdrawal) {
         $response['message'] = "Minimum Withdrawal Amount is $min_withdrawal";
         print_r(json_encode($response));
     }
+  
     ?>
